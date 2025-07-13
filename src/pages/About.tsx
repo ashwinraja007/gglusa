@@ -51,18 +51,24 @@ const About = () => {
                 </h2>
                 <div className="space-y-6 text-gray-700 text-lg leading-relaxed">
                   <p>
-                    GGL is a trusted global leader in LCL (Less-than-Container Load) consolidation. With a robust presence across
-                    <strong> North America, the UK, the Middle East, the Indian Subcontinent, Southeast Asia, and the Far East,</strong> we offer streamlined groupage services backed by strong customer support and competitive pricing.
+                    GGL is a prominent logistics company headquartered in Singapore. It operates with distinct divisions for 
+                    <strong> 3PL, Freight Management (Ocean and Air), Distribution, and Transportation.</strong> Our primary mission is to deliver comprehensive end-to-end solutions in supply chain management.
                   </p>
                   <p>
-                    We are strategically positioned in major transshipment hubs like
-                    <strong> Singapore, Malaysia, Sri Lanka, and Dubai,</strong> GGL operates <strong>direct weekly sailings</strong> to key global ports.
+                    We employ innovative approaches managed through our network of group offices and trusted partners who specialize in all facets of the supply chain. 
+                    We constantly strive to cultivate strong and collaborative relationships with our clients, fostering <strong>genuine partnerships</strong> that drive mutual growth.
                   </p>
                   <p>
-                    One of our standout services is <strong>neutral LCL consolidation</strong>, designed for freight forwarders and NVOCCs who require confidential and competitive solutions.
+                    Our commitment extends beyond mere forwarding and logistics. It revolves around <strong>building customer trust</strong> by consistently providing world-class services and solutions. 
+                    We pride ourselves on being more than just a forwarding service; we are a trusted partner, a global solution provider leveraging the expertise of our highly experienced team.
                   </p>
                   <p>
-                    Our advanced technology platform offers end-to-end shipment visibility. GGL stands as a dependable partner committed to neutrality, excellence, and customer success.
+                    Through our in-house IT capabilities, we develop customized solutions and seamlessly integrate them with our clients' systems and processes. 
+                    This approach offers <strong>complete visibility and enhances productivity</strong> at every stage of supply chain management.
+                  </p>
+                  <p>
+                    With our extensive presence encompassing group offices across <strong>15 countries</strong> in South East Asia, the Indian subcontinent, and the Middle East, 
+                    along with a well-established partner network, GGL is exceptionally positioned to deliver global solutions to our valued customers.
                   </p>
                 </div>
               </motion.div>

@@ -64,7 +64,7 @@ const Careers = () => {
         {/* Why Join Us */}
         
 
-        {/* Open Positions (Updated to show Coming Soon) */}
+        {/* Open Positions */}
         <section className="py-16">
           <div className="container mx-auto px-4">
             <motion.div initial={{
@@ -78,14 +78,46 @@ const Careers = () => {
           }} viewport={{
             once: true
           }} className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-brand-navy mb-4">Current Opportunities</h2>
+              <h2 className="text-3xl font-bold text-brand-navy mb-4">WORK WITH US</h2>
               <div className="w-24 h-1 bg-brand-gold mx-auto mb-6"></div>
               <p className="text-gray-600 max-w-2xl mx-auto">
                 Explore exciting career opportunities across our various departments and locations.
               </p>
             </motion.div>
 
-            <div className="text-center text-gray-500 text-xl font-medium">Career opportunities coming soon. Stay tuned!</div>
+            <div className="grid gap-8 max-w-4xl mx-auto">
+              {/* Operations Manager */}
+              <Card className="border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                <CardHeader>
+                  <CardTitle className="text-xl font-bold text-brand-navy">Operations Manager</CardTitle>
+                  <CardDescription>USA Operations</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-600 mb-4">
+                    GGL USA is in search of a dynamic and enterprising Operations Manager – USA. This is an exciting role with a comprehensive set of responsibilities that include full P & L Ownership, Supplier Management and Business Process execution.
+                  </p>
+                  <Button className="bg-brand-navy text-white hover:bg-brand-navy/90">
+                    Know More
+                  </Button>
+                </CardContent>
+              </Card>
+
+              {/* Director-Key Accounts */}
+              <Card className="border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                <CardHeader>
+                  <CardTitle className="text-xl font-bold text-brand-navy">Director-Key Accounts</CardTitle>
+                  <CardDescription>Chicago Location</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-600 mb-4">
+                    The Director – Key Accounts is a Commercial role based out of Chicago. GGL USA is looking for a dynamic sales person for developing Mid – to large-sized Accounts, mainly in the Chicago land area.
+                  </p>
+                  <Button className="bg-brand-navy text-white hover:bg-brand-navy/90">
+                    Know More
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </section>
 

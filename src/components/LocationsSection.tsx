@@ -1,75 +1,37 @@
 import React, { useState } from "react";
-type LocationKey = "Chennai" | "NaviMumbai" | "Delhi" | "Bangalore" | "Kolkata";
+type LocationKey = "NewYork" | "LosAngeles";
 const LocationsSection: React.FC = () => {
-  const [location, setLocation] = useState<LocationKey>("Chennai");
+  const [location, setLocation] = useState<LocationKey>("NewYork");
   const [showDetails, setShowDetails] = useState(true);
   const mapIframes: Record<LocationKey, string> = {
-    Chennai: "https://www.google.com/maps/d/embed?mid=12Rtb_hQeXud-j4o3tW86ldm7Pk8yLk0&ehbc=2E312F&noprof=1",
-    NaviMumbai: "https://www.google.com/maps/d/embed?mid=1S_e0QPhCx7XJpSpngt-uoCrhWZQApqw&ehbc=2E312F&noprof=1",
-    Delhi: "https://www.google.com/maps/d/embed?mid=1BB5XPTfJLKxYbhz8G4m8LdKzN5LQi3o&ehbc=2E312F&noprof=1",
-    Bangalore: "https://www.google.com/maps/d/embed?mid=1kvFU6arJH18wWA5qi9b2NJ-ci4ExfZA&ehbc=2E312F&noprof=1",
-    Kolkata: "https://www.google.com/maps/d/embed?mid=1WkGohVbKN6TZsllkoDWeEWF4TV2bQt0&ehbc=2E312F&noprof=1"
+    NewYork: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3025.3063874613204!2d-74.31676742346!3d40.6634196712128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c3b1a0e2c0a3e7%3A0x1234567890abcdef!2s33%20Wood%20Ave%20S%2C%20Iselin%2C%20NJ%2008830%2C%20USA!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus",
+    LosAngeles: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3310.276742654!2d-118.24532502348!3d33.9394!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c9234567890!2s2250%20S%20Central%20Ave%2C%20Compton%2C%20CA%2090220%2C%20USA!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
   };
   const locationDetails: Record<LocationKey, {
     address: string;
     phone: string;
+    email: string;
   }> = {
-    Chennai: {
-      address: `Old No G1, New G3, KAIZEN 2nd & 3rd Floor,
-Plot No. 565Q, G Block, Annanagar East,
-Chennai, Tamil Nadu - 600102`,
-      phone: `+91 9123523496`
+    NewYork: {
+      address: `New Jersey Branch
+33 Wood Avenue South
+Suite 600, Iselin, NJ 08830`,
+      phone: `+1 732 456 6780`,
+      email: `info@gglusa.us`
     },
-    NaviMumbai: {
-      address: `407, MAYURESH PLANET, PLOT NO - 42 & 43,
-SECTOR-15, CBD BELAPUR,
-NAVI MUMBAI, MAHARASHTRA - 400614`,
-      phone: `Export Customer Service:
-+91 2245174102, +91 2245174109, +91 2245174118
-
-Export Docs Team:
-+91 2245174103, +91 2245174105
-
-Import Docs Team:
-+91 2245174104, +91 2245174106
-
-Import Customer Service:
-+91 2245174113, +91 2245174110, +91 2245174107, +91 2245174112`
-    },
-    Delhi: {
-      address: `JA 511, DLF Tower A,
-Jasola District Centre, New Delhi - 110025`,
-      phone: `+91 9999022030`
-    },
-    Bangalore: {
-      address: `No 2M-216, First Floor,
-2nd Main, East Of NGEF Layout,
-Kasturinagar, Bangalore - 560043`,
-      phone: `+91 9986949743`
-    },
-    Kolkata: {
-      address: `Room No - 29, 4th Floor,
-6, Jawaharlal Nehru Rd, Siddha Esplanade,
-Adjacent to Metro Central (Previously Metro Cinema),
-Kolkata, West Bengal - 700013`,
-      phone: `+91 6290921534`
+    LosAngeles: {
+      address: `2250 South Central Avenue
+Compton, CA 90220`,
+      phone: `+1 310 928 3903`,
+      email: `info@gglusa.us`
     }
   };
   const locations = [{
-    key: "Chennai",
-    label: "Chennai"
+    key: "NewYork",
+    label: "New York"
   }, {
-    key: "NaviMumbai",
-    label: "Navi Mumbai"
-  }, {
-    key: "Delhi",
-    label: "Delhi"
-  }, {
-    key: "Bangalore",
-    label: "Bangalore"
-  }, {
-    key: "Kolkata",
-    label: "Kolkata"
+    key: "LosAngeles",
+    label: "Los Angeles"
   }];
   return <section className="py-12 bg-white relative">
       <div className="container mx-auto px-4 mb-8 text-center">
@@ -77,7 +39,7 @@ Kolkata, West Bengal - 700013`,
           Visit Our Locations
         </h2>
         <p className="text-lg text-gray-600">
-          Find us at our convenient office locations across India
+          Find us at our convenient office locations across USA
         </p>
       </div>
 
@@ -100,10 +62,12 @@ Kolkata, West Bengal - 700013`,
         <div className="w-full md:w-[70%] space-y-6">
           {/* Address Section */}
           {showDetails && <div className="transition-all duration-500 p-6 border border-gray-300 rounded-lg shadow-sm bg-slate-100">
-              <h4 className="text-xl font-bold text-gray-800 mb-2">Address:</h4>
+              <h4 className="text-xl font-bold text-gray-800 mb-2">OUR OFFICE</h4>
               <p className="whitespace-pre-line text-gray-700 mb-4">{locationDetails[location].address}</p>
               <h4 className="text-xl font-bold text-gray-800 mb-2">Phone:</h4>
-              <p className="whitespace-pre-line text-gray-700">{locationDetails[location].phone}</p>
+              <p className="whitespace-pre-line text-gray-700 mb-4">{locationDetails[location].phone}</p>
+              <h4 className="text-xl font-bold text-gray-800 mb-2">E-MAIL US:</h4>
+              <p className="whitespace-pre-line text-gray-700">{locationDetails[location].email}</p>
             </div>}
 
           {/* Map Section */}

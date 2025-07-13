@@ -65,43 +65,43 @@ export const Services = () => {
   const services = [
     {
       image: "/hom1.png",
-      title: "Ocean Freight",
+      title: "Freight Management",
       description:
-        "At GGL India, we specialize in providing comprehensive ocean freight solutions that cater to the diverse needs of our clients. Whether you're shipping large volumes or smaller consignments, our services are designed to ensure efficiency, reliability, and cost-effectiveness",
+        "GGL's highly skilled team has perfected an efficient and strategic process for seamlessly transporting freight across our extensive network. We utilize cutting-edge technologies including PO Management Systems, Online booking systems, and Electronic Bill of Lading.",
       icon: <Anchor />,
       link: "/services/ocean-freight"
     },
     {
-      image: "/hom4.png",
-      title: "LCL Consolidation",
+      image: "/warehosing.png",
+      title: "Warehousing-3PL",
       description:
-        "We collect your goods from your location and prepare them for consolidation. This includes proper labelling, packaging, and documentation to ensure smooth transit.",
+        "The GGL Group operates an extensive one million square feet of warehouse space, utilizing our advanced Warehouse Management Systems (WMS). Our in-house team of 26 highly experienced programmers have developed this system.",
       icon: <Warehouse />,
-      link: "/services/lcl-consolidation"
+      link: "/services/warehousing"
     },
     {
       image: "/hom3.png",
-      title: "Transportation And Distribution",
+      title: "Distribution and Transportation",
       description:
-        "At GGL India, we understand that efficient transportation and distribution are the backbone of a seamless supply chain. Our dedicated fleet and robust infrastructure ensure that your goods reach their destination on time, every time.",
+        "Our dedicated team of in-house IT developers has crafted a distinctive system that empowers customers to manage their product distribution requirements with features like Demand Forecasting and Order Recycle Process.",
       icon: <Truck />,
       link: "/services/transportation"
-    },
-    {
-      image: "/warehosing.png",
-      title: "Warehousing",
-      description:
-        "At GGL India, we offer comprehensive warehousing and third-party logistics (3PL) solutions designed to streamline your supply chain operations. Our services are tailored to meet the diverse needs of businesses, ensuring efficiency, reliability, and scalability.",
-      icon: <Warehouse />,
-      link: "/services/warehousing"
     },
     {
       image: "/aircargo1.png",
       title: "Air Freight",
       description:
-        "At GGL India, we offer a comprehensive range of air freight services designed to meet all your shipping needs. Our expert air freight teams provide seamless air import, export, and express options, all on a convenient door-to-door basis.",
+        "Comprehensive air freight services designed to meet all your shipping needs. Our expert air freight teams provide seamless air import, export, and express options, all on a convenient door-to-door basis.",
       icon: <Plane />,
       link: "/services/air-freight"
+    },
+    {
+      image: "/hom1.png",
+      title: "E-Commerce",
+      description:
+        "We build and manage customized e-commerce sites for our customers, offering individualized product presentation, pricing modules, customized sales management process, and integration with warehouse and transport modules.",
+      icon: <Package />,
+      link: "/services/e-commerce"
     },
     {
       image: "/cargoh1.png",

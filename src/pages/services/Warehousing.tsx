@@ -15,7 +15,7 @@ const Warehousing = () => {
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row items-center gap-8">
               <div className="md:w-1/2">
-                <motion.h1 initial={{
+                 <motion.h1 initial={{
                 opacity: 0,
                 y: 20
               }} animate={{
@@ -24,7 +24,7 @@ const Warehousing = () => {
               }} transition={{
                 duration: 0.5
               }} className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
-                  Warehousing & 3PL Solutions
+                  WAREHOUSING-3PL
                 </motion.h1>
                 <motion.p initial={{
                 opacity: 0,
@@ -35,7 +35,7 @@ const Warehousing = () => {
               }} transition={{
                 duration: 0.5,
                 delay: 0.1
-              }} className="text-lg text-gray-700 mb-6">At GGL India, we offer comprehensive warehousing and third-party logistics (3PL) solutions designed to streamline your supply chain operations. Our services are tailored to meet the diverse needs of businesses, ensuring efficiency, reliability, and scalability.</motion.p>
+              }} className="text-lg text-gray-700 mb-6">The GGL Group operates an extensive one million square feet of warehouse space, utilizing our advanced Warehouse Management Systems (WMS). Our in-house team of 26 highly experienced programmers have developed this system.</motion.p>
                 <motion.div initial={{
                 opacity: 0,
                 y: 20
@@ -75,28 +75,45 @@ const Warehousing = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto mb-12">
               <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center text-gray-800">
-                Tailored Warehousing Services
+                WMS Features and Steps
               </h2>
               <div className="w-24 h-1 bg-brand-gold mx-auto mb-8"></div>
               <ul className="text-gray-700 space-y-4 text-justify">
-                <li><strong>General Cargo Storage:</strong> Secure and organized storage solutions for various types of goods.</li>
-                <li><strong>Temperature-Controlled Storage:</strong> Specialized facilities for perishable and sensitive items.</li>
-                <li><strong>Bonded Warehousing:</strong> Storage solutions that allow goods to be stored without the payment of customs duties until they are released.</li>
+                <li><strong>Advance Shipment Note (ASN)</strong></li>
+                <li><strong>Goods Receipt Note (GRN)</strong></li>
+                <li><strong>Goods Issue Note (GIN)</strong></li>
+                <li><strong>Goods Delivery Note/Delivery Order (GDN)</strong></li>
+                <li><strong>Stock Movement/Stock Relocation</strong></li>
+                <li><strong>Reworking</strong></li>
+                <li><strong>Serial Number, ASN, GRN upload option</strong></li>
+                <li><strong>MIS Reports/MIS Dashboard</strong></li>
+                <li><strong>Tracking</strong></li>
+                <li><strong>Barcode scanning</strong></li>
+                <li><strong>PDT (Portable Data Terminal) enabled</strong></li>
               </ul>
             </div>
 
-            {/* Value-Added Services */}
+            {/* Key Features */}
             <div className="max-w-4xl mx-auto mb-12">
               <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center text-gray-800">
-                Value-Added Services
+                Key Features of Our WMS System
               </h2>
               <div className="w-24 h-1 bg-brand-gold mx-auto mb-8"></div>
               <ul className="text-gray-700 space-y-4 text-justify">
-                <li><strong>Inventory Management:</strong> Real-time tracking and management of stock levels.</li>
-                <li><strong>Pick & Pack:</strong> Efficient order fulfilment services to meet customer demands.</li>
-                <li><strong>Consolidation & Deconsolidation:</strong> Combining or separating shipments to optimize logistics.</li>
-                <li><strong>Order Processing:</strong> Streamlined handling of orders from receipt to dispatch.</li>
+                <li><strong>Cloud-based Online Warehouse Management System</strong></li>
+                <li><strong>Online tracking</strong></li>
+                <li><strong>Online access for customers</strong> to access information across multiple locations</li>
+                <li><strong>Multi-customer, multi-location warehouse management</strong> for 3PL operations</li>
+                <li><strong>Advanced location management</strong> for optimizing warehouse usage</li>
+                <li><strong>Order re-cycle management</strong></li>
+                <li><strong>B2B integration with Customers' ERP</strong> for seamless online information updates through EDI</li>
+                <li><strong>Bar code generation and scanning capabilities</strong></li>
+                <li><strong>PDT enabled</strong>, allowing the use of handheld terminals for put-away, picking, and cycle counting</li>
+                <li><strong>A "Live Scanning" feature</strong> providing real-time visibility to clients, reducing GRN time and ensuring immediate availability of cargo for ordering to their customers</li>
               </ul>
+              <p className="text-gray-700 mt-6 text-justify font-normal text-lg leading-relaxed">
+                Our WMS system is meticulously designed to adapt to various situations, countries, and infrastructure, ensuring optimal performance in any environment.
+              </p>
             </div>
 
            
