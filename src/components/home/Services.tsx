@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Plane, ArrowRight, Truck, Package, Anchor, Warehouse } from "lucide-react";
@@ -67,7 +68,7 @@ export const Services = () => {
       image: "/hom1.png",
       title: "Freight Management",
       description:
-        "GGL's highly skilled team has perfected an efficient and strategic process for seamlessly transporting freight across our extensive network. We utilize cutting-edge technologies including PO Management Systems, Online booking systems, and Electronic Bill of Lading.",
+        "GGL's highly skilled team has perfected an efficient and strategic process for seamlessly transporting freight across our extensive network, utilizing cutting-edge technologies including PO Management Systems and Electronic Bill of Lading.",
       icon: <Anchor />,
       link: "/services/ocean-freight"
     },
@@ -75,7 +76,7 @@ export const Services = () => {
       image: "/warehosing.png",
       title: "Warehousing-3PL",
       description:
-        "The GGL Group operates an extensive one million square feet of warehouse space, utilizing our advanced Warehouse Management Systems (WMS). Our in-house team of 26 highly experienced programmers have developed this system.",
+        "The GGL Group operates an extensive one million square feet of warehouse space, utilizing our advanced Warehouse Management Systems (WMS) developed by our in-house team of 26 highly experienced programmers.",
       icon: <Warehouse />,
       link: "/services/warehousing"
     },
@@ -83,17 +84,9 @@ export const Services = () => {
       image: "/hom3.png",
       title: "Distribution and Transportation",
       description:
-        "Our dedicated team of in-house IT developers has crafted a distinctive system that empowers customers to manage their product distribution requirements with features like Demand Forecasting and Order Recycle Process.",
+        "Our dedicated team of in-house IT developers has crafted a distinctive system that empowers customers to manage their product distribution requirements with Demand Forecasting and Order Recycle Process.",
       icon: <Truck />,
       link: "/services/transportation"
-    },
-    {
-      image: "/aircargo1.png",
-      title: "Air Freight",
-      description:
-        "Comprehensive air freight services designed to meet all your shipping needs. Our expert air freight teams provide seamless air import, export, and express options, all on a convenient door-to-door basis.",
-      icon: <Plane />,
-      link: "/services/air-freight"
     },
     {
       image: "/hom1.png",
@@ -102,14 +95,6 @@ export const Services = () => {
         "We build and manage customized e-commerce sites for our customers, offering individualized product presentation, pricing modules, customized sales management process, and integration with warehouse and transport modules.",
       icon: <Package />,
       link: "/services/e-commerce"
-    },
-    {
-      image: "/cargoh1.png",
-      title: "Project Cargo",
-      description:
-        "At GGL, we specialize in managing project cargo—the transportation of large, heavy, high-value, or complex pieces of equipment and materials essential to major infrastructure, engineering, or industrial projects.",
-      icon: <Warehouse />,
-      link: "/services/project-cargo"
     }
   ];
 
@@ -150,7 +135,7 @@ export const Services = () => {
 
         <motion.div
           variants={containerVariants}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 max-w-4xl mx-auto"
         >
           {services.map((service, index) => (
             <motion.div

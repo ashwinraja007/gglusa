@@ -1,9 +1,10 @@
+
 import React, { useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { Plane, Ship, Truck, Warehouse } from "lucide-react";
+import { Plane, Ship, Truck, Warehouse, Package, Anchor } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
 
@@ -18,12 +19,10 @@ const ScrollToTop = () => {
 const ServiceCard = ({ icon, title, description, image, link }) => {
   const getServiceImage = () => {
     switch (title) {
-      case "Air Freight": return "/aircargo2.png";
-      case "Ocean Freight": return "/oceanf.png";
-      case "Customs Clearance": return "/lovable-uploads/cc.jpg";
-      case "Liquid Transportation": return "/transports.png";
-      case "Transportation": return "/CARGO.png";
-      case "Warehousing": return "/warhouseh1.png";
+      case "Freight Management": return "/hom1.png";
+      case "Warehousing-3PL": return "/warehosing.png";
+      case "Distribution and Transportation": return "/hom3.png";
+      case "E-Commerce": return "/hom1.png";
       default: return image;
     }
   };
@@ -66,12 +65,38 @@ const ServiceCard = ({ icon, title, description, image, link }) => {
 const Services = () => {
   const isMobile = useIsMobile();
   const services = [
-    { id: 1, icon: <Ship className="w-5 h-5" />, title: "Ocean Freight", image: "/oceanf.png", description: "At GGL, our dedicated Ocean Freight Department specializes in comprehensive freight management services for both Less-than-Container Load (LCL) and Full Container Load (FCL) shipments.", link: "/services/ocean-freight" },
-    { id: 2, icon: <Warehouse className="w-5 h-5" />, title: "LCL Consolidation", image: "/hom4.png", description: "We collect your goods from your location and prepare them for consolidation. This includes proper labelling, packaging, and documentation to ensure smooth transit.", link: "/services/lcl-consolidation" },
-    { id: 3, icon: <Truck className="w-5 h-5" />, title: "Transportation", image: "/CARGO.png", description: "Efficient transportation and distribution are the backbone of a seamless supply chain. Our fleet and infrastructure ensure on-time delivery every time.", link: "/services/transportation" },
-    { id: 4, icon: <Warehouse className="w-5 h-5" />, title: "Warehousing", image: "/warhouseh1.png", description: "We offer full-service warehousing and third-party logistics (3PL) to streamline your supply chain with flexible, reliable, and scalable solutions.", link: "/services/warehousing" },
-    { id: 5, icon: <Plane className="w-5 h-5" />, title: "Air Freight", image: "/aircargo2.png", description: "Our air freight services provide fast, reliable, and flexible global shipping — including import/export, express, and door-to-door solutions.", link: "/services/air-freight" },
-    { id: 6, icon: <Warehouse className="w-5 h-5" />, title: "Project Cargo", image: "/cargoh1.png", description: "We specialize in delivering end-to-end logistics for heavy, oversized, and time-critical shipments, ensuring efficiency and safety.", link: "/services/project-cargo" }
+    { 
+      id: 1, 
+      icon: <Anchor className="w-5 h-5" />, 
+      title: "Freight Management", 
+      image: "/hom1.png", 
+      description: "GGL's highly skilled team has perfected an efficient and strategic process for seamlessly transporting freight across our extensive network, utilizing cutting-edge technologies including PO Management Systems and Electronic Bill of Lading.", 
+      link: "/services/ocean-freight" 
+    },
+    { 
+      id: 2, 
+      icon: <Warehouse className="w-5 h-5" />, 
+      title: "Warehousing-3PL", 
+      image: "/warehosing.png", 
+      description: "The GGL Group operates an extensive one million square feet of warehouse space, utilizing our advanced Warehouse Management Systems (WMS) developed by our in-house team of 26 highly experienced programmers.", 
+      link: "/services/warehousing" 
+    },
+    { 
+      id: 3, 
+      icon: <Truck className="w-5 h-5" />, 
+      title: "Distribution and Transportation", 
+      image: "/hom3.png", 
+      description: "Our dedicated team of in-house IT developers has crafted a distinctive system that empowers customers to manage their product distribution requirements with Demand Forecasting and Order Recycle Process.", 
+      link: "/services/transportation" 
+    },
+    { 
+      id: 4, 
+      icon: <Package className="w-5 h-5" />, 
+      title: "E-Commerce", 
+      image: "/hom1.png", 
+      description: "We build and manage customized e-commerce sites for our customers, offering individualized product presentation, pricing modules, customized sales management process, and integration with warehouse and transport modules.", 
+      link: "/services/e-commerce" 
+    }
   ];
 
   return (
@@ -80,26 +105,27 @@ const Services = () => {
       <Header />
       <main className="flex-grow pt-16 md:pt-20">
         <section className="bg-gradient-to-r from-gray-900 to-brand-navy text-white relative overflow-hidden">
-  <div className="absolute inset-0 z-0">
-    <img src="/lovable-uploads/gp.jpg" alt="Services" className="w-full h-full object-cover opacity-20" />
-    <div className="absolute inset-0 bg-gradient-to-r from-gray-900 to-brand-navy opacity-90" />
-  </div>
+          <div className="absolute inset-0 z-0">
+            <img src="/lovable-uploads/gp.jpg" alt="Services" className="w-full h-full object-cover opacity-20" />
+            <div className="absolute inset-0 bg-gradient-to-r from-gray-900 to-brand-navy opacity-90" />
+          </div>
 
-  <div className="container mx-auto px-4 py-8 md:py-12 relative z-10"> {/* reduced padding */}
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="text-center max-w-3xl mx-auto"
-    >
-      <h1 className="text-2xl md:text-4xl font-bold mb-2 text-slate-50">Our Logistics Services</h1> {/* smaller heading, tighter spacing */}
-      <div className="w-16 h-1 bg-brand-gold mx-auto mb-4"></div> {/* smaller divider and margin */}
-      <p className="text-base md:text-lg text-white/90 mb-4">
-        From air and ocean freight to specialized transportation solutions, we offer end-to-end logistics expertise to meet your global shipping needs.
-      </p>
-    </motion.div>
-  </div>
-</section>
+          <div className="container mx-auto px-4 py-8 md:py-12 relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-center max-w-3xl mx-auto"
+            >
+              <h1 className="text-2xl md:text-4xl font-bold mb-2 text-slate-50">Our Core Services</h1>
+              <div className="w-16 h-1 bg-brand-gold mx-auto mb-4"></div>
+              <p className="text-base md:text-lg text-white/90 mb-4">
+                Discover our four specialized logistics services designed to meet your comprehensive supply chain needs.
+              </p>
+            </motion.div>
+          </div>
+        </section>
+        
         <section className="py-12">
           <div className="container mx-auto px-4">
             <motion.div
@@ -109,13 +135,13 @@ const Services = () => {
               viewport={{ once: true }}
               className="text-center mb-8"
             >
-              <h2 className="text-2xl md:text-3xl font-bold text-brand-navy mb-3">All Services</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-brand-navy mb-3">Core Services</h2>
               <div className="w-20 h-1 bg-brand-gold mx-auto mb-4"></div>
               <p className="text-gray-600 max-w-2xl mx-auto">
                 Explore our comprehensive range of services designed to meet all your logistics requirements.
               </p>
             </motion.div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6">
               {services.map(service => (
                 <ServiceCard key={service.id} {...service} />
               ))}
