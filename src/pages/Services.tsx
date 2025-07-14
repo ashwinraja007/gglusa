@@ -34,7 +34,7 @@ const ServiceCard = ({
       case "Distribution and Transportation":
         return "/hom3.png";
       case "E-Commerce":
-        return "/hom1.png";
+        return "/ecomm.png";
       default:
         return image;
     }
