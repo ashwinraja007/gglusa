@@ -123,7 +123,7 @@ export const Services = () => {
           </p>
         </motion.div>
 
-        <motion.div variants={containerVariants} className="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-2 gap-4 max-w-4xl mx-auto">
+        <motion.div variants={containerVariants} className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
           {services.map((service, index) => <motion.div key={index} variants={itemVariants} transition={{
           duration: 0.5,
           delay: index * 0.1
