@@ -53,9 +53,7 @@ export const Header = () => {
           <div className="flex items-center gap-4">
             <img src="/lovable-uploads/GGL.png" alt="GGL Logo" onClick={handleLogoClick} className="h-16 w-auto cursor-pointer transition-all duration-300 object-fill" />
             <div className="h-8 w-px bg-gray-200 hidden md:block"></div>
-            <div className="hidden md:block">
-              <p className="text-brand-navy font-bold text-lg">GGL USA LLC</p>
-            </div>
+            <img src="/1GlobalEnterprises.png" alt="1 Global Enterprises Logo" className="hidden md:block h-10 w-auto object-contain transition-all duration-300" />
           </div>
 
           <button className="md:hidden text-gray-800 focus:outline-none focus:ring-2 focus:ring-brand-gold rounded-md p-1" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
