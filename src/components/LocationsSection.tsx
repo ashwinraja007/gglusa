@@ -5,7 +5,8 @@ const LocationsSection: React.FC = () => {
   const [showDetails, setShowDetails] = useState(true);
   const mapIframes: Record<LocationKey, string> = {
     NewYork: "https://www.google.com/maps/d/u/0/embed?mid=1WjWYKoN9Ce3enb8smz4GV3J9pVMJUhg&ehbc=2E312F&noprof=1",
-    LosAngeles: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3310.276742654!2d-118.24532502348!3d33.9394!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c9234567890!2s2250%20S%20Central%20Ave%2C%20Compton%2C%20CA%2090220%2C%20USA!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
+    Chicago: "https://www.google.com/maps/d/u/0/embed?mid=1L7p_8NilMD_fLPnn4BJ7ShVokCoPSEA&ehbc=2E312F&noprof=1",
+    LosAngeles: "https://www.google.com/maps/d/u/0/embed?mid=1zrNwZlOrx2KgHaEPkWDfOOzO2WPJ6oQ&ehbc=2E312F&noprof=1"
   };
   const locationDetails: Record<LocationKey, {
     address: string;
@@ -24,6 +25,12 @@ Suite 600, Iselin, NJ 08830`,
 Compton, CA 90220`,
       phone: `+1 310 928 3903`,
       email: `info@gglusa.us`
+    },
+   Chicago: {
+      address: `939 W. North Avenue, Suite 750, 
+Chicago, IL 60642`,
+      phone: `+1 847 254 7320`,
+      email: `info@gglusa.us`
     }
   };
   const locations = [{
@@ -32,6 +39,9 @@ Compton, CA 90220`,
   }, {
     key: "LosAngeles",
     label: "Los Angeles"
+  }, {
+    key: "Chicago",
+    label: "Chicago"
   }];
   return <section className="py-12 bg-white relative">
       <div className="container mx-auto px-4 mb-8 text-center">
