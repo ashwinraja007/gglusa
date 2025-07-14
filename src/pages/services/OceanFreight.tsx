@@ -66,7 +66,7 @@ const OceanFreight = () => {
                 duration: 0.5
               }} className="rounded-xl overflow-hidden shadow-xl">
                   <AspectRatio ratio={16 / 9}>
-                    <img alt="Ocean Freight Service" className="w-full h-full object-cover" src="/lovable-uploads/1c085df7-9363-40dc-a724-ff004b473cac.png" />
+                    <img alt="Ocean Freight Service" className="w-full h-full object-cover" src="/lovable-uploads/8dfb3d5e-5940-4962-9a63-221a04f3adf5.jpg" />
                   </AspectRatio>
                 </motion.div>
               </div>
