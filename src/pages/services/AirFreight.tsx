@@ -64,7 +64,7 @@ const AirFreight = () => {
                 duration: 0.5
               }} className="rounded-xl overflow-hidden shadow-xl">
                   <AspectRatio ratio={16 / 9}>
-                    <img alt="Air Freight Service" className="w-full h-full object-cover" src="/lovable-uploads/054acf94-b58e-4129-8153-ab170b147e03.png" />
+                    <img alt="Air Freight Service" className="w-full h-full object-cover" src="/lovable-uploads/be9bf1ab-8fbc-4e1e-b259-4e81ed0231be.jpg" />
                   </AspectRatio>
                 </motion.div>
               </div>
@@ -127,22 +127,24 @@ const AirFreight = () => {
               icon: <Headset className="h-10 w-10 text-brand-gold" />,
               title: "Customs Clearance Support",
               description: "End-to-end handling of documentation, customs brokerage, and compliance to streamline international transit."
-            }].map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="text-center p-6 bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-              >
+            }].map((feature, index) => <motion.div key={index} initial={{
+              opacity: 0,
+              y: 20
+            }} whileInView={{
+              opacity: 1,
+              y: 0
+            }} transition={{
+              duration: 0.5,
+              delay: index * 0.1
+            }} viewport={{
+              once: true
+            }} className="text-center p-6 bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                 <div className="flex justify-center mb-4">
                   {feature.icon}
                 </div>
                 <h3 className="text-lg font-semibold text-brand-navy mb-2">{feature.title}</h3>
                 <p className="text-gray-600 text-sm">{feature.description}</p>
-              </motion.div>
-            ))}
+              </motion.div>)}
             </div>
 
             {/* CTA Section */}
