@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Plane, ArrowRight, Truck, Package, Anchor, Warehouse } from "lucide-react";
+import { Plane, ArrowRight, Truck, Package, Anchor, Droplets, Warehouse } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
