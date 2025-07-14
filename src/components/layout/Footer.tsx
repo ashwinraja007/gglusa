@@ -56,6 +56,12 @@ export const Footer = () => {
       email: "info@gglusa.us"
     },
     {
+      title: "Chicago Office",
+      address: "939 W. North Avenue, Suite 750, Chicago, IL 60642",
+      phone: "+1 847 254 7320",
+      email: "info@gglusa.us"
+    },
+    {
       title: "Los Angeles Office", 
       address: "2250 South Central Avenue, Compton, CA 90220",
       phone: "+1 310 928 3903",
