@@ -62,7 +62,7 @@ const Warehousing = () => {
                 duration: 0.5
               }} className="rounded-xl overflow-hidden shadow-xl">
                   <AspectRatio ratio={16 / 9}>
-                    <img alt="Warehousing Service" className="w-full h-full object-cover" src="/lovable-uploads/6443996b-8be8-4116-b844-0847fca71e52.png" />
+                    <img alt="Warehousing Service" className="w-full h-full object-cover" src="/lovable-uploads/a00a6bca-afed-43ec-bb45-775ec956dc8d.jpg" />
                   </AspectRatio>
                 </motion.div>
               </div>
