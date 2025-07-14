@@ -5,10 +5,8 @@ import { motion } from 'framer-motion';
 import { ShoppingCart, CreditCard, BarChart, Truck, Settings, Monitor } from "lucide-react";
 import { Link } from 'react-router-dom';
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-
 const ECommerce = () => {
-  return (
-    <div className="min-h-screen flex flex-col">
+  return <div className="min-h-screen flex flex-col">
       <Header />
 
       <main className="flex-grow pt-24">
@@ -17,48 +15,56 @@ const ECommerce = () => {
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row items-center gap-8">
               <div className="md:w-1/2">
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="text-3xl md:text-4xl font-bold mb-4 text-gray-900"
-                >
+                <motion.h1 initial={{
+                opacity: 0,
+                y: 20
+              }} animate={{
+                opacity: 1,
+                y: 0
+              }} transition={{
+                duration: 0.5
+              }} className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
                   E-COMMERCE
                 </motion.h1>
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.1 }}
-                  className="text-lg text-gray-700 mb-6"
-                >
+                <motion.p initial={{
+                opacity: 0,
+                y: 20
+              }} animate={{
+                opacity: 1,
+                y: 0
+              }} transition={{
+                duration: 0.5,
+                delay: 0.1
+              }} className="text-lg text-gray-700 mb-6">
                   Comprehensive e-commerce management solutions to enhance your online business operations
                 </motion.p>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                  <Link
-                    to="/contact"
-                    className="px-6 py-3 bg-brand-gold hover:bg-amber-400 text-brand-navy font-medium rounded-md shadow-md transition-all"
-                  >
+                <motion.div initial={{
+                opacity: 0,
+                y: 20
+              }} animate={{
+                opacity: 1,
+                y: 0
+              }} transition={{
+                duration: 0.5,
+                delay: 0.2
+              }}>
+                  <Link to="/contact" className="px-6 py-3 bg-brand-gold hover:bg-amber-400 text-brand-navy font-medium rounded-md shadow-md transition-all">
                     Get Started
                   </Link>
                 </motion.div>
               </div>
               <div className="md:w-1/2">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5 }}
-                  className="rounded-xl overflow-hidden shadow-xl"
-                >
+                <motion.div initial={{
+                opacity: 0,
+                scale: 0.95
+              }} animate={{
+                opacity: 1,
+                scale: 1
+              }} transition={{
+                duration: 0.5
+              }} className="rounded-xl overflow-hidden shadow-xl">
                   <AspectRatio ratio={16 / 9}>
-                    <img
-                      alt="E-Commerce Solutions"
-                      className="w-full h-full object-cover"
-                      src="/lovable-uploads/054acf94-b58e-4129-8153-ab170b147e03.png"
-                    />
+                    <img alt="E-Commerce Solutions" className="w-full h-full object-cover" src="/lovable-uploads/acbc23f0-2458-4e3d-9222-c80a8ea8ce46.png" />
                   </AspectRatio>
                 </motion.div>
               </div>
@@ -83,26 +89,21 @@ const ECommerce = () => {
 
               {/* Features List */}
               <div className="space-y-4 mb-8">
-                {[
-                  "Individualized Product Presentation",
-                  "Pricing Modules", 
-                  "Customized Sales Management Process",
-                  "Integration with Warehouse, Transport, Freight Management & Finance Modules",
-                  "Payment Gateway Management Systems",
-                  "Dashboard with MIS"
-                ].map((feature, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="flex items-center space-x-3"
-                  >
+                {["Individualized Product Presentation", "Pricing Modules", "Customized Sales Management Process", "Integration with Warehouse, Transport, Freight Management & Finance Modules", "Payment Gateway Management Systems", "Dashboard with MIS"].map((feature, index) => <motion.div key={index} initial={{
+                opacity: 0,
+                x: -20
+              }} whileInView={{
+                opacity: 1,
+                x: 0
+              }} transition={{
+                duration: 0.5,
+                delay: index * 0.1
+              }} viewport={{
+                once: true
+              }} className="flex items-center space-x-3">
                     <div className="w-2 h-2 bg-brand-gold rounded-full"></div>
                     <span className="text-gray-700 font-medium">{feature}</span>
-                  </motion.div>
-                ))}
+                  </motion.div>)}
               </div>
 
               <p className="text-gray-700 text-justify font-normal text-lg leading-relaxed">
@@ -115,71 +116,67 @@ const ECommerce = () => {
 
             {/* Features Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-              {[
-                {
-                  icon: <ShoppingCart className="h-10 w-10 text-brand-gold" />,
-                  title: "Product Management",
-                  description: "Comprehensive product catalog management with individualized presentation and pricing modules."
-                },
-                {
-                  icon: <CreditCard className="h-10 w-10 text-brand-gold" />,
-                  title: "Payment Gateway",
-                  description: "Secure payment processing with multiple gateway options and financial integration."
-                },
-                {
-                  icon: <BarChart className="h-10 w-10 text-brand-gold" />,
-                  title: "Analytics Dashboard",
-                  description: "Advanced MIS dashboard with real-time analytics and comprehensive reporting features."
-                },
-                {
-                  icon: <Truck className="h-10 w-10 text-brand-gold" />,
-                  title: "Logistics Integration",
-                  description: "Seamless integration with warehouse, transport, and freight management modules."
-                },
-                {
-                  icon: <Settings className="h-10 w-10 text-brand-gold" />,
-                  title: "Custom Solutions",
-                  description: "Tailored sales management processes designed to meet your specific business requirements."
-                },
-                {
-                  icon: <Monitor className="h-10 w-10 text-brand-gold" />,
-                  title: "User Experience",
-                  description: "Enhanced online presence with seamless shopping experience for your customers."
-                }
-              ].map((feature, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="text-center p-6 bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-                >
+              {[{
+              icon: <ShoppingCart className="h-10 w-10 text-brand-gold" />,
+              title: "Product Management",
+              description: "Comprehensive product catalog management with individualized presentation and pricing modules."
+            }, {
+              icon: <CreditCard className="h-10 w-10 text-brand-gold" />,
+              title: "Payment Gateway",
+              description: "Secure payment processing with multiple gateway options and financial integration."
+            }, {
+              icon: <BarChart className="h-10 w-10 text-brand-gold" />,
+              title: "Analytics Dashboard",
+              description: "Advanced MIS dashboard with real-time analytics and comprehensive reporting features."
+            }, {
+              icon: <Truck className="h-10 w-10 text-brand-gold" />,
+              title: "Logistics Integration",
+              description: "Seamless integration with warehouse, transport, and freight management modules."
+            }, {
+              icon: <Settings className="h-10 w-10 text-brand-gold" />,
+              title: "Custom Solutions",
+              description: "Tailored sales management processes designed to meet your specific business requirements."
+            }, {
+              icon: <Monitor className="h-10 w-10 text-brand-gold" />,
+              title: "User Experience",
+              description: "Enhanced online presence with seamless shopping experience for your customers."
+            }].map((feature, index) => <motion.div key={index} initial={{
+              opacity: 0,
+              y: 20
+            }} whileInView={{
+              opacity: 1,
+              y: 0
+            }} transition={{
+              duration: 0.5,
+              delay: index * 0.1
+            }} viewport={{
+              once: true
+            }} className="text-center p-6 bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                   <div className="flex justify-center mb-4">
                     {feature.icon}
                   </div>
                   <h3 className="text-lg font-semibold text-brand-navy mb-2">{feature.title}</h3>
                   <p className="text-gray-600 text-sm">{feature.description}</p>
-                </motion.div>
-              ))}
+                </motion.div>)}
             </div>
 
             {/* CTA Section */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-              className="bg-gradient-to-r from-brand-navy to-blue-700 rounded-xl text-white p-8 text-center"
-            >
+            <motion.div initial={{
+            opacity: 0,
+            y: 20
+          }} whileInView={{
+            opacity: 1,
+            y: 0
+          }} transition={{
+            duration: 0.5
+          }} viewport={{
+            once: true
+          }} className="bg-gradient-to-r from-brand-navy to-blue-700 rounded-xl text-white p-8 text-center">
               <h3 className="text-2xl font-bold mb-4 text-slate-50">Ready to Transform Your E-Commerce?</h3>
               <p className="mb-6 text-blue-50">
                 Contact our team today to discuss your customized e-commerce solution.
               </p>
-              <Link
-                to="/contact"
-                className="inline-block bg-white text-blue-700 px-6 py-3 rounded-lg font-medium hover:bg-blue-50 transition-colors"
-              >
+              <Link to="/contact" className="inline-block bg-white text-blue-700 px-6 py-3 rounded-lg font-medium hover:bg-blue-50 transition-colors">
                 Get Started
               </Link>
             </motion.div>
@@ -188,8 +185,6 @@ const ECommerce = () => {
       </main>
 
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default ECommerce;
