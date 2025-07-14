@@ -23,31 +23,41 @@ const EnhancedServiceCard = ({
       whileHover={{ y: -2 }}
       whileTap={{ scale: 0.98 }}
       transition={{ type: "spring", stiffness: 300 }}
-      className="group w-full h-full flex flex-col rounded-lg bg-white border border-gray-200 shadow hover:shadow-md transition-shadow"
+      className="group w-full h-full flex flex-col justify-between rounded-lg bg-white border border-gray-200 shadow hover:shadow-md transition-shadow"
     >
-      <Link to={link} className="flex flex-col flex-grow h-full" onClick={() => window.scrollTo(0, 0)}>
-        <div className="overflow-hidden">
-          <AspectRatio ratio={3 / 2}>
-            <img
-              src={image}
-              alt={title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            />
-          </AspectRatio>
-        </div>
-        <div className="flex flex-col flex-grow p-4 justify-between">
-          <div className="flex items-center gap-2 text-brand-navy mb-2">
+      <div className="flex flex-col flex-grow">
+        <Link to={link} onClick={() => window.scrollTo(0, 0)} className="block">
+          <div className="overflow-hidden">
+            <AspectRatio ratio={3 / 2}>
+              <img
+                src={image}
+                alt={title}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+            </AspectRatio>
+          </div>
+        </Link>
+        <div className="p-4 flex flex-col gap-3 flex-grow">
+          <div className="flex items-center gap-2 text-brand-navy">
             <div className="w-6 h-6 rounded-full bg-[#f6b100] flex items-center justify-center text-white">
               {React.cloneElement(icon, { size: 14 })}
             </div>
             <h3 className="text-sm font-semibold">{title}</h3>
           </div>
-          <p className="text-xs text-gray-600 line-clamp-4 leading-snug flex-grow">{description}</p>
+          <p className="text-xs text-gray-600 line-clamp-4 leading-snug">{description}</p>
         </div>
-      </Link>
+      </div>
+      <div className="px-4 pb-4">
+        <Link to={link} onClick={() => window.scrollTo(0, 0)}>
+          <Button variant="outline" className="w-full text-sm">
+            Learn More
+          </Button>
+        </Link>
+      </div>
     </motion.div>
   );
 };
+
 
 export const Services = () => {
   const services = [
@@ -82,13 +92,13 @@ export const Services = () => {
       icon: <Warehouse />,
       link: "/services/warehousing"
     },
-    {
-      image: "/lcl.png",
-      title: "LCL Consolidation",
+     {
+      image: "/hom1.png",
+      title: "E-Commerce",
       description:
-        "GGL is a LCL Consolidator with global presence covering North America, UK, Middle East, Indian Sub Continent, South East Asia and Far East. Our LCL Groupage services is backed by very efficient customer support at competitive prices.",
-      icon: <Warehouse />,
-      link: "/services/lcl-consolidation"
+        "We build and manage customized e-commerce sites for our customers, offering individualized product presentation, pricing modules, customized sales management process, and integration with warehouse and transport modules.",
+      icon: <Package />,
+      link: "/services/e-commerce"
     },{
       image: "/lovable-uploads/liquid.jpg",
       title: "Liquid Transportation",
