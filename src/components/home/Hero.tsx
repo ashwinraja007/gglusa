@@ -7,7 +7,7 @@ const Hero = () => {
   const [activeSlide, setActiveSlide] = useState(0);
 
   const sliderImages = [
-    '/hom1.png'
+    '/herot.png'
   ];
 
   useEffect(() => {
