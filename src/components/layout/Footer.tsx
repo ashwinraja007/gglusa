@@ -84,13 +84,10 @@ export const Footer = () => {
             className="flex flex-col items-start"
           >
             <div className="mb-4">
-              <img 
-                src="/lovable-uploads/GGL.png" 
-                alt="GGL Logo" 
-                className="h-14 w-auto object-contain" 
-                loading="lazy" 
-              />
-              <p className="text-lg font-semibold text-brand-navy mt-2">GGL USA LLC</p>
+              <div className="mb-4">
+              <img src="/lovable-uploads/GGL.png" alt="GGL Logo" className="h-14 w-auto object-contain" loading="lazy" />
+              <img src="/1GlobalEnterprises.png" alt="1 Global Enterprises Logo" className="h-10 w-auto object-contain mt-2" />
+            </div>
             </div>
             <p className="text-sm md:text-base text-gray-600 max-w-xs text-left">
               GGL is one of the leading Logistics company with its head quarter in Singapore having separate divisions for 3PL, Freight Management (Ocean and Air), Distribution and Transportation.
