@@ -4,7 +4,7 @@ const LocationsSection: React.FC = () => {
   const [location, setLocation] = useState<LocationKey>("NewYork");
   const [showDetails, setShowDetails] = useState(true);
   const mapIframes: Record<LocationKey, string> = {
-    NewYork: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3025.3063874613204!2d-74.31676742346!3d40.6634196712128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c3b1a0e2c0a3e7%3A0x1234567890abcdef!2s33%20Wood%20Ave%20S%2C%20Iselin%2C%20NJ%2008830%2C%20USA!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus",
+    NewYork: "https://www.google.com/maps/d/u/0/embed?mid=1WjWYKoN9Ce3enb8smz4GV3J9pVMJUhg&ehbc=2E312F&noprof=1",
     LosAngeles: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3310.276742654!2d-118.24532502348!3d33.9394!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c9234567890!2s2250%20S%20Central%20Ave%2C%20Compton%2C%20CA%2090220%2C%20USA!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
   };
   const locationDetails: Record<LocationKey, {
