@@ -52,36 +52,57 @@ const EnhancedServiceCard = ({
 export const Services = () => {
   const services = [
     {
-      image: "/hom1.png",
-      title: "Freight Management",
+      image: "/lovable-uploads/oceanfrieght.jpg",
+      title: "Ocean Freight",
       description:
-        "GGL's highly skilled team has perfected an efficient and strategic process for seamlessly transporting freight across our extensive network, utilizing cutting-edge technologies including PO Management Systems and Electronic Bill of Lading.",
+        "GGL's dedicated ocean freight department specialize in the complete range freight management services for LCL and FCL loads, supported thru a well established and reliable partner network around the world, for efficient collection, storage & delivery from shippers door to door.",
       icon: <Anchor />,
       link: "/services/ocean-freight"
     },
     {
-      image: "/warehosing.png",
-      title: "Warehousing-3PL",
+      image: "/cargoplane.png",
+      title: "Air Freight",
       description:
-        "The GGL Group operates an extensive one million square feet of warehouse space, utilizing our advanced Warehouse Management Systems (WMS) developed by our in-house team of 26 highly experienced programmers.",
+        "At GGL, we provide a comprehensive range of air freight services designed to meet all your shipping needs. Our expert air freight teams offer seamless air import, export, and express options, all on a convenient door-to-door basis. GGL stands out with competitive rates.",
+      icon: <Plane />,
+      link: "/services/air-freight"
+    },
+    {
+      image: "/lovable-uploads/cc.jpg",
+      title: "Customs Clearance",
+      description: "Expert customs clearance services ensuring your shipments move smoothly across borders with accurate documentation and regulatory compliance.",
+      icon: <Truck size={20} />,
+      link: "/services/customs-clearance"
+    },
+    {
+      image: "/lovable-uploads/warehouse.jpg",
+      title: "Warehousing - 3PL",
+      description:
+        "GGL is a premier supply chain solutions provider in Singapore, addressing the full spectrum of logistics needs for our clients. We facilitate the movement of goods from suppliers to manufacturers (for parts and components), from manufacturers and brand owners to resellers and distributors.",
       icon: <Warehouse />,
       link: "/services/warehousing"
     },
     {
-      image: "/hom3.png",
-      title: "Distribution and Transportation",
+      image: "/lcl.png",
+      title: "LCL Consolidation",
       description:
-        "Our dedicated team of in-house IT developers has crafted a distinctive system that empowers customers to manage their product distribution requirements with Demand Forecasting and Order Recycle Process.",
-      icon: <Truck />,
-      link: "/services/transportation"
+        "GGL is a LCL Consolidator with global presence covering North America, UK, Middle East, Indian Sub Continent, South East Asia and Far East. Our LCL Groupage services is backed by very efficient customer support at competitive prices.",
+      icon: <Warehouse />,
+      link: "/services/lcl-consolidation"
+    },{
+      image: "/lovable-uploads/liquid.jpg",
+      title: "Liquid Transportation",
+      description: "Specialized solutions for transporting liquids safely and efficiently, utilizing ISO tanks, flexitanks, and specialized tankers managed by expert teams.",
+      icon: <Droplets size={20} />,
+      link: "/services/liquid-transportation"
     },
     {
-      image: "/hom1.png",
-      title: "E-Commerce",
+      image: "/projectcargo3.png",
+      title: "Project Cargo",
       description:
-        "We build and manage customized e-commerce sites for our customers, offering individualized product presentation, pricing modules, customized sales management process, and integration with warehouse and transport modules.",
+        "Project cargo refers to the specialized transportation of large, heavy, high-value, or complex equipment, often associated with large-scale infrastructure or construction projects.",
       icon: <Package />,
-      link: "/services/e-commerce"
+      link: "/services/project-cargo"
     }
   ];
 
