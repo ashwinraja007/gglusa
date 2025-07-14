@@ -62,7 +62,7 @@ const EnhancedServiceCard = ({
 export const Services = () => {
   const services = [
     {
-      image: "/lovable-uploads/oceanfrieght.jpg",
+      image: "/ocfreight.png",
       title: "Ocean Freight",
       description:
         "GGL's dedicated ocean freight department specialize in the complete range freight management services for LCL and FCL loads, supported thru a well established and reliable partner network around the world, for efficient collection, storage & delivery from shippers door to door.",
@@ -70,7 +70,7 @@ export const Services = () => {
       link: "/services/ocean-freight"
     },
     {
-      image: "/cargoplane.png",
+      image: "/arfreight.png",
       title: "Air Freight",
       description:
         "At GGL, we provide a comprehensive range of air freight services designed to meet all your shipping needs. Our expert air freight teams offer seamless air import, export, and express options, all on a convenient door-to-door basis. GGL stands out with competitive rates.",
@@ -78,14 +78,14 @@ export const Services = () => {
       link: "/services/air-freight"
     },
     {
-      image: "/lovable-uploads/cc.jpg",
+      image: "/custom.png",
       title: "Customs Clearance",
       description: "Expert customs clearance services ensuring your shipments move smoothly across borders with accurate documentation and regulatory compliance.",
       icon: <Truck size={20} />,
       link: "/services/customs-clearance"
     },
     {
-      image: "/lovable-uploads/warehouse.jpg",
+      image: "/warehousing.png",
       title: "Warehousing - 3PL",
       description:
         "GGL is a premier supply chain solutions provider in Singapore, addressing the full spectrum of logistics needs for our clients. We facilitate the movement of goods from suppliers to manufacturers (for parts and components), from manufacturers and brand owners to resellers and distributors.",
@@ -93,21 +93,21 @@ export const Services = () => {
       link: "/services/warehousing"
     },
      {
-      image: "/hom1.png",
+      image: "/ecomm.png",
       title: "E-Commerce",
       description:
         "We build and manage customized e-commerce sites for our customers, offering individualized product presentation, pricing modules, customized sales management process, and integration with warehouse and transport modules.",
       icon: <Package />,
       link: "/services/e-commerce"
     },{
-      image: "/lovable-uploads/liquid.jpg",
+      image: "/iiqd.png",
       title: "Liquid Transportation",
       description: "Specialized solutions for transporting liquids safely and efficiently, utilizing ISO tanks, flexitanks, and specialized tankers managed by expert teams.",
       icon: <Droplets size={20} />,
       link: "/services/liquid-transportation"
     },
     {
-      image: "/projectcargo3.png",
+      image: "/projectcar.png",
       title: "Project Cargo",
       description:
         "Project cargo refers to the specialized transportation of large, heavy, high-value, or complex equipment, often associated with large-scale infrastructure or construction projects.",
