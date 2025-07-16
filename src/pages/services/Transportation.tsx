@@ -69,49 +69,7 @@ const Transportation = () => {
         <section className="py-12 md:py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto mb-12">
-              <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center text-gray-800">
-                TRANSPORTATION & DISTRIBUTION
-              </h2>
-              <div className="w-24 h-1 bg-brand-gold mx-auto mb-8"></div>
-              <p className="text-gray-700 mb-6 text-justify">
-                At GGL India, we understand that efficient transportation and distribution are the backbone of a seamless supply chain. Our dedicated fleet and robust infrastructure ensure that your goods reach their destination on time, every time.
-              </p>
-
-              <h3 className="text-xl font-semibold text-gray-800 mb-2 mt-8">
-                Domestic Distribution Network
-              </h3>
-              <p className="text-gray-700 mb-6 text-justify">
-                With a strategically located network of offices in Mumbai, New Delhi, Kolkata, Bangalore, and Chennai, GGL India offers comprehensive domestic transportation solutions. Our fleet is equipped to handle various cargo types, ensuring safe and timely deliveries across the country.
-              </p>
-
-              <h3 className="text-xl font-semibold text-gray-800 mb-2 mt-8">
-                Fleet & Operational Excellence
-              </h3>
-              <p className="text-gray-700 mb-4 text-justify">
-                Our fleet comprises a diverse range of vehicles, including:
-              </p>
-              <ul className="list-disc list-inside text-gray-700 mb-6">
-                <li>Full Truck Load (FTL)</li>
-                <li>Less than Truck Load (LTL)</li>
-                <li>Refrigerated Vehicles (for temperature-sensitive goods)</li>
-                <li>Flatbed Trucks (for oversized cargo)</li>
-              </ul>
-              <p className="text-gray-700 mb-6 text-justify">
-                Each vehicle is maintained to the highest standards, ensuring reliability and safety during transit.
-              </p>
-
-              <h3 className="text-xl font-semibold text-gray-800 mb-2 mt-8">
-                Distribution Services
-              </h3>
-              <p className="text-gray-700 mb-4 text-justify">
-                We offer a range of distribution services tailored to meet the specific needs of our clients:
-              </p>
-              <ul className="list-disc list-inside text-gray-700 mb-6">
-                <li>Last-Mile Delivery: Ensuring timely deliveries to end customers.</li>
-                <li>Cross-Docking: Minimizing storage time and speeding up the distribution process.</li>
-                <li>Milk Run Services: Efficient collection and delivery from multiple suppliers to a single destination.</li>
-              </ul>
-
+              
               {/* New Section: Technology Features */}
               <h3 className="text-xl font-semibold text-gray-800 mb-2 mt-8">
                 Technology-Driven Distribution Management
