@@ -144,42 +144,47 @@ const CountrySelector = () => {
         >
          <ScrollArea className="h-[300px] w-full pr-2">
   <div
-    ref={(el) => {
-      if (!el) return;
-      let isDown = false;
+    className="grid grid-cols-1 gap-1 p-1"
+    ref={(node) => {
+      if (!node) return;
+
+      let isDragging = false;
       let startY = 0;
       let scrollTop = 0;
 
       const onMouseDown = (e: MouseEvent) => {
-        isDown = true;
-        startY = e.pageY - el.offsetTop;
-        scrollTop = el.scrollTop;
-        el.style.cursor = "grabbing";
-        el.style.userSelect = "none";
+        isDragging = true;
+        startY = e.pageY - node.offsetTop;
+        scrollTop = node.scrollTop;
+        node.style.cursor = 'grabbing';
+        node.style.userSelect = 'none';
+
+        const onMouseMove = (e: MouseEvent) => {
+          if (!isDragging) return;
+          const y = e.pageY - node.offsetTop;
+          const delta = y - startY;
+          node.scrollTop = scrollTop - delta;
+        };
+
+        const onMouseUp = () => {
+          isDragging = false;
+          node.style.cursor = 'grab';
+          node.style.removeProperty('user-select');
+          window.removeEventListener("mousemove", onMouseMove);
+          window.removeEventListener("mouseup", onMouseUp);
+        };
 
         window.addEventListener("mousemove", onMouseMove);
         window.addEventListener("mouseup", onMouseUp);
       };
 
-      const onMouseMove = (e: MouseEvent) => {
-        if (!isDown) return;
-        const y = e.pageY - el.offsetTop;
-        const walk = y - startY;
-        el.scrollTop = scrollTop - walk;
-      };
+      node.addEventListener("mousedown", onMouseDown);
+      node.style.cursor = 'grab';
 
-      const onMouseUp = () => {
-        isDown = false;
-        el.style.cursor = "grab";
-        el.style.removeProperty("user-select");
-        window.removeEventListener("mousemove", onMouseMove);
-        window.removeEventListener("mouseup", onMouseUp);
+      return () => {
+        node.removeEventListener("mousedown", onMouseDown);
       };
-
-      el.addEventListener("mousedown", onMouseDown);
     }}
-    className="grid grid-cols-1 gap-1 p-1 overflow-y-auto"
-    style={{ cursor: "grab" }}
   >
     {sortedCountries.map((country) => (
       <div
@@ -191,10 +196,7 @@ const CountrySelector = () => {
           handleCountrySelect(country);
         }}
       >
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          className="flex items-center w-full"
-        >
+        <motion.div whileHover={{ scale: 1.05 }} className="flex items-center w-full">
           <div className="flex-shrink-0">
             {country.flag ? (
               <img
@@ -217,6 +219,7 @@ const CountrySelector = () => {
     ))}
   </div>
 </ScrollArea>
+
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
