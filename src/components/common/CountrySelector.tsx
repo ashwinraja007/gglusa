@@ -42,6 +42,9 @@ const findAustraliaCountry = () => {
 const CountrySelector = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  
+  // The Australia flag that always shows in the button
+  const australiaFlag = getAustraliaFlag();
 
   // Sort countries by priority, with Australia first
   const sortedCountries = [...countries].sort((a, b) => {
@@ -131,18 +134,22 @@ const CountrySelector = () => {
             variant="outline" 
             className="border-[#F6B100] bg-white text-gray-800 hover:bg-[#F6B100]/10 px-4 py-2 rounded-full flex items-center gap-2"
           >
-            {/* Show globe icon instead of Australia flag */}
-            <Globe className="w-6 h-6 text-[#F6B100]" />
+            {/* Always show Australia flag in the button */}
+            <img 
+              src="/au.svg" 
+              alt="Australia flag" 
+              className="w-5 h-5 rounded-sm shadow-sm object-cover"
+            />
             <span className="flex items-center gap-1">
               Switch Country <ChevronDown className="h-3 w-3 ml-1 text-gray-500" />
             </span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent 
-  align="center" 
-  className="w-[280px] border border-amber-100 bg-white p-2 rounded-lg shadow-lg"
->
-    <ScrollArea className="h-[300px] w-full pr-2">
+          align="center" 
+          className="w-[280px] border border-amber-100 bg-white p-2 rounded-lg shadow-lg"
+        >
+          <ScrollArea className="h-[300px] w-full pr-2">
             <div className="grid grid-cols-1 gap-1 p-1">
               {sortedCountries.map((country) => (
                 <div
@@ -180,9 +187,7 @@ const CountrySelector = () => {
               ))}
             </div>
           </ScrollArea>
-
-</DropdownMenuContent>
-
+        </DropdownMenuContent>
       </DropdownMenu>
     </div>
   );
