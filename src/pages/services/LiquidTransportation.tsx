@@ -56,7 +56,7 @@ const Transportation = () => {
                   <AspectRatio ratio={16 / 9}>
                     <img
                       alt="GGL India truck transporting liquid cargo"
-                      src="/trucks.png"
+                      src="/truck2.png"
                       className="w-full h-full object-cover"
                     />
                   </AspectRatio>
