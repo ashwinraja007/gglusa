@@ -74,51 +74,6 @@ const AirFreight = () => {
               </p>
             </div>
 
-            {/* Features Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
-              {[
-                {
-                  icon: <Clock className="h-10 w-10 text-brand-gold" />,
-                  title: "Time-Definite Deliveries",
-                  description: "Flexible options including next-flight-out, express, and deferred services to meet critical timelines."
-                },
-                {
-                  icon: <Plane className="h-10 w-10 text-brand-gold" />,
-                  title: "Cargo Consolidation",
-                  description: "Efficient consolidation services to optimize costs and reduce handling time."
-                },
-                {
-                  icon: <Globe className="h-10 w-10 text-brand-gold" />,
-                  title: "Specialized Handling",
-                  description: "Capabilities to manage high-value, sensitive, or perishable cargo with care and compliance."
-                },
-                {
-                  icon: <Clock className="h-10 w-10 text-brand-gold" />,
-                  title: "Real-Time Shipment Tracking",
-                  description: "Full visibility and status updates through integrated tracking systems."
-                },
-                {
-                  icon: <Headset className="h-10 w-10 text-brand-gold" />,
-                  title: "Customs Clearance Support",
-                  description: "End-to-end handling of documentation, customs brokerage, and compliance to streamline international transit."
-                }
-              ].map((feature, index) => (
-                <motion.div key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="text-center p-6 bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-                >
-                  <div className="flex justify-center mb-4">
-                    {feature.icon}
-                  </div>
-                  <h3 className="text-lg font-semibold text-brand-navy mb-2">{feature.title}</h3>
-                  <p className="text-gray-600 text-sm">{feature.description}</p>
-                </motion.div>
-              ))}
-            </div>
-
             {/* CTA Section */}
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }} className="bg-gradient-to-r from-brand-navy to-blue-700 rounded-xl text-white p-8 text-center">
               <h3 className="text-2xl font-bold mb-4 text-slate-50">Ready to Ship with Us?</h3>
