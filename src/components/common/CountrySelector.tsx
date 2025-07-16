@@ -144,31 +144,42 @@ const CountrySelector = () => {
         >
          <ScrollArea className="h-[300px] w-full pr-2">
   <div
-    className="grid grid-cols-1 gap-1 p-1"
-    onMouseDown={(e) => {
-      const container = e.currentTarget;
-      let startY = e.pageY - container.offsetTop;
-      let scrollTop = container.scrollTop;
-      let isDown = true;
+    ref={(el) => {
+      if (!el) return;
+      let isDown = false;
+      let startY = 0;
+      let scrollTop = 0;
+
+      const onMouseDown = (e: MouseEvent) => {
+        isDown = true;
+        startY = e.pageY - el.offsetTop;
+        scrollTop = el.scrollTop;
+        el.style.cursor = "grabbing";
+        el.style.userSelect = "none";
+
+        window.addEventListener("mousemove", onMouseMove);
+        window.addEventListener("mouseup", onMouseUp);
+      };
 
       const onMouseMove = (e: MouseEvent) => {
         if (!isDown) return;
-        e.preventDefault();
-        const y = e.pageY - container.offsetTop;
+        const y = e.pageY - el.offsetTop;
         const walk = y - startY;
-        container.scrollTop = scrollTop - walk;
+        el.scrollTop = scrollTop - walk;
       };
 
       const onMouseUp = () => {
         isDown = false;
+        el.style.cursor = "grab";
+        el.style.removeProperty("user-select");
         window.removeEventListener("mousemove", onMouseMove);
         window.removeEventListener("mouseup", onMouseUp);
       };
 
-      window.addEventListener("mousemove", onMouseMove);
-      window.addEventListener("mouseup", onMouseUp);
+      el.addEventListener("mousedown", onMouseDown);
     }}
-    style={{ cursor: "grab", userSelect: "none" }}
+    className="grid grid-cols-1 gap-1 p-1 overflow-y-auto"
+    style={{ cursor: "grab" }}
   >
     {sortedCountries.map((country) => (
       <div
