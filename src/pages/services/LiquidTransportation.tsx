@@ -5,10 +5,6 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
-// ✅ If image is in /public folder, no need to import it
-// If you use an image in /src/assets, use this instead:
-// import trucksImg from '@/assets/trucks.png';
-
 const Transportation = () => {
   return (
     <div className="min-h-screen flex flex-col">
@@ -60,7 +56,7 @@ const Transportation = () => {
                   <AspectRatio ratio={16 / 9}>
                     <img
                       alt="GGL India truck transporting liquid cargo"
-                      src="/trucks.png" // or use {trucksImg} if imported
+                      src="/trucks.png"
                       className="w-full h-full object-cover"
                     />
                   </AspectRatio>
@@ -70,45 +66,42 @@ const Transportation = () => {
           </div>
         </section>
 
-        {/* Main Card Content Section */}
+        {/* Main Content Section */}
         <section className="py-16 bg-gray-100">
           <div className="container mx-auto px-4">
             <div className="bg-white rounded-2xl shadow-xl p-10 md:p-14 max-w-6xl mx-auto">
               <h2 className="text-3xl font-bold mb-6 text-gray-800">
-                LIQUID CARGO TRANSPORTATION
+                Specialized Expertise in Liquid Transportation
               </h2>
               <div className="w-20 h-1 bg-brand-gold mb-8"></div>
 
               <p className="text-gray-700 mb-6 text-justify">
-                At GGL India, we specialize in the secure and efficient transportation of liquid cargo. Our expert handling processes, dedicated fleet, and specialized containers ensure safe movement of bulk liquids across regions, meeting both safety and compliance standards.
+                Transporting liquid cargo demands specialized expertise, and we provide comprehensive solutions ensuring the safe and efficient delivery of your valuable cargo. Understanding the unique challenges of liquid transport, whether chemicals, food-grade products, or other bulk items, we utilize a specialized fleet and equipment—including ISO tanks, flexitanks, and specialized tankers—managed by a team trained in strict safety protocols.
               </p>
 
-              <h3 className="text-xl font-semibold text-gray-800 mb-2 mt-8">Specialized Liquid Transport Fleet</h3>
               <p className="text-gray-700 mb-6 text-justify">
-                Our fleet is equipped with ISO tank containers, flexitanks, and dedicated tankers designed for the safe transport of various types of liquid cargo, including chemicals, oils, and food-grade liquids.
+                We offer end-to-end logistics, encompassing pre-shipment planning, route optimization, regulatory compliance, temperature-controlled transportation for sensitive cargo, secure loading/unloading, and real-time tracking. Our commitment to safety and reliability guarantees your cargo arrives in perfect condition and on time, making us a trusted partner for both domestic and international transportation needs.
               </p>
 
-              <h3 className="text-xl font-semibold text-gray-800 mb-2 mt-8">Compliance & Safety</h3>
-              <p className="text-gray-700 mb-4 text-justify">
-                GGL adheres strictly to international safety standards and environmental regulations. Our operations prioritize:
-              </p>
-              <ul className="list-disc pl-6 text-gray-700 mb-6">
-                <li>Hazardous and non-hazardous liquid cargo segregation</li>
-                <li>Temperature-controlled transport options</li>
-                <li>Real-time GPS tracking and monitoring</li>
-                <li>Emergency response protocols</li>
-              </ul>
-
-              <h3 className="text-xl font-semibold text-gray-800 mb-2 mt-8">Liquid Distribution Services</h3>
-              <p className="text-gray-700 mb-4 text-justify">
-                We offer end-to-end solutions for your liquid logistics needs, including:
-              </p>
-              <ul className="list-disc pl-6 text-gray-700 mb-6">
-                <li>Bulk liquid transportation (domestic & international)</li>
-                <li>Intermediate storage and tank cleaning</li>
-                <li>Last-mile delivery with safety compliance</li>
-                <li>Return logistics and reverse liquid collection</li>
-              </ul>
+              {/* Feature Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+                <div className="bg-blue-50 p-6 rounded-xl shadow-sm text-center">
+                  <h4 className="text-lg font-semibold text-brand-navy mb-2">Specialized Equipment</h4>
+                  <p className="text-gray-700 text-sm">ISO tanks, flexitanks, and specialized tankers for all cargo types</p>
+                </div>
+                <div className="bg-blue-50 p-6 rounded-xl shadow-sm text-center">
+                  <h4 className="text-lg font-semibold text-brand-navy mb-2">End-to-End Logistics</h4>
+                  <p className="text-gray-700 text-sm">Complete solutions from planning to delivery</p>
+                </div>
+                <div className="bg-blue-50 p-6 rounded-xl shadow-sm text-center">
+                  <h4 className="text-lg font-semibold text-brand-navy mb-2">Temperature Control</h4>
+                  <p className="text-gray-700 text-sm">Maintain optimal conditions for sensitive cargo</p>
+                </div>
+                <div className="bg-blue-50 p-6 rounded-xl shadow-sm text-center">
+                  <h4 className="text-lg font-semibold text-brand-navy mb-2">Safety First</h4>
+                  <p className="text-gray-700 text-sm">Strict protocols and trained personnel handle your cargo</p>
+                </div>
+              </div>
             </div>
 
             {/* CTA Section */}
