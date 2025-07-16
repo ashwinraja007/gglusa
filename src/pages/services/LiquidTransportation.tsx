@@ -10,12 +10,67 @@ const Transportation = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
 
+      <main className="flex-grow pt-24">
+        {/* Hero Section */}
+        <section className="bg-gradient-to-br from-blue-50 to-blue-100 py-12 md:py-16">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row items-center gap-8">
+              <div className="md:w-1/2">
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="text-3xl md:text-4xl font-bold mb-4 text-gray-900"
+                >
+                  Liquid Cargo Transportation
+                </motion.h1>
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                  className="text-lg text-gray-700 mb-6"
+                >
+                  Reliable handling and distribution of liquid cargo across domestic and international routes
+                </motion.p>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                  <Link
+                    to="/contact"
+                    className="px-6 py-3 bg-brand-gold hover:bg-amber-400 text-brand-navy font-medium rounded-md shadow-md transition-all"
+                  >
+                    Get a Quote
+                  </Link>
+                </motion.div>
+              </div>
+              <div className="md:w-1/2">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="rounded-xl overflow-hidden shadow-xl"
+                >
+                  <AspectRatio ratio={16 / 9}>
+                    <img
+                      alt="Liquid Transportation Service"
+                      className="w-full h-full object-cover"
+                      src="/trucks.png"
+                    />
+                  </AspectRatio>
+                </motion.div>
+              </div>
+            </div>
+          </div>
+        </section>
+
        {/* Main Content */}
         <section className="py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto mb-16">
               <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center text-gray-800">
-                Specialized Expertise in {title}
+                Specialized Expertise in Liquid Transportation
               </h2>
               <div className="w-24 h-1 bg-brand-gold mx-auto mb-8"></div>
               <p className="text-gray-700 mb-6 text-justify">
