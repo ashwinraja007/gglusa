@@ -42,7 +42,13 @@ const findAustraliaCountry = () => {
 const CountrySelector = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  
+
+  // Sort countries by priority, with Australia first
+  const sortedCountries = [...countries].sort((a, b) => {
+    if (a.country === "AUSTRALIA") return -1;
+    if (b.country === "AUSTRALIA") return 1;
+    return a.priority - b.priority;
+  });
 
   // Improved and more reliable redirect function with multiple fallbacks
   const handleCountrySelect = (country: CountryData) => {
@@ -125,60 +131,38 @@ const CountrySelector = () => {
             variant="outline" 
             className="border-[#F6B100] bg-white text-gray-800 hover:bg-[#F6B100]/10 px-4 py-2 rounded-full flex items-center gap-2"
           >
-            {/* Always show Australia flag in the button */}
-            <img 
-              src="/au.svg" 
-              alt="Australia flag" 
-              className="w-5 h-5 rounded-sm shadow-sm object-cover"
-            />
+            {/* Show globe icon instead of Australia flag */}
+            <Globe className="w-6 h-6 text-[#F6B100]" />
             <span className="flex items-center gap-1">
               Switch Country <ChevronDown className="h-3 w-3 ml-1 text-gray-500" />
             </span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent 
-          align="center" 
-          className="w-[280px] border border-amber-100 bg-white p-2 rounded-lg shadow-lg"
+  align="center" 
+  className="w-[280px] border border-amber-100 bg-white p-2 rounded-lg shadow-lg"
+>
+  <ScrollArea className="h-[300px] w-full pr-2">
+    <div className="grid grid-cols-1 gap-1 p-1">
+      {sortedCountries.map((country) => (
+        <div
+          key={country.country}
+          className="cursor-pointer hover:bg-amber-50 p-2 rounded-md flex items-center gap-2"
+          onClick={() => handleCountrySelect(country)}
         >
-          <ScrollArea className="h-[300px] w-full pr-2">
-            <div className="grid grid-cols-1 gap-1 p-1">
-              {sortedCountries.map((country) => (
-                <div
-                  key={country.country + country.company}
-                  className="cursor-pointer hover:bg-amber-50 p-2 rounded-md flex items-center gap-2 transition-colors"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation(); // Prevent event bubbling that could interfere with redirection
-                    handleCountrySelect(country);
-                  }}
-                >
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    className="flex items-center w-full"
-                  >
-                    <div className="flex-shrink-0">
-                      {country.flag ? (
-                        <img 
-                          src={country.flag} 
-                          alt={`${country.country} flag`} 
-                          className="w-6 h-6 rounded-sm shadow-sm object-cover"
-                        />
-                      ) : (
-                        <div className="w-6 h-6 bg-gray-200 rounded-sm flex items-center justify-center">
-                          <Globe className="w-4 h-4 text-gray-500" />
-                        </div>
-                      )}
-                    </div>
-                    <div className="ml-3 flex-1">
-                      <div className="font-medium text-sm">{country.country}</div>
-                      <div className="text-xs text-gray-500">{country.company}</div>
-                    </div>
-                  </motion.div>
-                </div>
-              ))}
+          <div className="flex items-center">
+            <img src={country.flag} className="w-6 h-6 rounded-sm shadow" />
+            <div className="ml-3">
+              <div className="text-sm font-medium">{country.country}</div>
+              <div className="text-xs text-gray-500">{country.company}</div>
             </div>
-          </ScrollArea>
-        </DropdownMenuContent>
+          </div>
+        </div>
+      ))}
+    </div>
+  </ScrollArea>
+</DropdownMenuContent>
+
       </DropdownMenu>
     </div>
   );
