@@ -109,6 +109,13 @@ const Services = () => {
       icon: <Package />,
       link: "/services/e-commerce"
     },{
+    image: "/truck1.png",
+    title: "Distribution And Transportation",
+    description: "Our dedicated team of in-house IT developers has crafted a truly distinctive system that empowers our customers to effectively manage their product distribution requirements.",
+    icon: <Truck />,
+    link: "/services/transportation"
+  },
+  {
       image: "/iiqd.png",
       title: "Liquid Transportation",
       description: "Specialized solutions for transporting liquids safely and efficiently, utilizing ISO tanks, flexitanks, and specialized tankers managed by expert teams.",
