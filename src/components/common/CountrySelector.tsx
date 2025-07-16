@@ -142,32 +142,44 @@ const CountrySelector = () => {
   align="center" 
   className="w-[280px] border border-amber-100 bg-white p-2 rounded-lg shadow-lg"
 >
-  <ScrollArea
-  className="h-[300px] w-full pr-2"
-  onPointerDown={(e) => e.stopPropagation()}
->
-  <div className="grid grid-cols-1 gap-1 p-1">
-    {sortedCountries.map((country) => (
-      <div
-        key={country.country}
-        className="cursor-pointer hover:bg-amber-50 p-2 rounded-md flex items-center gap-2"
-        onClick={() => handleCountrySelect(country)}
-      >
-        <div className="flex items-center">
-          <img
-            src={country.flag}
-            alt={country.country}
-            className="w-6 h-6 rounded-sm shadow-sm"
-          />
-          <div className="ml-3">
-            <div className="text-sm font-medium">{country.country}</div>
-            <div className="text-xs text-gray-500">{country.company}</div>
-          </div>
-        </div>
-      </div>
-    ))}
-  </div>
-</ScrollArea>
+   <ScrollArea className="h-[300px] w-full pr-2">
+            <div className="grid grid-cols-1 gap-1 p-1">
+              {sortedCountries.map((country) => (
+                <div
+                  key={country.country + country.company}
+                  className="cursor-pointer hover:bg-amber-50 p-2 rounded-md flex items-center gap-2 transition-colors"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation(); // Prevent event bubbling that could interfere with redirection
+                    handleCountrySelect(country);
+                  }}
+                >
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    className="flex items-center w-full"
+                  >
+                    <div className="flex-shrink-0">
+                      {country.flag ? (
+                        <img 
+                          src={country.flag} 
+                          alt={`${country.country} flag`} 
+                          className="w-6 h-6 rounded-sm shadow-sm object-cover"
+                        />
+                      ) : (
+                        <div className="w-6 h-6 bg-gray-200 rounded-sm flex items-center justify-center">
+                          <Globe className="w-4 h-4 text-gray-500" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="ml-3 flex-1">
+                      <div className="font-medium text-sm">{country.country}</div>
+                      <div className="text-xs text-gray-500">{country.company}</div>
+                    </div>
+                  </motion.div>
+                </div>
+              ))}
+            </div>
+          </ScrollArea>
 
 </DropdownMenuContent>
 
