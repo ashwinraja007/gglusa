@@ -139,88 +139,30 @@ const CountrySelector = () => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent 
-          align="center" 
-          className="w-[280px] border border-amber-100 bg-white p-2 rounded-lg shadow-lg"
+  align="center" 
+  className="w-[280px] border border-amber-100 bg-white p-2 rounded-lg shadow-lg"
+>
+  <ScrollArea className="h-[300px] w-full pr-2">
+    <div className="grid grid-cols-1 gap-1 p-1">
+      {sortedCountries.map((country) => (
+        <div
+          key={country.country}
+          className="cursor-pointer hover:bg-amber-50 p-2 rounded-md flex items-center gap-2"
+          onClick={() => handleCountrySelect(country)}
         >
-         <ScrollArea className="h-[300px] w-full pr-2">
-  <div
-    className="grid grid-cols-1 gap-1 p-1"
-    ref={(node) => {
-      if (!node) return;
-
-      let isDragging = false;
-      let startY = 0;
-      let scrollTop = 0;
-
-      const onMouseDown = (e: MouseEvent) => {
-        isDragging = true;
-        startY = e.pageY - node.offsetTop;
-        scrollTop = node.scrollTop;
-        node.style.cursor = 'grabbing';
-        node.style.userSelect = 'none';
-
-        const onMouseMove = (e: MouseEvent) => {
-          if (!isDragging) return;
-          const y = e.pageY - node.offsetTop;
-          const delta = y - startY;
-          node.scrollTop = scrollTop - delta;
-        };
-
-        const onMouseUp = () => {
-          isDragging = false;
-          node.style.cursor = 'grab';
-          node.style.removeProperty('user-select');
-          window.removeEventListener("mousemove", onMouseMove);
-          window.removeEventListener("mouseup", onMouseUp);
-        };
-
-        window.addEventListener("mousemove", onMouseMove);
-        window.addEventListener("mouseup", onMouseUp);
-      };
-
-      node.addEventListener("mousedown", onMouseDown);
-      node.style.cursor = 'grab';
-
-      return () => {
-        node.removeEventListener("mousedown", onMouseDown);
-      };
-    }}
-  >
-    {sortedCountries.map((country) => (
-      <div
-        key={country.country + country.company}
-        className="cursor-pointer hover:bg-amber-50 p-2 rounded-md flex items-center gap-2 transition-colors"
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          handleCountrySelect(country);
-        }}
-      >
-        <motion.div whileHover={{ scale: 1.05 }} className="flex items-center w-full">
-          <div className="flex-shrink-0">
-            {country.flag ? (
-              <img
-                src={country.flag}
-                alt={`${country.country} flag`}
-                className="w-6 h-6 rounded-sm shadow-sm object-cover"
-              />
-            ) : (
-              <div className="w-6 h-6 bg-gray-200 rounded-sm flex items-center justify-center">
-                <Globe className="w-6 h-6 text-[#F6B100]" />
-              </div>
-            )}
+          <div className="flex items-center">
+            <img src={country.flag} className="w-6 h-6 rounded-sm shadow" />
+            <div className="ml-3">
+              <div className="text-sm font-medium">{country.country}</div>
+              <div className="text-xs text-gray-500">{country.company}</div>
+            </div>
           </div>
-          <div className="ml-3 flex-1">
-            <div className="font-medium text-sm">{country.country}</div>
-            <div className="text-xs text-gray-500">{country.company}</div>
-          </div>
-        </motion.div>
-      </div>
-    ))}
-  </div>
-</ScrollArea>
+        </div>
+      ))}
+    </div>
+  </ScrollArea>
+</DropdownMenuContent>
 
-        </DropdownMenuContent>
       </DropdownMenu>
     </div>
   );
