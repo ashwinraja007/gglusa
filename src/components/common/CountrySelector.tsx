@@ -142,25 +142,33 @@ const CountrySelector = () => {
   align="center" 
   className="w-[280px] border border-amber-100 bg-white p-2 rounded-lg shadow-lg"
 >
-  <ScrollArea className="h-[300px] w-full pr-2">
-    <div className="grid grid-cols-1 gap-1 p-1">
-      {sortedCountries.map((country) => (
-        <div
-          key={country.country}
-          className="cursor-pointer hover:bg-amber-50 p-2 rounded-md flex items-center gap-2"
-          onClick={() => handleCountrySelect(country)}
-        >
-          <div className="flex items-center">
-            <img src={country.flag} className="w-6 h-6 rounded-sm shadow" />
-            <div className="ml-3">
-              <div className="text-sm font-medium">{country.country}</div>
-              <div className="text-xs text-gray-500">{country.company}</div>
-            </div>
+  <ScrollArea
+  className="h-[300px] w-full pr-2"
+  onPointerDown={(e) => e.stopPropagation()}
+>
+  <div className="grid grid-cols-1 gap-1 p-1">
+    {sortedCountries.map((country) => (
+      <div
+        key={country.country}
+        className="cursor-pointer hover:bg-amber-50 p-2 rounded-md flex items-center gap-2"
+        onClick={() => handleCountrySelect(country)}
+      >
+        <div className="flex items-center">
+          <img
+            src={country.flag}
+            alt={country.country}
+            className="w-6 h-6 rounded-sm shadow-sm"
+          />
+          <div className="ml-3">
+            <div className="text-sm font-medium">{country.country}</div>
+            <div className="text-xs text-gray-500">{country.company}</div>
           </div>
         </div>
-      ))}
-    </div>
-  </ScrollArea>
+      </div>
+    ))}
+  </div>
+</ScrollArea>
+
 </DropdownMenuContent>
 
       </DropdownMenu>
