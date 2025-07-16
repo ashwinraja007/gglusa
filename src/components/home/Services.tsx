@@ -85,6 +85,12 @@ export const Services = () => {
     description: "We build and manage customized e-commerce sites for our customers, offering individualized product presentation, pricing modules, customized sales management process, and integration with warehouse and transport modules.",
     icon: <Package />,
     link: "/services/e-commerce"
+  },{
+    image: "/truck1.png",
+    title: "Distribution And Transportation",
+    description: "Our dedicated team of in-house IT developers has crafted a truly distinctive system that empowers our customers to effectively manage their product distribution requirements.",
+    icon: <Truck />,
+    link: "/services/transportation"
   }, {
     image: "/iiqd.png",
     title: "Liquid Transportation",
