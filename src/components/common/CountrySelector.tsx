@@ -43,15 +43,6 @@ const CountrySelector = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   
-  // The Australia flag that always shows in the button
-  const australiaFlag = getAustraliaFlag();
-
-  // Sort countries by priority, with Australia first
-  const sortedCountries = [...countries].sort((a, b) => {
-    if (a.country === "AUSTRALIA") return -1;
-    if (b.country === "AUSTRALIA") return 1;
-    return a.priority - b.priority;
-  });
 
   // Improved and more reliable redirect function with multiple fallbacks
   const handleCountrySelect = (country: CountryData) => {
