@@ -16,6 +16,7 @@ import NotFound from "./pages/NotFound";
 import LiquidTransportation from "./pages/services/LiquidTransportation";
 import AirFreight from "./pages/services/AirFreight";
 import OceanFreight from "./pages/services/OceanFreight";
+import Transportation from "./pages/services/Transportation";
 import LCLConsolidation from "./pages/services/LCLConsolidation";
 import Warehousing from "./pages/services/Warehousing";
 import ProjectCargo from "./pages/services/ProjectCargo";
@@ -47,6 +48,7 @@ function App() {
             {/* Service specific pages */}
             <Route path="/services/liquid-transportation" element={<LiquidTransportation />} />
             <Route path="/services/air-freight" element={<AirFreight />} />
+            <Route path="/services/transportation" element={<Transportation />} />
             <Route path="/services/ocean-freight" element={<OceanFreight />} />
             <Route path="/services/lcl-consolidation" element={<LCLConsolidation />} />
             <Route path="/services/project-cargo" element={<ProjectCargo />} />
