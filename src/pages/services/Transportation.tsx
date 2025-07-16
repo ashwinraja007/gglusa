@@ -63,7 +63,7 @@ const Transportation = () => {
                 duration: 0.5
               }} className="rounded-xl overflow-hidden shadow-xl">
                   <AspectRatio ratio={16 / 9}>
-                    <img alt="Transportation Service" className="w-full h-full object-cover" src="/lovable-uploads/4691638c-d519-46a4-9e19-05fc2c9ed326.png" />
+                    <img alt="Transportation Service" className="w-full h-full object-cover" src="/truck2.png" />
                   </AspectRatio>
                 </motion.div>
               </div>
