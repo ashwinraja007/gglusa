@@ -22,7 +22,7 @@ const Transportation = () => {
                   transition={{ duration: 0.5 }}
                   className="text-3xl md:text-4xl font-bold mb-4 text-gray-900"
                 >
-                  Liquid Transportation & Distribution
+                  Liquid Cargo Transportation
                 </motion.h1>
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
@@ -70,7 +70,7 @@ const Transportation = () => {
           <div className="container mx-auto px-4">
             <div className="bg-white rounded-2xl shadow-xl p-10 md:p-14 max-w-6xl mx-auto">
               <h2 className="text-3xl font-bold mb-6 text-gray-800">
-                LIQUID TRANSPORTATION & DISTRIBUTION
+                LIQUID CARGO TRANSPORTATION 
               </h2>
               <div className="w-20 h-1 bg-brand-gold mb-8"></div>
 
