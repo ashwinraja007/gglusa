@@ -22,7 +22,7 @@ const Transportation = () => {
                   transition={{ duration: 0.5 }}
                   className="text-3xl md:text-4xl font-bold mb-4 text-gray-900"
                 >
-                  Transportation & Distribution
+                  Liquid Transportation & Distribution
                 </motion.h1>
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
@@ -30,7 +30,7 @@ const Transportation = () => {
                   transition={{ duration: 0.5, delay: 0.1 }}
                   className="text-lg text-gray-700 mb-6"
                 >
-                  Reliable domestic and international transportation services
+                  Reliable handling and distribution of liquid cargo across domestic and international routes
                 </motion.p>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -54,7 +54,7 @@ const Transportation = () => {
                 >
                   <AspectRatio ratio={16 / 9}>
                     <img
-                      alt="Transportation Service"
+                      alt="Liquid Transportation Service"
                       className="w-full h-full object-cover"
                       src="/trucks.png"
                     />
@@ -70,41 +70,39 @@ const Transportation = () => {
           <div className="container mx-auto px-4">
             <div className="bg-white rounded-2xl shadow-xl p-10 md:p-14 max-w-6xl mx-auto">
               <h2 className="text-3xl font-bold mb-6 text-gray-800">
-                TRANSPORTATION & DISTRIBUTION
+                LIQUID TRANSPORTATION & DISTRIBUTION
               </h2>
               <div className="w-20 h-1 bg-brand-gold mb-8"></div>
 
               <p className="text-gray-700 mb-6 text-justify">
-                At GGL India, we understand that efficient transportation and distribution are the backbone of a seamless supply chain. Our dedicated fleet and robust infrastructure ensure that your goods reach their destination on time, every time.
+                At GGL India, we specialize in the secure and efficient transportation of liquid cargo. Our expert handling processes, dedicated fleet, and specialized containers ensure safe movement of bulk liquids across regions, meeting both safety and compliance standards.
               </p>
 
-              <h3 className="text-xl font-semibold text-gray-800 mb-2 mt-8">Domestic Distribution Network</h3>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2 mt-8">Specialized Liquid Transport Fleet</h3>
               <p className="text-gray-700 mb-6 text-justify">
-                With a strategically located network of offices in Mumbai, New Delhi, Kolkata, Bangalore, and Chennai, GGL India offers comprehensive domestic transportation solutions. Our fleet is equipped to handle various cargo types, ensuring safe and timely deliveries across the country.
+                Our fleet is equipped with ISO tank containers, flexitanks, and dedicated tankers designed for the safe transport of various types of liquid cargo, including chemicals, oils, and food-grade liquids.
               </p>
 
-              <h3 className="text-xl font-semibold text-gray-800 mb-2 mt-8">Fleet & Operational Excellence</h3>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2 mt-8">Compliance & Safety</h3>
               <p className="text-gray-700 mb-4 text-justify">
-                Our fleet comprises a diverse range of vehicles, including:
+                GGL adheres strictly to international safety standards and environmental regulations. Our operations prioritize:
               </p>
               <ul className="list-disc pl-6 text-gray-700 mb-6">
-                <li>Full Truck Load (FTL)</li>
-                <li>Less than Truck Load (LTL)</li>
-                <li>Refrigerated Vehicles (for temperature-sensitive goods)</li>
-                <li>Flatbed Trucks (for oversized cargo)</li>
+                <li>Hazardous and non-hazardous liquid cargo segregation</li>
+                <li>Temperature-controlled transport options</li>
+                <li>Real-time GPS tracking and monitoring</li>
+                <li>Emergency response protocols</li>
               </ul>
-              <p className="text-gray-700 mb-6 text-justify">
-                Each vehicle is maintained to the highest standards, ensuring reliability and safety during transit.
-              </p>
 
-              <h3 className="text-xl font-semibold text-gray-800 mb-2 mt-8">Distribution Services</h3>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2 mt-8">Liquid Distribution Services</h3>
               <p className="text-gray-700 mb-4 text-justify">
-                We offer a range of distribution services tailored to meet the specific needs of our clients:
+                We offer end-to-end solutions for your liquid logistics needs, including:
               </p>
               <ul className="list-disc pl-6 text-gray-700 mb-6">
-                <li>Last-Mile Delivery: Ensuring timely deliveries to end customers.</li>
-                <li>Cross-Docking: Minimizing storage time and speeding up the distribution process.</li>
-                <li>Milk Run Services: Efficient collection and delivery from multiple suppliers to a single destination.</li>
+                <li>Bulk liquid transportation (domestic & international)</li>
+                <li>Intermediate storage and tank cleaning</li>
+                <li>Last-mile delivery with safety compliance</li>
+                <li>Return logistics and reverse liquid collection</li>
               </ul>
             </div>
 
@@ -116,15 +114,15 @@ const Transportation = () => {
               viewport={{ once: true }}
               className="mt-12 bg-gradient-to-r from-brand-navy to-blue-700 rounded-xl text-white p-8 text-center"
             >
-              <h3 className="text-2xl font-bold mb-4 text-slate-50">Ready to Transport Your Cargo?</h3>
+              <h3 className="text-2xl font-bold mb-4 text-slate-50">Need Expert Liquid Logistics?</h3>
               <p className="mb-6 text-blue-50">
-                Contact our team today for reliable transportation solutions.
+                Partner with GGL India for safe and compliant bulk liquid transportation.
               </p>
               <Link
                 to="/contact"
                 className="inline-block bg-white text-brand-navy px-6 py-3 rounded-lg font-medium hover:bg-blue-50 transition-colors"
               >
-                Get a Quote
+                Request a Quote
               </Link>
             </motion.div>
           </div>
