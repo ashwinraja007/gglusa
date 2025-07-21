@@ -14,12 +14,12 @@ interface SidebarProps {
 const countries = [{
   code: "in",
   name: "India",
-  lat: 17.3839,
-  lng: 78.4539,
+  lat: 19.00745,
+  lng: 73.03271,
   cities: [{
     name: "Mumbai",
-    lat: 17.3839,
-    lng: 78.4539,
+    lat: 19.00745,
+    lng: 73.03271,
     address: "407, mayuresh planet, plot no - 42 & 43, sector-15, cbd belapur, navi mumbai, maharashtra, 400614",
     contacts: ["Export customer service: +91 2245174102, +91 2245174109, +91 2245174118", "Export docs team: +91 2245174103, +91 2245174105", "Import docs team: +91 2245174104, +91 2245174106", "Import customer service: +91 2245174113, +91 2245174110, +91 2245174107, +91 2245174112"]
   }, {
@@ -315,7 +315,7 @@ const Sidebar: React.FC<ContactSidebarProps> = ({ isOpen, onClose }) => {
       try {
         // Use higher zoom level for city-specific locations
         const zoomLevel = city ? 10 : 10;
-        const baseUrl = "https://www.google.com/maps/d/u/0/embed?mid=1rF5337I7j7xk98at6ZPdMul4aglzrLg";
+        const baseUrl = "https://www.google.com/maps/d/u/0/embed?mid=1d5jZQlEjnKqnsGHvdJWR5wB_-fcQ_Zk&ehbc=2E312F";
         const newSrc = `${baseUrl}&z=${zoomLevel}&ll=${lat},${lng}&hl=en&ehbc=2E312F&output=embed`;
         iframe.src = newSrc;
         if (city) {
