@@ -51,7 +51,7 @@ const countries = [{
   code: "my",
   name: "Malaysia",
   lat: 1.4720,
-  lng: 103.9027,,
+  lng: 103.9027,
   cities: [{
     name: "PASIRGUDANG",
     lat: 1.4720,
@@ -231,8 +231,8 @@ const countries = [{
     name: "Chicago",
     lat: 41.8781,
     lng: -87.6298,
-    address: "",
-    contacts: []
+    address: "939 W. North Avenue, Suite 750, Chicago, IL 60642",
+    contacts: ["+1 847 254 7320"]
   }, {
     name: "New York",
     lat: 40.7128,
