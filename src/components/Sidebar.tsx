@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { ScrollArea } from "@/components/ui/scroll-area";
-import InfoPanel from './InfoPanel';
 import { Button } from "@/components/ui/button";
 import { X, MapPin, Globe, ExternalLink, Phone, Mail, Home, ChevronRight } from 'lucide-react';
 import { cn } from "@/lib/utils";
