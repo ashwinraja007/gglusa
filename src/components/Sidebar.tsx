@@ -14,8 +14,8 @@ interface SidebarProps {
 const countries = [{
   code: "in",
   name: "India",
-  lat: 22.3511,
-  lng: 78.6677,
+  lat: 17.3839,
+  lng: 78.4539,
   cities: [{
     name: "Mumbai",
     lat: 17.3839,
@@ -24,8 +24,8 @@ const countries = [{
     contacts: ["Export customer service: +91 2245174102, +91 2245174109, +91 2245174118", "Export docs team: +91 2245174103, +91 2245174105", "Import docs team: +91 2245174104, +91 2245174106", "Import customer service: +91 2245174113, +91 2245174110, +91 2245174107, +91 2245174112"]
   }, {
     name: "Delhi",
-    lat: 28.53651, 
-    lng: 77.25499,
+    lat: 28.53837,
+    lng: 77.29022,
     address: "JA 511, DLF Tower A, Jasola District Centre, New Delhi, 110025",
     contacts: ["+91 9999022030"]
   }, {
@@ -50,8 +50,8 @@ const countries = [{
 }, {
   code: "my",
   name: "Malaysia",
-  lat: 4.2105,
-  lng: 101.9758,
+  lat: 1.4720,
+  lng: 103.9027,,
   cities: [{
     name: "PASIRGUDANG",
     lat: 1.4720,
@@ -81,8 +81,8 @@ const countries = [{
 }, {
   code: "id",
   name: "Indonesia",
-  lat: -0.7893,
-  lng: 113.9213,
+    lat: -6.2088,
+    lng: 106.8456,
   cities: [{
     name: "Jakarta",
     lat: -6.2088,
@@ -99,8 +99,8 @@ const countries = [{
 }, {
   code: "lk",
   name: "Sri Lanka",
-  lat: 7.8731,
-  lng: 80.7718,
+    lat: 6.9271,
+    lng: 79.8612,
   cities: [{
     name: "Colombo",
     lat: 6.9271,
@@ -111,8 +111,8 @@ const countries = [{
 }, {
   code: "th",
   name: "Thailand",
-  lat: 15.8700,
-  lng: 100.9925,
+    lat: 13.7563,
+    lng: 100.5018,
   cities: [{
     name: "Bangkok",
     lat: 13.7563,
@@ -123,8 +123,8 @@ const countries = [{
 }, {
   code: "mm",
   name: "Myanmar",
-  lat: 21.9162,
-  lng: 95.9560,
+    lat: 16.8409,
+    lng: 96.1735,
   cities: [{
     name: "Yangon",
     lat: 16.8409,
@@ -135,8 +135,8 @@ const countries = [{
 }, {
   code: "bd",
   name: "Bangladesh",
-  lat: 23.6850,
-  lng: 90.3563,
+    lat: 23.8103,
+    lng: 90.4125,
   cities: [{
     name: "Dhaka",
     lat: 23.8103,
@@ -147,8 +147,8 @@ const countries = [{
 }, {
   code: "pk",
   name: "Pakistan",
-  lat: 32.4145,
-  lng: 64.9162,
+    lat: 32.4145,
+    lng: 64.9162,
   cities: [{
     name: "Karachi",
     lat: 32.4145,
@@ -165,8 +165,8 @@ const countries = [{
 }, {
   code: "ae",
   name: "United Arab Emirates (UAE)",
-  lat: 23.4241,
-  lng: 53.8478,
+    lat: 25.2048,
+    lng: 55.2708,
   cities: [{
     name: "Dubai",
     lat: 25.2048,
@@ -189,8 +189,8 @@ const countries = [{
 }, {
   code: "qa",
   name: "Qatar",
-  lat: 25.276987,
-  lng: 51.520008,
+    lat: 25.276987,
+    lng: 51.520008,
   cities: [{
     name: "Doha",
     lat: 25.276987,
@@ -201,8 +201,8 @@ const countries = [{
 }, {
   code: "sa",
   name: "Saudi Arabia",
-  lat: 23.8859,
-  lng: 45.0792,
+  lat: 26.4207,
+    lng: 50.0888,
   cities: [{
     name: "Dammam",
     lat: 26.4207,
@@ -225,8 +225,8 @@ const countries = [{
 }, {
   code: "us",
   name: "United States (USA)",
-  lat: 37.0902,
-  lng: -95.7129,
+    lat: 41.8781,
+    lng: -87.6298,
   cities: [{
     name: "Chicago",
     lat: 41.8781,
@@ -251,8 +251,8 @@ const countries = [{
 }, {
   code: "gb",
   name: "United Kingdom (UK)",
-  lat: 55.3781,
-  lng: -3.4360,
+    lat: 51.5074,
+    lng: -0.1278,
   cities: [{
     name: "London",
     lat: 51.5074,
@@ -263,8 +263,8 @@ const countries = [{
 }, {
   code: "au",
   name: "Australia",
-  lat: -37.8136,
-  lng: 144.9631,
+    lat: -37.8136,
+    lng: 144.9631,
   cities: [{
     name: "Melbourne",
     lat: -37.8136,
