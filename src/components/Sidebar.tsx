@@ -354,16 +354,12 @@ const Sidebar: React.FC<ContactSidebarProps> = ({ isOpen, onClose }) => {
       {/* Sidebar container */}
       <div className={`my-3 w-full ${isMobile ? 'max-w-[95%]' : 'max-w-[520px]'} mx-auto px-2 md:px-0`}>
         {/* Header */}
-        <div className="flex justify-between items-center px-4 py-3 border-b bg-gradient-to-r from-red-600 to-red-700 text-white rounded-t-xl shadow-sm">
+        <div className="flex justify-between items-center px-4 py-3 border-b bg-gradient-to-r from-amber-500 to-amber-400 text-white rounded-t-xl shadow-sm">
           <div className="flex items-center gap-2">
             <Globe className="h-5 w-5" />
             <h2 className="font-bold text-lg">Global Locations</h2>
           </div>
-          {isMobile && (
-            <Button variant="ghost" size="sm" onClick={onClose} className="text-white hover:bg-red-500/20">
-              <X className="h-4 w-4" />
-            </Button>
-          )}
+          {isMobile}
         </div>
 
         {/* Content area */}
