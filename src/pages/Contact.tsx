@@ -6,37 +6,41 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import LocationsSection from "@/components/LocationsSection";
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, CheckCircle } from 'lucide-react';
+import { Send, CheckCircle, AlertCircle } from 'lucide-react';
 
 const Contact = () => {
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
 
-    formData.append("access_key", "ff34937d-d72f-499b-ac68-0053c5539df2"); // Web3Forms access key
-
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
+      const response = await fetch("https://formsubmit.co/ajax/info@gglusa.us", {
         method: "POST",
+        headers: {
+          Accept: "application/json",
+        },
         body: formData,
       });
 
       const result = await response.json();
 
-      if (result.success) {
+      if (result.success === "true") {
         setSuccess(true);
         form.reset();
         setTimeout(() => setSuccess(false), 4000);
       } else {
-        alert("Submission failed. Please try again.");
+        setError(true);
+        setTimeout(() => setError(false), 4000);
         console.error(result);
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      alert("Form Submitted Successfully.");
+      setError(true);
+      setTimeout(() => setError(false), 4000);
     }
   };
 
@@ -124,11 +128,10 @@ const Contact = () => {
                   className="min-h-[120px] border-gray-200 focus:ring-blue-500"
                 />
 
-                {/* Hidden Fields for Web3Forms */}
-                <input type="hidden" name="from_name" value="Website Inquiry" />
-                <input type="hidden" name="replyto" value="karthiktrendsandtactics@gmail.com" />
-                <input type="hidden" name="subject" value="New Contact Form Message" />
-                <input type="hidden" name="redirect" value="https://yourdomain.com/thank-you" />
+                {/* Hidden Fields for FormSubmit */}
+                <input type="hidden" name="_subject" value="New Contact Form Message from Website" />
+                <input type="hidden" name="_template" value="box" />
+                <input type="hidden" name="_captcha" value="false" />
 
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                   <Button
@@ -141,7 +144,7 @@ const Contact = () => {
                 </motion.div>
               </form>
 
-              {/* Success Popup */}
+              {/* Notification Popups */}
               <AnimatePresence>
                 {success && (
                   <motion.div
@@ -152,6 +155,17 @@ const Contact = () => {
                   >
                     <CheckCircle className="text-green-600" />
                     Your message has been sent successfully!
+                  </motion.div>
+                )}
+                {error && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    className="mt-6 p-4 bg-red-100 text-red-700 rounded-lg flex items-center gap-2"
+                  >
+                    <AlertCircle className="text-red-600" />
+                    Oops! Something went wrong. Please try again.
                   </motion.div>
                 )}
               </AnimatePresence>
