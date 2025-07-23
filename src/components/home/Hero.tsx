@@ -197,7 +197,7 @@ const Hero = () => {
                 >
                   Cancel
                 </button>
-                <a href="https://cp.onlinetracking.co/#/login/3" target="_blank" rel="noopener noreferrer">
+                <a href="https://consolmate.com/auth/login/1" target="_blank" rel="noopener noreferrer">
                   <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
                     Login
                   </button>
