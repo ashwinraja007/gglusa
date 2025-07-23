@@ -39,7 +39,7 @@ const AirFreight = () => {
           </div>
         </section>
 
-        {/* Main Content with Replaced Text */}
+        {/* Main Content with Updated Text */}
         <section className="py-12 md:py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto mb-12 text-center">
@@ -49,28 +49,15 @@ const AirFreight = () => {
               <div className="w-24 h-1 bg-brand-gold mx-auto mb-8"></div>
 
               <p className="text-gray-700 mb-6 text-justify font-normal">
-                GGL's highly skilled team has perfected an efficient and strategic process for seamlessly transporting freight across our extensive network, starting from its origin and reaching its desired destination. We utilize a diverse range of transportation modes, intermediaries, and cutting-edge technologies to ensure optimal results. Our expertise in logistics and supply chain management, coupled with our physical assets such as trucks, distribution centers, and warehouses, enables us to move freight with utmost efficiency and cost-effectiveness.
+                At GGL, we provide a comprehensive range of air freight services designed to meet all your shipping needs. Our expert air freight teams offer seamless air import, export, and express options, all on a convenient door-to-door basis. GGL stands out with competitive rates.
               </p>
 
               <p className="text-gray-700 mb-6 text-justify font-normal">
-                At GGL, we are at the forefront of the industry, continuously developing and deploying the latest technologies. Our dedicated in-house team manages these technologies, allowing us to stay ahead of the curve. Some of the modules currently employed by our esteemed clients include:
+                Tailored air freight solutions to meet your unique requirements. We understand that every shipment is different. That's why we offer flexible air freight solutions designed to meet your specific needs. Whether you're shipping time-sensitive documents or large-scale cargo, we have the expertise and resources to handle it efficiently.
               </p>
 
-              <ul className="text-left list-disc list-inside text-gray-700 font-normal space-y-2">
-                <li>PO Management Systems</li>
-                <li>Online booking systems</li>
-                <li>Electronic Shipping Instructions</li>
-                <li>Electronic Bill of Lading</li>
-                <li>Electronic Certificate of Origin</li>
-                <li>Integrated customer portal</li>
-              </ul>
-
-              <p className="text-gray-700 mt-6 text-justify font-normal">
-                Furthermore, we understand the importance of timely updates and effective communication throughout the shipment's journey. To streamline this process, we have implemented a user-friendly menu-driven system. Our clients have the flexibility to select specific milestones they wish to be notified about, ensuring relevant and concise communication while minimizing unnecessary interruptions.
-              </p>
-
-              <p className="text-gray-700 mt-6 text-justify font-normal">
-                At GGL, our commitment to innovation and customer satisfaction remains unwavering as we continue to enhance our services through advanced technologies and tailored solutions.
+              <p className="text-gray-700 mb-6 text-justify font-normal">
+                Our comprehensive services include air imports, exports, and express deliveries, all with the convenience of door-to-door service. We pride ourselves on our competitive pricing and our unwavering commitment to providing exceptional customer support. Let us optimize your air freight logistics and ensure your shipments reach their destinations seamlessly.
               </p>
             </div>
 
