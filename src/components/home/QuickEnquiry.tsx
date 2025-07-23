@@ -51,7 +51,7 @@ export const CustomEnquiryForm = ({
       formData.append("_subject", subjectLine);
       formData.append("_template", "table");
 
-      const response = await fetch(`https://formsubmit.co/ajax/karthikjungleemara@gmail.com`, {
+      const response = await fetch(`https://formsubmit.co/ajax/info@gglusa.us`, {
         method: "POST",
         body: formData,
       });
