@@ -35,8 +35,13 @@ const countries: CountryData[] = [
   { country: "UK", company: "Moltech", website: "https://moltech.uk/", priority: 15, flag: "/gb.svg" }
 ];
 
+const findAustraliaCountry = () => {
+  return countries.find(country => country.country === "AUSTRALIA") || countries[0];
+};
+
 const CountrySelector = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedRedirectCountry, setSelectedRedirectCountry] = useState<CountryData>(findAustraliaCountry());
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const sortedCountries = [...countries].sort((a, b) => {
@@ -46,36 +51,11 @@ const CountrySelector = () => {
   });
 
   const handleCountrySelect = (country: CountryData) => {
-    let url = country.website;
-    if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
-      url = 'https://' + url;
-    }
-
-    setIsOpen(false);
-
+    setSelectedRedirectCountry(country);
     setTimeout(() => {
-      try {
-        const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
-        if (newWindow && !newWindow.closed) return;
-      } catch (e) {}
-
-      try {
-        const link = document.createElement('a');
-        link.href = url;
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
-        link.style.display = 'none';
-        document.body.appendChild(link);
-        link.click();
-        setTimeout(() => {
-          if (document.body.contains(link)) {
-            document.body.removeChild(link);
-          }
-        }, 100);
-      } catch (e) {
-        window.location.href = url;
-      }
-    }, 50);
+      window.open(country.website, '_blank', 'noopener,noreferrer');
+    }, 100); // ensure dropdown closes before redirect
+    setIsOpen(false);
   };
 
   useEffect(() => {
@@ -84,8 +64,11 @@ const CountrySelector = () => {
         setIsOpen(false);
       }
     };
+
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   return (
@@ -102,31 +85,23 @@ const CountrySelector = () => {
             </span>
           </Button>
         </DropdownMenuTrigger>
-
         <DropdownMenuContent 
           align="center" 
-          className="w-[280px] border border-amber-100 bg-white p-2 rounded-lg shadow-lg"
+          className="w-[280px] border border-amber-100 bg-white p-2 rounded-lg shadow-lg max-h-[90vh]"
+          onPointerDownOutside={(e) => e.preventDefault()}
         >
-          <ScrollArea
-            className="h-[300px] w-full pr-2"
-            onMouseDown={(e) => e.stopPropagation()} // prevents dropdown from closing on scroll drag
-            onTouchStart={(e) => e.stopPropagation()} // mobile support
-          >
+          <ScrollArea className="h-[calc(100vh-120px)] w-full pr-2 overflow-y-auto scrollbar-gold">
             <div className="grid grid-cols-1 gap-1 p-1">
               {sortedCountries.map((country) => (
-                <div
-                  key={country.country + country.company}
-                  className="cursor-pointer hover:bg-amber-50 p-2 rounded-md flex items-center gap-2 transition-colors"
-                  onClick={(e) => {
+                <DropdownMenuItem
+                  key={country.country}
+                  onSelect={(e) => {
                     e.preventDefault();
-                    e.stopPropagation(); // ensure dropdown doesn't close on drag-click
                     handleCountrySelect(country);
                   }}
+                  className="cursor-pointer hover:bg-amber-50 p-2 rounded-md flex items-center gap-2 transition-colors"
                 >
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    className="flex items-center w-full"
-                  >
+                  <motion.div whileHover={{ scale: 1.05 }} className="flex items-center w-full">
                     <div className="flex-shrink-0">
                       {country.flag ? (
                         <img 
@@ -145,7 +120,7 @@ const CountrySelector = () => {
                       <div className="text-xs text-gray-500">{country.company}</div>
                     </div>
                   </motion.div>
-                </div>
+                </DropdownMenuItem>
               ))}
             </div>
           </ScrollArea>
