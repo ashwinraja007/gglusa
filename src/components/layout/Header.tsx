@@ -162,7 +162,7 @@ export const Header = () => {
             <CountrySelector />
 
             <button
-              onClick={() => handleNavClick("/contact", "contact-form")}
+              onClick={() => handleNavClick("/contact")}
               className="px-5 py-2 bg-[#F6B100] text-black rounded-full hover:bg-[#FFCC33] transition font-medium"
             >
               Contact / Quote
