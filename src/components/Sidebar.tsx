@@ -106,7 +106,21 @@ const countries = [{
     lat: 6.9271,
     lng: 79.8612,
     address: "Ceylinco House, 9th Floor, No. 69, Janadhipathi Mawatha, Colombo 01, Sri Lanka",
-    contacts: ["+94 114477499", "+94 114477494 / 98"]
+    contacts: ["+94 114477499", "+94 114477494 / 98"],
+    email: "thilanka.cmb@globalconsol.com"
+  }]
+},{
+  code: "cn",
+  name: "China",
+    lat: 22.54262,
+    lng: 114.11696,
+  cities: [{
+    name: "China",
+    lat: 22.54262,
+    lng: 114.11696,
+    address: "13C02, Block A, Zhaoxin Huijin Plaza 3085 Shennan East Road, Luohu, Shenzhen.",
+    contacts: ["+86 75582222447"],
+    email: "helen@haixun.co"
   }]
 }, {
   code: "th",
@@ -130,7 +144,8 @@ const countries = [{
     lat: 16.8409,
     lng: 96.1735,
     address: "No.608, Room 8B, Bo Soon Pat Tower, Merchant Street, Pabedan Township, Yangon, Myanmar",
-    contacts: ["+951 243158", "+951 377985, 243101"]
+    contacts: ["+951 243158", "+951 377985, 243101"],
+    email: "info@globalconsol.com"
   }]
 }, {
   code: "bd",
@@ -142,7 +157,8 @@ const countries = [{
     lat: 23.8103,
     lng: 90.4125,
     address: "ID #9-N (New), 9-M(Old-N), 9th floor, Tower 1, Police Plaza Concord No.2, Road # 144, Gulshan Model Town, Dhaka 1215, Bangladesh",
-    contacts: ["+880 1716 620989"]
+    contacts: ["+880 1716 620989"],
+    email: "info@globalconsol.com"
   }]
 }, {
   code: "pk",
@@ -154,13 +170,15 @@ const countries = [{
     lat: 24.86149,
     lng: 67.06616,
     address: "Suite No.301, 3rd Floor, Fortune Center, Shahrah-e-Faisal, Block 6, PECHS, Karachi, Pakistan",
-    contacts: ["+92-300-8282511", "+92-21-34302281-5"]
+    contacts: ["+92-300-8282511", "+92-21-34302281-5"],
+     email: "khalid.pk@globalconsol.com"
   }, {
     name: "Lahore",
     lat: 31.52945,
     lng: 74.35887,
     address: "Office # 301, 3rd Floor, Gulberg Arcade Main Market, Gulberg 2, Lahore, Pakistan",
-    contacts: ["+92 42-35782306/07/08"]
+    contacts: ["+92 42-35782306/07/08"],
+    email: "shazia.pklhe@globalconsol.com"
   }]
 }, {
   code: "ae",
@@ -270,7 +288,8 @@ const countries = [{
     lat: -37.8136,
     lng: 144.9631,
     address: "Suite 5, 7-9 Mallet Road, Tullamarine, Victoria, 3043",
-    contacts: ["Mob: +61 432254969", "Tel: +61 388205157"]
+    contacts: ["Mob: +61 432254969", "Tel: +61 388205157"],
+    email: "info@gglaustralia.com"
   }]
 }];
 
