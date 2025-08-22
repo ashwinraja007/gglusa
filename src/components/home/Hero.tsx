@@ -27,7 +27,8 @@ const Hero = () => {
       icon: <Users className="w-4 h-4 sm:w-5 sm:h-5" />,
       title: 'Consolmate',
       description: 'Access shipping dashboard',
-      onClick: () => setIsCustomerPortalOpen(true),
+      url: 'https://consolmate.com/auth/login/6',
+      external: true,
     },
     {
       icon: <UserCircle className="w-4 h-4 sm:w-5 sm:h-5" />,
