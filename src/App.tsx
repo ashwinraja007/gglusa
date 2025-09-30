@@ -55,7 +55,7 @@ function App() {
             <Route path="/services/customs-clearance" element={<CustomsClearance />} />
             <Route path="/services/warehousing" element={<Warehousing />} />
             <Route path="/services/e-commerce" element={<ECommerce />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<Index  />} />
           </Routes>
           <Toaster />
           <Sonner />
