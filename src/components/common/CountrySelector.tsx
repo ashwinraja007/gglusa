@@ -20,7 +20,7 @@ interface CountryData {
 
 const countries: CountryData[] = [
   { country: "SINGAPORE", company: "GGL", website: "https://www.ggl.sg/", priority: 1, flag: "/sg.svg" },
-  { country: "MALAYSIA", company: "OECL", website: "https://www.oecl.sg/malaysia/home", priority: 2, flag: "/my.svg" },
+  { country: "MALAYSIA", company: "GGL", website: "https://www.ggl.sg/malaysia/home", priority: 2, flag: "/my.svg" },
   { country: "INDONESIA", company: "OECL", website: "https://www.oecl.sg/indonesia/home", priority: 3, flag: "/id.svg" },
   { country: "THAILAND", company: "OECL", website: "https://www.oecl.sg/thailand/home", priority: 4, flag: "/th.svg" },
   { country: "MYANMAR", company: "GC", website: "https://www.globalconsol.com/myanmar", priority: 5, flag: "/mm.svg" },
