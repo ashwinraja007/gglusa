@@ -12,16 +12,26 @@ const STATIC_ROUTES = new Set([
   "/contact",
   "/privacy-policy",
   "/terms-and-conditions",
+  "/careers",
+  "/services/transportation",
+  "/services/liquid-transportation",
+  "/services/air-freight",
+  "/services/ocean-freight",
+  "/services/lcl-consolidation",
+  "/services/project-cargo",
+  "/services/customs-clearance",
+  "/services/warehousing",
+  "/services/e-commerce",
   "/admin",
 ]);
 
 export default function DynamicRouteResolver() {
   const { pathname } = useLocation();
-  const { data, isLoading } = usePages();
-
-  if (isLoading) return <div className="p-8">Resolving route...</div>;
+  const { data, isLoading, isError } = usePages();
 
   if (STATIC_ROUTES.has(pathname)) return <NotFound />;
+  if (isLoading) return <div className="p-8">Resolving route...</div>;
+  if (isError) return <NotFound />;
 
   const match = data?.items.find((page) => page.path === pathname && !STATIC_ROUTES.has(page.path));
 
