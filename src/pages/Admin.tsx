@@ -1,6 +1,5 @@
 import { FormEvent, useMemo, useState } from "react";
 
-import { loginViaApi } from "@/api/hooks";
 import { ADMIN_AUTH_STORAGE_KEY, defaultAdminCredentials, nonProductionSecurityWarning } from "@/config/adminAuth";
 import { AdminPanel } from "./admin/AdminPanel";
 
@@ -18,27 +17,16 @@ export default function AdminPage() {
     setLoading(true);
     setError("");
 
-    try {
-      const localValid = username === creds.username && password === creds.password;
-      if (localValid) {
-        localStorage.setItem(ADMIN_AUTH_STORAGE_KEY, "true");
-        setIsAuthenticated(true);
-        return;
-      }
+    const localValid = username === creds.username && password === creds.password;
 
-      const response = await loginViaApi(username, password);
-      if (response.success) {
-        localStorage.setItem(ADMIN_AUTH_STORAGE_KEY, "true");
-        setIsAuthenticated(true);
-        return;
-      }
-
+    if (localValid) {
+      localStorage.setItem(ADMIN_AUTH_STORAGE_KEY, "true");
+      setIsAuthenticated(true);
+    } else {
       setError("Invalid credentials.");
-    } catch {
-      setError("Login check failed.");
-    } finally {
-      setLoading(false);
     }
+
+    setLoading(false);
   };
 
   const logout = () => {
