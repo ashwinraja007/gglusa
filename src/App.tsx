@@ -10,6 +10,7 @@ import AdminPage from "./pages/Admin";
 import Careers from "./pages/Careers";
 import Contact from "./pages/Contact";
 import GlobalPresence from "./pages/GlobalPresence";
+import HomeDynamic from "./pages/HomeDynamic";
 import Index from "./pages/Index";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Services from "./pages/Services";
@@ -34,6 +35,7 @@ function App() {
           <ScrollToTop />
           <Routes>
             <Route path="/" element={<HomeDynamic />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
             <Route path="/global-presence" element={<GlobalPresence />} />
