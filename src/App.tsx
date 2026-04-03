@@ -9,7 +9,6 @@ import About from "./pages/About";
 import AdminPage from "./pages/Admin";
 import Careers from "./pages/Careers";
 import Contact from "./pages/Contact";
-import DynamicRouteResolver from "./pages/DynamicRouteResolver";
 import GlobalPresence from "./pages/GlobalPresence";
 import Index from "./pages/Index";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -52,7 +51,7 @@ function App() {
             <Route path="/services/warehousing" element={<Warehousing />} />
             <Route path="/services/e-commerce" element={<ECommerce />} />
             <Route path="/admin" element={<AdminPage />} />
-            <Route path="*" element={<DynamicRouteResolver />} />
+            <Route path="*" element={<Index />} />
           </Routes>
           <Toaster />
           <Sonner />
