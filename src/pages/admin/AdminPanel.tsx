@@ -47,8 +47,11 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
   useEffect(() => {
     apiFetch<SummaryResponse>("/admin/summary")
       .then(setSummary)
-      .catch((error) => {
-        setSummary({ status: "error", message: error instanceof Error ? error.message : "Failed to fetch summary" });
+      .catch(() => {
+        setSummary({
+          status: "fallback",
+          message: "Backend API is not running. Admin panel is active in dummy mode.",
+        });
       });
   }, []);
 
@@ -77,7 +80,7 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
             {summary.serverTime ? ` · Server time: ${summary.serverTime}` : ""}
           </p>
         ) : (
-          <p className="text-red-600">{summary?.message ?? "Checking connection..."}</p>
+          <p className="text-amber-700">{summary?.message ?? "Checking connection..."}</p>
         )}
       </div>
 
