@@ -2,30 +2,11 @@ import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { useAdminCollections, useCreateRecord, useDeleteRecord, useUpdateRecord } from "@/api/hooks";
-import type { ContentRecord, SeoRecord } from "@/api/types";
 import { apiFetch } from "@/api/client";
-import { configuredMysqlDatabase, configuredMysqlHost, configuredMysqlPort, configuredMysqlUser } from "@/config/adminAuth";
+import type { ContentRecord, SeoRecord } from "@/api/types";
 
 type Module = "seo" | "content" | "pages" | "headers" | "locations";
 type DummyRecord = Record<string, string | number | boolean>;
-
-type SummaryResponse = {
-  status: string;
-  connected?: boolean;
-  dbName?: string;
-  serverTime?: string;
-  dbVersion?: string;
-  host?: string;
-  port?: number;
-  user?: string;
-  counts?: {
-    pages?: number;
-    content?: number;
-    seo?: number;
-  };
-  message?: string;
-};
-
 
 type SeoFormState = {
   path: string;
@@ -98,8 +79,6 @@ const initialForm: ContentFormState = {
 export function AdminPanel({ onLogout }: { onLogout: () => void }) {
   const [active, setActive] = useState<Module>("content");
   const [search, setSearch] = useState("");
-  const [summary, setSummary] = useState<SummaryResponse | null>(null);
-  const [lastChecked, setLastChecked] = useState<string>("-");
   const [form, setForm] = useState<ContentFormState>(initialForm);
   const [seoForm, setSeoForm] = useState<SeoFormState>(initialSeoForm);
   const [editingId, setEditingId] = useState<number | null>(null);
@@ -113,6 +92,8 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
     queryFn: () => apiFetch<{ items: SeoRecord[]; total: number }>("/seo?page=1&page_size=500"),
     refetchInterval: 10000,
   });
+  const seoItems = seoAll.data?.items?.length ? seoAll.data.items : (seo.data?.items ?? []);
+
   const createContent = useCreateRecord("content");
   const deleteContent = useDeleteRecord("content");
   const updateContent = useUpdateRecord("content");
@@ -120,31 +101,6 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
   const updateSeo = useUpdateRecord("seo");
   const deleteSeo = useDeleteRecord("seo");
 
-  useEffect(() => {
-    const fetchSummary = () => {
-      apiFetch<SummaryResponse>("/admin/summary")
-        .then((data) => {
-          setSummary(data);
-          setLastChecked(new Date().toLocaleString());
-        })
-        .catch(() => {
-          setSummary({
-            status: "configured",
-            connected: true,
-            dbName: configuredMysqlDatabase,
-            host: configuredMysqlHost,
-            port: configuredMysqlPort,
-            user: configuredMysqlUser,
-            message: "Remote database configuration loaded.",
-          });
-          setLastChecked(new Date().toLocaleString());
-        });
-    };
-
-    fetchSummary();
-    const timer = window.setInterval(fetchSummary, 15000);
-    return () => window.clearInterval(timer);
-  }, []);
 
   const counters = useMemo(
     () => ({
@@ -152,9 +108,9 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
       headers: headers.data?.total ?? seedData.headers.length,
       locations: locations.data?.total ?? seedData.locations.length,
       content: content.data?.total ?? 0,
-      seo: seoAll.data?.total ?? seo.data?.total ?? seedData.seo.length,
+      seo: seoAll.data?.total ?? seo.data?.total ?? seoItems.length ?? seedData.seo.length,
     }),
-    [content.data?.total, headers.data?.total, locations.data?.total, pages.data?.total, seo.data?.total, seoAll.data?.total],
+    [content.data?.total, headers.data?.total, locations.data?.total, pages.data?.total, seo.data?.total, seoAll.data?.total, seoItems.length],
   );
 
   const filtered = useMemo(() => {
@@ -206,7 +162,7 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
 
 
   useEffect(() => {
-    const existing = (seoAll.data?.items ?? []).find((item) => item.path === seoForm.path);
+    const existing = seoItems.find((item) => item.path === seoForm.path);
     if (!existing) {
       setEditingSeoId(null);
       return;
@@ -220,7 +176,7 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
       keywords: existing.keywords,
     }));
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [seoForm.path, seoAll.data?.items]);
+  }, [seoForm.path, seoAll.data?.items, seo.data?.items]);
 
   const submitSeo = async (event: FormEvent) => {
     event.preventDefault();
@@ -258,28 +214,6 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
 
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-6">
-      <div className="mb-4 rounded-xl border bg-white p-4 text-sm">
-        <p className="font-semibold">Remote MySQL status</p>
-        <div className="mt-2 grid gap-2 sm:grid-cols-2">
-          <p><span className="font-medium">Connection:</span> {summary?.connected ? "Connected" : "Configured"}</p>
-          <p><span className="font-medium">Database:</span> {summary?.dbName ?? configuredMysqlDatabase}</p>
-          <p><span className="font-medium">Host:</span> {summary?.host ?? configuredMysqlHost}</p>
-          <p><span className="font-medium">Port:</span> {summary?.port ?? configuredMysqlPort}</p>
-          <p><span className="font-medium">User:</span> {summary?.user ?? configuredMysqlUser}</p>
-          <p><span className="font-medium">Last checked:</span> {lastChecked}</p>
-          <p><span className="font-medium">DB time:</span> {summary?.serverTime ?? new Date().toLocaleString()}</p>
-          <p><span className="font-medium">DB version:</span> {summary?.dbVersion ?? "MySQL (configured remote)"}</p>
-        </div>
-        {summary?.counts ? (
-          <div className="mt-3 grid gap-2 sm:grid-cols-3">
-            <div className="rounded border p-2">Pages rows: {summary.counts.pages ?? 0}</div>
-            <div className="rounded border p-2">Content rows: {summary.counts.content ?? 0}</div>
-            <div className="rounded border p-2">SEO rows: {summary.counts.seo ?? 0}</div>
-          </div>
-        ) : null}
-        {summary?.message ? <p className="mt-2 text-slate-600">{summary.message}</p> : null}
-      </div>
-
       <div className="grid gap-4 md:grid-cols-[240px_1fr]">
         <aside className="rounded-xl border bg-white p-4">
           <h2 className="mb-3 font-semibold">Admin Panel</h2>
@@ -336,11 +270,11 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
 
               <div>
                 <h3 className="mb-2 font-semibold">SEO records</h3>
-                {(seoAll.data?.items ?? []).length === 0 ? (
-                  <p className="text-sm text-muted-foreground">No SEO records found.</p>
+                {seoItems.length === 0 ? (
+                  <p className="text-sm text-muted-foreground">No SEO records found in API response. Click Save SEO to create one for the selected path.</p>
                 ) : (
                   <div className="space-y-2">
-                    {(seoAll.data?.items ?? []).map((item) => (
+                    {seoItems.map((item) => (
                       <div key={item.id} className="rounded border p-3">
                         <div className="mb-2 flex gap-2">
                           <button className="rounded border px-2 py-1 text-xs" onClick={() => onEditSeo(item)}>Edit</button>
