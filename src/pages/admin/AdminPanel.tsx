@@ -1,9 +1,17 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-import { nonProductionSecurityWarning } from "@/config/adminAuth";
+import { apiFetch } from "@/api/client";
+import { configuredMysqlDatabase } from "@/config/adminAuth";
 
 type Module = "seo" | "content" | "pages" | "headers" | "locations";
 type DummyRecord = Record<string, string | number | boolean>;
+
+type SummaryResponse = {
+  status: string;
+  dbName?: string;
+  serverTime?: string;
+  message?: string;
+};
 
 const modules: Module[] = ["seo", "content", "pages", "headers", "locations"];
 
@@ -34,6 +42,19 @@ const seedData: Record<Module, DummyRecord[]> = {
 export function AdminPanel({ onLogout }: { onLogout: () => void }) {
   const [active, setActive] = useState<Module>("seo");
   const [search, setSearch] = useState("");
+  const [summary, setSummary] = useState<SummaryResponse | null>(null);
+
+  useEffect(() => {
+    apiFetch<SummaryResponse>("/admin/summary")
+      .then(setSummary)
+      .catch(() => {
+        setSummary({
+          status: "configured",
+          dbName: configuredMysqlDatabase,
+          message: "Database configured. Live connection check is unavailable right now.",
+        });
+      });
+  }, []);
 
   const counters = useMemo(
     () => ({
@@ -51,10 +72,24 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
 
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-6">
-      <p className="mb-3 rounded border border-amber-400 bg-amber-100 p-3 text-sm text-amber-900">{nonProductionSecurityWarning}</p>
+      <div className="mb-4 rounded-xl border bg-white p-4 text-sm">
+        <p className="font-semibold">Remote MySQL status</p>
+        {summary?.status === "ok" ? (
+          <p>
+            Connected to <span className="font-semibold">{summary.dbName}</span>
+            {summary.serverTime ? ` · Server time: ${summary.serverTime}` : ""}
+          </p>
+        ) : (
+          <p>
+            <span className="font-semibold">{summary?.dbName ?? configuredMysqlDatabase}</span>
+            {summary?.message ? ` · ${summary.message}` : ""}
+          </p>
+        )}
+      </div>
+
       <div className="grid gap-4 md:grid-cols-[220px_1fr]">
         <aside className="rounded-xl border bg-white p-4">
-          <h2 className="mb-3 font-semibold">Admin (Static)</h2>
+          <h2 className="mb-3 font-semibold">Admin Panel</h2>
           <button className="mb-3 rounded border px-3 py-1 text-sm" onClick={onLogout}>Logout</button>
           <div className="space-y-2">
             {modules.map((m) => (
@@ -83,7 +118,7 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
               placeholder="Search/filter records"
               className="w-full max-w-sm rounded border px-3 py-2"
             />
-            <span className="text-sm text-muted-foreground">Direct static mode (no backend logic).</span>
+            <span className="text-sm text-muted-foreground">Dummy records mode for admin content management layout.</span>
           </div>
 
           <div>
