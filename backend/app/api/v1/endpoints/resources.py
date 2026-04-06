@@ -100,6 +100,19 @@ async def create_content(payload: ContentIn, db: AsyncSession = Depends(get_db))
     return ContentOut.model_validate(record, from_attributes=True)
 
 
+
+
+@router.put("/content/{content_id}", response_model=ContentOut)
+async def update_content(content_id: int, payload: ContentIn, db: AsyncSession = Depends(get_db)):
+    record = await db.get(ContentRecord, content_id)
+    if not record:
+        raise HTTPException(status_code=404, detail="Not found")
+    for key, value in payload.model_dump().items():
+        setattr(record, key, value)
+    await db.commit()
+    await db.refresh(record)
+    return ContentOut.model_validate(record, from_attributes=True)
+
 @router.delete("/content/{content_id}")
 async def delete_content(content_id: int, db: AsyncSession = Depends(get_db)):
     record = await db.get(ContentRecord, content_id)
