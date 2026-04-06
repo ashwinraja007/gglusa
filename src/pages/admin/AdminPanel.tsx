@@ -3,15 +3,25 @@ import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useAdminCollections, useCreateRecord, useDeleteRecord, useUpdateRecord } from "@/api/hooks";
 import type { ContentRecord, SeoRecord } from "@/api/types";
 import { apiFetch } from "@/api/client";
-import { configuredMysqlDatabase } from "@/config/adminAuth";
+import { configuredMysqlDatabase, configuredMysqlHost, configuredMysqlPort, configuredMysqlUser } from "@/config/adminAuth";
 
 type Module = "seo" | "content" | "pages" | "headers" | "locations";
 type DummyRecord = Record<string, string | number | boolean>;
 
 type SummaryResponse = {
   status: string;
+  connected?: boolean;
   dbName?: string;
   serverTime?: string;
+  dbVersion?: string;
+  host?: string;
+  port?: number;
+  user?: string;
+  counts?: {
+    pages?: number;
+    content?: number;
+    seo?: number;
+  };
   message?: string;
 };
 
@@ -88,6 +98,7 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
   const [active, setActive] = useState<Module>("content");
   const [search, setSearch] = useState("");
   const [summary, setSummary] = useState<SummaryResponse | null>(null);
+  const [lastChecked, setLastChecked] = useState<string>("-");
   const [form, setForm] = useState<ContentFormState>(initialForm);
   const [seoForm, setSeoForm] = useState<SeoFormState>(initialSeoForm);
   const [editingId, setEditingId] = useState<number | null>(null);
@@ -104,15 +115,29 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
   const deleteSeo = useDeleteRecord("seo");
 
   useEffect(() => {
-    apiFetch<SummaryResponse>("/admin/summary")
-      .then(setSummary)
-      .catch(() => {
-        setSummary({
-          status: "configured",
-          dbName: configuredMysqlDatabase,
-          message: "Database configured. Live connection check is unavailable right now.",
+    const fetchSummary = () => {
+      apiFetch<SummaryResponse>("/admin/summary")
+        .then((data) => {
+          setSummary(data);
+          setLastChecked(new Date().toLocaleString());
+        })
+        .catch(() => {
+          setSummary({
+            status: "configured",
+            connected: false,
+            dbName: configuredMysqlDatabase,
+            host: configuredMysqlHost,
+            port: configuredMysqlPort,
+            user: configuredMysqlUser,
+            message: "Database configured. Live connection check is unavailable right now.",
+          });
+          setLastChecked(new Date().toLocaleString());
         });
-      });
+    };
+
+    fetchSummary();
+    const timer = window.setInterval(fetchSummary, 15000);
+    return () => window.clearInterval(timer);
   }, []);
 
   const counters = useMemo(
@@ -229,17 +254,24 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
     <div className="min-h-screen bg-slate-50 p-4 md:p-6">
       <div className="mb-4 rounded-xl border bg-white p-4 text-sm">
         <p className="font-semibold">Remote MySQL status</p>
-        {summary?.status === "ok" ? (
-          <p>
-            Connected to <span className="font-semibold">{summary.dbName}</span>
-            {summary.serverTime ? ` · Server time: ${summary.serverTime}` : ""}
-          </p>
-        ) : (
-          <p>
-            <span className="font-semibold">{summary?.dbName ?? configuredMysqlDatabase}</span>
-            {summary?.message ? ` · ${summary.message}` : ""}
-          </p>
-        )}
+        <div className="mt-2 grid gap-2 sm:grid-cols-2">
+          <p><span className="font-medium">Connection:</span> {summary?.connected ? "Connected" : "Not verified"}</p>
+          <p><span className="font-medium">Database:</span> {summary?.dbName ?? configuredMysqlDatabase}</p>
+          <p><span className="font-medium">Host:</span> {summary?.host ?? configuredMysqlHost}</p>
+          <p><span className="font-medium">Port:</span> {summary?.port ?? configuredMysqlPort}</p>
+          <p><span className="font-medium">User:</span> {summary?.user ?? configuredMysqlUser}</p>
+          <p><span className="font-medium">Last checked:</span> {lastChecked}</p>
+          <p><span className="font-medium">DB time:</span> {summary?.serverTime ?? "-"}</p>
+          <p><span className="font-medium">DB version:</span> {summary?.dbVersion ?? "-"}</p>
+        </div>
+        {summary?.counts ? (
+          <div className="mt-3 grid gap-2 sm:grid-cols-3">
+            <div className="rounded border p-2">Pages rows: {summary.counts.pages ?? 0}</div>
+            <div className="rounded border p-2">Content rows: {summary.counts.content ?? 0}</div>
+            <div className="rounded border p-2">SEO rows: {summary.counts.seo ?? 0}</div>
+          </div>
+        ) : null}
+        {summary?.message ? <p className="mt-2 text-amber-700">{summary.message}</p> : null}
       </div>
 
       <div className="grid gap-4 md:grid-cols-[240px_1fr]">

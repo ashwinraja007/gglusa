@@ -54,17 +54,39 @@ app.post("/api/v1/admin/login", async (req, res) => {
 
 app.get("/api/v1/admin/summary", async (_req, res) => {
   try {
-    const [rows] = await pool.query("SELECT DATABASE() AS dbName, NOW() AS serverTime");
-    const summary = Array.isArray(rows) ? rows[0] : null;
+    const [summaryRows] = await pool.query("SELECT DATABASE() AS dbName, NOW() AS serverTime, VERSION() AS dbVersion");
+    const [contentCountRows] = await pool.query("SELECT COUNT(*) AS total FROM content");
+    const [seoCountRows] = await pool.query("SELECT COUNT(*) AS total FROM seo_records");
+    const [pagesCountRows] = await pool.query("SELECT COUNT(*) AS total FROM pages");
+
+    const summary = Array.isArray(summaryRows) ? summaryRows[0] : null;
+    const contentCount = Array.isArray(contentCountRows) ? Number(contentCountRows[0]?.total ?? 0) : 0;
+    const seoCount = Array.isArray(seoCountRows) ? Number(seoCountRows[0]?.total ?? 0) : 0;
+    const pagesCount = Array.isArray(pagesCountRows) ? Number(pagesCountRows[0]?.total ?? 0) : 0;
 
     return res.json({
       status: "ok",
+      connected: true,
       dbName: summary?.dbName ?? process.env.MYSQL_DATABASE,
       serverTime: summary?.serverTime,
+      dbVersion: summary?.dbVersion,
+      host: process.env.MYSQL_HOST,
+      port: Number(process.env.MYSQL_PORT ?? 3306),
+      user: process.env.MYSQL_USER,
+      counts: {
+        pages: pagesCount,
+        content: contentCount,
+        seo: seoCount,
+      },
     });
   } catch (error) {
     return res.status(500).json({
       status: "error",
+      connected: false,
+      dbName: process.env.MYSQL_DATABASE,
+      host: process.env.MYSQL_HOST,
+      port: Number(process.env.MYSQL_PORT ?? 3306),
+      user: process.env.MYSQL_USER,
       message: error instanceof Error ? error.message : "Unknown error",
     });
   }
