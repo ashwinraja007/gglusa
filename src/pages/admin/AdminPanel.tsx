@@ -62,7 +62,7 @@ const seedData: Record<Exclude<Module, "content">, DummyRecord[]> = {
   ],
 };
 
-const initialSeoForm: SeoFormState = {
+const defaultSeoFormState: SeoFormState = {
   path: "/",
   title: "",
   description: "",
@@ -80,26 +80,28 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
   const [active, setActive] = useState<Module>("content");
   const [search, setSearch] = useState("");
   const [form, setForm] = useState<ContentFormState>(initialForm);
-  const [seoForm, setSeoForm] = useState<SeoFormState>(initialSeoForm);
+  const [seoFormState, setSeoFormState] = useState<SeoFormState>(defaultSeoFormState);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [formError, setFormError] = useState("");
-  const [seoError, setSeoError] = useState("");
-  const [editingSeoId, setEditingSeoId] = useState<number | null>(null);
+  const [seoFormError, setSeoFormError] = useState("");
+  const [editingSeoRecordId, setEditingSeoRecordId] = useState<number | null>(null);
 
   const { pages, headers, locations, seo, content } = useAdminCollections(search);
-  const seoAll = useQuery({
+  const seoRecordsQuery = useQuery({
     queryKey: ["seo", "all-records"],
     queryFn: () => apiFetch<{ items: SeoRecord[]; total: number }>("/seo?page=1&page_size=500"),
     refetchInterval: 10000,
   });
-  const seoItems = seoAll.data?.items?.length ? seoAll.data.items : (seo.data?.items ?? []);
+  const seoItems = seoRecordsQuery.data?.items?.length ? seoRecordsQuery.data.items : (seo.data?.items ?? []);
+  const seoLoading = seoRecordsQuery.isLoading || seo.isLoading;
+  const seoLoadError = (seoRecordsQuery.error as Error | null)?.message || (seo.error as Error | null)?.message || "";
 
-  const createContent = useCreateRecord("content");
-  const deleteContent = useDeleteRecord("content");
-  const updateContent = useUpdateRecord("content");
-  const upsertSeo = useCreateRecord("seo");
-  const updateSeo = useUpdateRecord("seo");
-  const deleteSeo = useDeleteRecord("seo");
+  const createContentRecord = useCreateRecord("content");
+  const deleteContentRecord = useDeleteRecord("content");
+  const updateContentRecord = useUpdateRecord("content");
+  const createSeoRecord = useCreateRecord("seo");
+  const updateSeoRecord = useUpdateRecord("seo");
+  const deleteSeoRecord = useDeleteRecord("seo");
 
 
   const counters = useMemo(
@@ -108,9 +110,9 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
       headers: headers.data?.total ?? seedData.headers.length,
       locations: locations.data?.total ?? seedData.locations.length,
       content: content.data?.total ?? 0,
-      seo: seoAll.data?.total ?? seo.data?.total ?? seoItems.length ?? seedData.seo.length,
+      seo: seoRecordsQuery.data?.total ?? seo.data?.total ?? seoItems.length ?? seedData.seo.length,
     }),
-    [content.data?.total, headers.data?.total, locations.data?.total, pages.data?.total, seo.data?.total, seoAll.data?.total, seoItems.length],
+    [content.data?.total, headers.data?.total, locations.data?.total, pages.data?.total, seo.data?.total, seoRecordsQuery.data?.total, seoItems.length],
   );
 
   const filtered = useMemo(() => {
@@ -136,9 +138,9 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
       };
 
       if (editingId) {
-        await updateContent.mutateAsync({ id: editingId, payload });
+        await updateContentRecord.mutateAsync({ id: editingId, payload });
       } else {
-        await createContent.mutateAsync(payload);
+        await createContentRecord.mutateAsync(payload);
       }
 
       setForm(initialForm);
@@ -162,48 +164,48 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
 
 
   useEffect(() => {
-    const existing = seoItems.find((item) => item.path === seoForm.path);
+    const existing = seoItems.find((item) => item.path === seoFormState.path);
     if (!existing) {
-      setEditingSeoId(null);
+      setEditingSeoRecordId(null);
       return;
     }
 
-    setEditingSeoId(existing.id);
-    setSeoForm((prev) => ({
+    setEditingSeoRecordId(existing.id);
+    setSeoFormState((prev) => ({
       ...prev,
       title: existing.title,
       description: existing.description,
       keywords: existing.keywords,
     }));
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [seoForm.path, seoAll.data?.items, seo.data?.items]);
+  }, [seoFormState.path, seoRecordsQuery.data?.items, seo.data?.items]);
 
   const submitSeo = async (event: FormEvent) => {
     event.preventDefault();
-    setSeoError("");
+    setSeoFormError("");
 
     try {
       const payload = {
-        path: seoForm.path,
-        title: seoForm.title,
-        description: seoForm.description,
-        keywords: seoForm.keywords,
+        path: seoFormState.path,
+        title: seoFormState.title,
+        description: seoFormState.description,
+        keywords: seoFormState.keywords,
         extra_meta_json: {},
       };
 
-      if (editingSeoId) {
-        await updateSeo.mutateAsync({ id: editingSeoId, payload });
+      if (editingSeoRecordId) {
+        await updateSeoRecord.mutateAsync({ id: editingSeoRecordId, payload });
       } else {
-        await upsertSeo.mutateAsync(payload);
+        await createSeoRecord.mutateAsync(payload);
       }
     } catch {
-      setSeoError("Unable to save SEO record. Please check inputs.");
+      setSeoFormError("Unable to save SEO record. Please check inputs.");
     }
   };
 
   const onEditSeo = (record: SeoRecord) => {
-    setEditingSeoId(record.id);
-    setSeoForm({
+    setEditingSeoRecordId(record.id);
+    setSeoFormState({
       path: record.path,
       title: record.title,
       description: record.description,
@@ -254,31 +256,35 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
             <>
               <form onSubmit={submitSeo} className="space-y-3 rounded-lg border p-4">
                 <h3 className="font-semibold">Update SEO (All Pages)</h3>
-                <select className="w-full rounded border px-3 py-2" value={seoForm.path} onChange={(e) => setSeoForm((prev) => ({ ...prev, path: e.target.value, title: "", description: "", keywords: "" }))}>
+                <select className="w-full rounded border px-3 py-2" value={seoFormState.path} onChange={(e) => setSeoFormState((prev) => ({ ...prev, path: e.target.value, title: "", description: "", keywords: "" }))}>
                   {seoPaths.map((path) => (
                     <option key={path} value={path}>
                       {path}
                     </option>
                   ))}
                 </select>
-                <input className="w-full rounded border px-3 py-2" placeholder="Meta title" value={seoForm.title} onChange={(e) => setSeoForm((prev) => ({ ...prev, title: e.target.value }))} />
-                <textarea className="min-h-20 w-full rounded border px-3 py-2" placeholder="Meta description" value={seoForm.description} onChange={(e) => setSeoForm((prev) => ({ ...prev, description: e.target.value }))} />
-                <input className="w-full rounded border px-3 py-2" placeholder="Meta keywords (comma separated)" value={seoForm.keywords} onChange={(e) => setSeoForm((prev) => ({ ...prev, keywords: e.target.value }))} />
-                {seoError ? <p className="text-sm text-red-600">{seoError}</p> : null}
-                <button className="rounded bg-slate-900 px-4 py-2 text-white" type="submit">{editingSeoId ? "Update SEO" : "Save SEO"}</button>
+                <input className="w-full rounded border px-3 py-2" placeholder="Meta title" value={seoFormState.title} onChange={(e) => setSeoFormState((prev) => ({ ...prev, title: e.target.value }))} />
+                <textarea className="min-h-20 w-full rounded border px-3 py-2" placeholder="Meta description" value={seoFormState.description} onChange={(e) => setSeoFormState((prev) => ({ ...prev, description: e.target.value }))} />
+                <input className="w-full rounded border px-3 py-2" placeholder="Meta keywords (comma separated)" value={seoFormState.keywords} onChange={(e) => setSeoFormState((prev) => ({ ...prev, keywords: e.target.value }))} />
+                {seoFormError ? <p className="text-sm text-red-600">{seoFormError}</p> : null}
+                <button className="rounded bg-slate-900 px-4 py-2 text-white" type="submit">{editingSeoRecordId ? "Update SEO" : "Save SEO"}</button>
               </form>
 
               <div>
                 <h3 className="mb-2 font-semibold">SEO records</h3>
-                {seoItems.length === 0 ? (
-                  <p className="text-sm text-muted-foreground">No SEO records found in API response. Click Save SEO to create one for the selected path.</p>
+                {seoLoading ? (
+                  <p className="text-sm text-muted-foreground">Loading SEO records from MySQL…</p>
+                ) : seoLoadError ? (
+                  <p className="text-sm text-red-600">Failed to load SEO records from API: {seoLoadError}</p>
+                ) : seoItems.length === 0 ? (
+                  <p className="text-sm text-muted-foreground">No SEO records found in MySQL `seo_records` table for the current query.</p>
                 ) : (
                   <div className="space-y-2">
                     {seoItems.map((item) => (
                       <div key={item.id} className="rounded border p-3">
                         <div className="mb-2 flex gap-2">
                           <button className="rounded border px-2 py-1 text-xs" onClick={() => onEditSeo(item)}>Edit</button>
-                          <button className="rounded border border-red-200 px-2 py-1 text-xs text-red-600" onClick={() => deleteSeo.mutate(item.id)}>Delete</button>
+                          <button className="rounded border border-red-200 px-2 py-1 text-xs text-red-600" onClick={() => deleteSeoRecord.mutate(item.id)}>Delete</button>
                         </div>
                         <div className="mb-2 grid gap-1 text-xs">
                           <p><span className="font-medium">ID:</span> {item.id}</p>
@@ -327,7 +333,7 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
                       <div key={item.id} className="rounded border p-3">
                         <div className="mb-2 flex gap-2">
                           <button className="rounded border px-2 py-1 text-xs" onClick={() => onEditContent(item)}>Edit</button>
-                          <button className="rounded border border-red-200 px-2 py-1 text-xs text-red-600" onClick={() => deleteContent.mutate(item.id)}>Delete</button>
+                          <button className="rounded border border-red-200 px-2 py-1 text-xs text-red-600" onClick={() => deleteContentRecord.mutate(item.id)}>Delete</button>
                         </div>
                         <div className="mb-2 grid gap-1 text-xs">
                           <p><span className="font-medium">ID:</span> {item.id}</p>
