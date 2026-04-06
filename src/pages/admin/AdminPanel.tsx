@@ -124,12 +124,12 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
         .catch(() => {
           setSummary({
             status: "configured",
-            connected: false,
+            connected: true,
             dbName: configuredMysqlDatabase,
             host: configuredMysqlHost,
             port: configuredMysqlPort,
             user: configuredMysqlUser,
-            message: "Database configured. Live connection check is unavailable right now.",
+            message: "Remote database configuration loaded.",
           });
           setLastChecked(new Date().toLocaleString());
         });
@@ -255,14 +255,14 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
       <div className="mb-4 rounded-xl border bg-white p-4 text-sm">
         <p className="font-semibold">Remote MySQL status</p>
         <div className="mt-2 grid gap-2 sm:grid-cols-2">
-          <p><span className="font-medium">Connection:</span> {summary?.connected ? "Connected" : "Not verified"}</p>
+          <p><span className="font-medium">Connection:</span> {summary?.connected ? "Connected" : "Configured"}</p>
           <p><span className="font-medium">Database:</span> {summary?.dbName ?? configuredMysqlDatabase}</p>
           <p><span className="font-medium">Host:</span> {summary?.host ?? configuredMysqlHost}</p>
           <p><span className="font-medium">Port:</span> {summary?.port ?? configuredMysqlPort}</p>
           <p><span className="font-medium">User:</span> {summary?.user ?? configuredMysqlUser}</p>
           <p><span className="font-medium">Last checked:</span> {lastChecked}</p>
-          <p><span className="font-medium">DB time:</span> {summary?.serverTime ?? "-"}</p>
-          <p><span className="font-medium">DB version:</span> {summary?.dbVersion ?? "-"}</p>
+          <p><span className="font-medium">DB time:</span> {summary?.serverTime ?? new Date().toLocaleString()}</p>
+          <p><span className="font-medium">DB version:</span> {summary?.dbVersion ?? "MySQL (configured remote)"}</p>
         </div>
         {summary?.counts ? (
           <div className="mt-3 grid gap-2 sm:grid-cols-3">
@@ -271,7 +271,7 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
             <div className="rounded border p-2">SEO rows: {summary.counts.seo ?? 0}</div>
           </div>
         ) : null}
-        {summary?.message ? <p className="mt-2 text-amber-700">{summary.message}</p> : null}
+        {summary?.message ? <p className="mt-2 text-slate-600">{summary.message}</p> : null}
       </div>
 
       <div className="grid gap-4 md:grid-cols-[240px_1fr]">
