@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.v1.endpoints.resources import router as api_router
 from app.core.config import settings
 
-app = FastAPI(title=settings.APP_NAME)
+app = FastAPI(title=settings.PROJECT_NAME)
 
 app.add_middleware(
     CORSMiddleware,
