@@ -60,72 +60,26 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
   const seoLoading = seoRecordsQuery.isLoading || seo.isLoading;
   const seoLoadError = (seoRecordsQuery.error as Error | null)?.message || (seo.error as Error | null)?.message || "";
 
-  const createContentRecord = useCreateRecord("content");
-  const deleteContentRecord = useDeleteRecord("content");
-  const updateContentRecord = useUpdateRecord("content");
   const createSeoRecord = useCreateRecord("seo");
   const updateSeoRecord = useUpdateRecord("seo");
   const deleteSeoRecord = useDeleteRecord("seo");
 
-
   const counters = useMemo(
     () => ({
-      pages: pages.data?.total ?? seedData.pages.length,
-      headers: headers.data?.total ?? seedData.headers.length,
-      locations: locations.data?.total ?? seedData.locations.length,
-      content: content.data?.total ?? 0,
-      seo: seoRecordsQuery.data?.total ?? seo.data?.total ?? seoItems.length ?? seedData.seo.length,
+      seo: seoRecordsQuery.data?.total ?? seo.data?.total ?? seoItems.length ?? 0,
     }),
-    [content.data?.total, headers.data?.total, locations.data?.total, pages.data?.total, seo.data?.total, seoRecordsQuery.data?.total, seoItems.length],
+    [seo.data?.total, seoRecordsQuery.data?.total, seoItems.length],
   );
 
   const filtered = useMemo(() => {
-    if (active === "content") {
-      return content.data?.items ?? [];
-    }
-
-    const items = seedData[active as Exclude<Module, "content">] ?? [];
     const q = search.trim().toLowerCase();
-    return items.filter((record) => JSON.stringify(record).toLowerCase().includes(q));
-  }, [active, content.data?.items, search]);
-
-  const submitContent = async (event: FormEvent) => {
-    event.preventDefault();
-    setFormError("");
-
-    try {
-      const payload = {
-        page_path: form.page_path,
-        section_key: form.section_key,
-        content_json: JSON.parse(form.content_json),
-        images_json: JSON.parse(form.images_json),
-      };
-
-      if (editingId) {
-        await updateContentRecord.mutateAsync({ id: editingId, payload });
-      } else {
-        await createContentRecord.mutateAsync(payload);
-      }
-
-      setForm(initialForm);
-      setEditingId(null);
-    } catch {
-      setFormError("Please provide valid JSON in content_json and images_json.");
-    }
-  };
-
-  const onEditContent = (record: ContentRecord) => {
-    setEditingId(record.id);
-    setForm({
-      page_path: record.page_path,
-      section_key: record.section_key,
-      content_json: JSON.stringify(record.content_json, null, 2),
-      images_json: JSON.stringify(record.images_json ?? {}, null, 2),
-    });
-    setActive("content");
-  };
-
-
+    return seoItems.filter((item) => 
+      item.path.toLowerCase().includes(q) ||
+      item.title.toLowerCase().includes(q) ||
+      item.description.toLowerCase().includes(q) ||
+      item.keywords.toLowerCase().includes(q)
+    );
+  }, [seoItems, search]);
 
   useEffect(() => {
     const existing = seoItems.find((item) => item.path === seoFormState.path);
