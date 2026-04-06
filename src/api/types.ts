@@ -26,6 +26,8 @@ export type SeoRecord = {
   description: string;
   keywords: string;
   extra_meta_json: Record<string, string>;
+  created_at?: string;
+  updated_at?: string;
 };
 
 export type HeaderRecord = {
