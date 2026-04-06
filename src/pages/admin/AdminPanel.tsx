@@ -54,9 +54,45 @@ const initialContentForm: ContentFormState = {
   images_json: '{"hero_image":"/lovable-uploads/41795fb5-562d-45d1-a8d3-f26724bc079b.png"}',
 };
 
+const initialSeoForm: SeoFormState = {
+  path: "/",
+  title: "",
+  description: "",
+  keywords: "",
+};
+
+const initialForm: ContentFormState = {
+  page_path: "/about",
+  section_key: "hero",
+  content_json: '{"title":"About GGL","subtitle":"Update me"}',
+  images_json: '{"hero_image":"/lovable-uploads/41795fb5-562d-45d1-a8d3-f26724bc079b.png"}',
+};
+
 export function AdminPanel({ onLogout }: { onLogout: () => void }) {
-  const [active, setActive] = useState<Module>("seo");
+  const [active, setActive] = useState<Module>("content");
   const [search, setSearch] = useState("");
+  const [form, setForm] = useState<ContentFormState>(initialForm);
+  const [seoForm, setSeoForm] = useState<SeoFormState>(initialSeoForm);
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [formError, setFormError] = useState("");
+  const [seoError, setSeoError] = useState("");
+  const [editingSeoId, setEditingSeoId] = useState<number | null>(null);
+
+  const { pages, headers, locations, seo, content } = useAdminCollections(search);
+  const seoAll = useQuery({
+    queryKey: ["seo", "all-records"],
+    queryFn: () => apiFetch<{ items: SeoRecord[]; total: number }>("/seo?page=1&page_size=500"),
+    refetchInterval: 10000,
+  });
+  const seoItems = seoAll.data?.items?.length ? seoAll.data.items : (seo.data?.items ?? []);
+
+  const createContent = useCreateRecord("content");
+  const deleteContent = useDeleteRecord("content");
+  const updateContent = useUpdateRecord("content");
+  const upsertSeo = useCreateRecord("seo");
+  const updateSeo = useUpdateRecord("seo");
+  const deleteSeo = useDeleteRecord("seo");
+
 
   const [seoForm, setSeoForm] = useState<SeoFormState>(initialSeoForm);
   const [seoError, setSeoError] = useState("");
