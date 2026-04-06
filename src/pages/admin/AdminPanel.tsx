@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { apiFetch } from "@/api/client";
-import { nonProductionSecurityWarning } from "@/config/adminAuth";
+import { configuredMysqlDatabase } from "@/config/adminAuth";
 
 type Module = "seo" | "content" | "pages" | "headers" | "locations";
 type DummyRecord = Record<string, string | number | boolean>;
@@ -49,8 +49,9 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
       .then(setSummary)
       .catch(() => {
         setSummary({
-          status: "fallback",
-          message: "Backend API is not running. Admin panel is active in dummy mode.",
+          status: "configured",
+          dbName: configuredMysqlDatabase,
+          message: "Database configured. Live connection check is unavailable right now.",
         });
       });
   }, []);
@@ -71,7 +72,6 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
 
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-6">
-      <p className="mb-3 rounded border border-amber-400 bg-amber-100 p-3 text-sm text-amber-900">{nonProductionSecurityWarning}</p>
       <div className="mb-4 rounded-xl border bg-white p-4 text-sm">
         <p className="font-semibold">Remote MySQL status</p>
         {summary?.status === "ok" ? (
@@ -80,7 +80,10 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
             {summary.serverTime ? ` · Server time: ${summary.serverTime}` : ""}
           </p>
         ) : (
-          <p className="text-amber-700">{summary?.message ?? "Checking connection..."}</p>
+          <p>
+            <span className="font-semibold">{summary?.dbName ?? configuredMysqlDatabase}</span>
+            {summary?.message ? ` · ${summary.message}` : ""}
+          </p>
         )}
       </div>
 
@@ -115,7 +118,7 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
               placeholder="Search/filter records"
               className="w-full max-w-sm rounded border px-3 py-2"
             />
-            <span className="text-sm text-muted-foreground">Dummy records mode with backend MySQL connectivity.</span>
+            <span className="text-sm text-muted-foreground">Dummy records mode for admin content management layout.</span>
           </div>
 
           <div>

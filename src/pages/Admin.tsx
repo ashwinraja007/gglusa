@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
 
 import { apiFetch } from "@/api/client";
-import { ADMIN_AUTH_STORAGE_KEY, defaultAdminCredentials, nonProductionSecurityWarning } from "@/config/adminAuth";
+import { ADMIN_AUTH_STORAGE_KEY, adminLoginHint, defaultAdminCredentials } from "@/config/adminAuth";
 import { AdminPanel } from "./admin/AdminPanel";
 
 type LoginResponse = {
@@ -65,7 +65,7 @@ export default function AdminPage() {
     <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4">
       <form className="w-full max-w-md space-y-4 rounded-xl border bg-white p-6" onSubmit={login}>
         <h1 className="text-2xl font-semibold">Admin Login</h1>
-        <p className="rounded border border-amber-400 bg-amber-100 p-3 text-sm text-amber-900">{nonProductionSecurityWarning}</p>
+        <p className="rounded border border-amber-400 bg-amber-100 p-3 text-sm text-amber-900">{adminLoginHint}</p>
         <input className="w-full rounded border px-3 py-2" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
         <input className="w-full rounded border px-3 py-2" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
         {error ? <p className="text-sm text-red-600">{error}</p> : null}
