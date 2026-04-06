@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { ScrollToTop } from "./components/common/ScrollToTop";
+import { RouteMeta } from "./components/seo/RouteMeta";
 import About from "./pages/About";
 import AdminPage from "./pages/Admin";
 import Careers from "./pages/Careers";
@@ -33,6 +34,7 @@ function App() {
       <TooltipProvider>
         <BrowserRouter>
           <ScrollToTop />
+          <RouteMeta />
           <Routes>
             <Route path="/" element={<HomeDynamic />} />
             <Route path="/contact" element={<Contact />} />
