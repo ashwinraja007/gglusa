@@ -1,4 +1,5 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 import { useAdminCollections, useCreateRecord, useDeleteRecord, useUpdateRecord } from "@/api/hooks";
 import type { ContentRecord, SeoRecord } from "@/api/types";
@@ -107,6 +108,11 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
   const [editingSeoId, setEditingSeoId] = useState<number | null>(null);
 
   const { pages, headers, locations, seo, content } = useAdminCollections(search);
+  const seoAll = useQuery({
+    queryKey: ["seo", "all-records"],
+    queryFn: () => apiFetch<{ items: SeoRecord[]; total: number }>("/seo?page=1&page_size=500"),
+    refetchInterval: 10000,
+  });
   const createContent = useCreateRecord("content");
   const deleteContent = useDeleteRecord("content");
   const updateContent = useUpdateRecord("content");
@@ -146,9 +152,9 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
       headers: headers.data?.total ?? seedData.headers.length,
       locations: locations.data?.total ?? seedData.locations.length,
       content: content.data?.total ?? 0,
-      seo: seo.data?.total ?? seedData.seo.length,
+      seo: seoAll.data?.total ?? seo.data?.total ?? seedData.seo.length,
     }),
-    [content.data?.total, headers.data?.total, locations.data?.total, pages.data?.total, seo.data?.total],
+    [content.data?.total, headers.data?.total, locations.data?.total, pages.data?.total, seo.data?.total, seoAll.data?.total],
   );
 
   const filtered = useMemo(() => {
@@ -200,7 +206,7 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
 
 
   useEffect(() => {
-    const existing = (seo.data?.items ?? []).find((item) => item.path === seoForm.path);
+    const existing = (seoAll.data?.items ?? []).find((item) => item.path === seoForm.path);
     if (!existing) {
       setEditingSeoId(null);
       return;
@@ -214,7 +220,7 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
       keywords: existing.keywords,
     }));
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [seoForm.path, seo.data?.items]);
+  }, [seoForm.path, seoAll.data?.items]);
 
   const submitSeo = async (event: FormEvent) => {
     event.preventDefault();
@@ -330,17 +336,26 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
 
               <div>
                 <h3 className="mb-2 font-semibold">SEO records</h3>
-                {(seo.data?.items ?? []).length === 0 ? (
+                {(seoAll.data?.items ?? []).length === 0 ? (
                   <p className="text-sm text-muted-foreground">No SEO records found.</p>
                 ) : (
                   <div className="space-y-2">
-                    {(seo.data?.items ?? []).map((item) => (
+                    {(seoAll.data?.items ?? []).map((item) => (
                       <div key={item.id} className="rounded border p-3">
                         <div className="mb-2 flex gap-2">
                           <button className="rounded border px-2 py-1 text-xs" onClick={() => onEditSeo(item)}>Edit</button>
                           <button className="rounded border border-red-200 px-2 py-1 text-xs text-red-600" onClick={() => deleteSeo.mutate(item.id)}>Delete</button>
                         </div>
-                        <pre className="text-xs">{JSON.stringify(item, null, 2)}</pre>
+                        <div className="mb-2 grid gap-1 text-xs">
+                          <p><span className="font-medium">ID:</span> {item.id}</p>
+                          <p><span className="font-medium">Path:</span> {item.path}</p>
+                          <p><span className="font-medium">Title:</span> {item.title}</p>
+                          <p><span className="font-medium">Description:</span> {item.description}</p>
+                          <p><span className="font-medium">Keywords:</span> {item.keywords}</p>
+                          <p><span className="font-medium">Created:</span> {item.created_at ?? "-"}</p>
+                          <p><span className="font-medium">Updated:</span> {item.updated_at ?? "-"}</p>
+                        </div>
+                        <pre className="text-xs">{JSON.stringify(item.extra_meta_json ?? {}, null, 2)}</pre>
                       </div>
                     ))}
                   </div>
@@ -380,7 +395,16 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
                           <button className="rounded border px-2 py-1 text-xs" onClick={() => onEditContent(item)}>Edit</button>
                           <button className="rounded border border-red-200 px-2 py-1 text-xs text-red-600" onClick={() => deleteContent.mutate(item.id)}>Delete</button>
                         </div>
-                        <pre className="text-xs">{JSON.stringify(item, null, 2)}</pre>
+                        <div className="mb-2 grid gap-1 text-xs">
+                          <p><span className="font-medium">ID:</span> {item.id}</p>
+                          <p><span className="font-medium">Path:</span> {item.path}</p>
+                          <p><span className="font-medium">Title:</span> {item.title}</p>
+                          <p><span className="font-medium">Description:</span> {item.description}</p>
+                          <p><span className="font-medium">Keywords:</span> {item.keywords}</p>
+                          <p><span className="font-medium">Created:</span> {item.created_at ?? "-"}</p>
+                          <p><span className="font-medium">Updated:</span> {item.updated_at ?? "-"}</p>
+                        </div>
+                        <pre className="text-xs">{JSON.stringify(item.extra_meta_json ?? {}, null, 2)}</pre>
                       </div>
                     ))}
                   </div>
@@ -396,7 +420,16 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
                 <div className="space-y-2">
                   {(filtered as DummyRecord[]).map((item) => (
                     <div key={String(item.id)} className="rounded border p-3">
-                      <pre className="text-xs">{JSON.stringify(item, null, 2)}</pre>
+                      <div className="mb-2 grid gap-1 text-xs">
+                          <p><span className="font-medium">ID:</span> {item.id}</p>
+                          <p><span className="font-medium">Path:</span> {item.path}</p>
+                          <p><span className="font-medium">Title:</span> {item.title}</p>
+                          <p><span className="font-medium">Description:</span> {item.description}</p>
+                          <p><span className="font-medium">Keywords:</span> {item.keywords}</p>
+                          <p><span className="font-medium">Created:</span> {item.created_at ?? "-"}</p>
+                          <p><span className="font-medium">Updated:</span> {item.updated_at ?? "-"}</p>
+                        </div>
+                        <pre className="text-xs">{JSON.stringify(item.extra_meta_json ?? {}, null, 2)}</pre>
                     </div>
                   ))}
                 </div>
