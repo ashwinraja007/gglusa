@@ -4,15 +4,16 @@ import { useQuery } from "@tanstack/react-query";
 import { useAdminCollections, useCreateRecord, useDeleteRecord, useUpdateRecord } from "@/api/hooks";
 import { apiFetch } from "@/api/client";
 import type { ContentRecord, SeoRecord } from "@/api/types";
+import type { Page } from "@/api/types"; // Import Page type to fetch paths
 
-type Module = "seo" | "content" | "pages" | "headers" | "locations";
-type DummyRecord = Record<string, string | number | boolean>;
+type Module = "seo"; // Only SEO module will be displayed
 
 type SeoFormState = {
   path: string;
   title: string;
   description: string;
   keywords: string;
+  extra_meta_json: object; // To hold and re-send existing extra_meta_json
 };
 
 const seoPaths = [
@@ -34,19 +35,6 @@ const seoPaths = [
   "/services/e-commerce",
 ];
 
-type ContentFormState = {
-  page_path: string;
-  section_key: string;
-  content_json: string;
-  images_json: string;
-};
-
-const modules: Module[] = ["seo", "content", "pages", "headers", "locations"];
-
-const seedData: Record<Exclude<Module, "content">, DummyRecord[]> = {
-  seo: [
-    { id: 1, path: "/", title: "Home", description: "Homepage metadata" },
-    { id: 2, path: "/about", title: "About", description: "About metadata" },
   ],
   pages: [
     { id: 1, path: "/about", component_key: "about_dynamic" },
