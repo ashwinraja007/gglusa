@@ -92,6 +92,142 @@ app.get("/api/v1/admin/summary", async (_req, res) => {
   }
 });
 
+
+
+const parseJsonField = (value) => {
+  if (!value) return {};
+  if (typeof value === "object") return value;
+  try {
+    return JSON.parse(value);
+  } catch {
+    return {};
+  }
+};
+
+app.get("/api/v1/seo", async (req, res) => {
+  try {
+    const page = Number(req.query.page ?? 1);
+    const pageSize = Number(req.query.page_size ?? 20);
+    const q = String(req.query.q ?? "").trim();
+    const offset = (Math.max(page, 1) - 1) * Math.max(pageSize, 1);
+
+    const whereSql = q ? "WHERE path LIKE ? OR title LIKE ? OR description LIKE ? OR keywords LIKE ?" : "";
+    const whereParams = q ? [`%${q}%`, `%${q}%`, `%${q}%`, `%${q}%`] : [];
+
+    const [rows] = await pool.query(
+      `SELECT id, path, title, description, keywords, extra_meta_json, created_at, updated_at FROM seo_records ${whereSql} ORDER BY id DESC LIMIT ? OFFSET ?`,
+      [...whereParams, Math.max(pageSize, 1), offset],
+    );
+
+    const [countRows] = await pool.query(
+      `SELECT COUNT(*) as total FROM seo_records ${whereSql}`,
+      whereParams,
+    );
+
+    const items = Array.isArray(rows)
+      ? rows.map((row) => ({
+          ...row,
+          extra_meta_json: parseJsonField(row.extra_meta_json),
+        }))
+      : [];
+
+    const total = Array.isArray(countRows) ? Number(countRows[0]?.total ?? 0) : 0;
+
+    return res.json({ items, page: Math.max(page, 1), page_size: Math.max(pageSize, 1), total });
+  } catch (error) {
+    return res.status(500).json({
+      message: error instanceof Error ? error.message : "Failed to fetch SEO records",
+    });
+  }
+});
+
+app.post("/api/v1/seo", async (req, res) => {
+  try {
+    const { path, title, description, keywords, extra_meta_json } = req.body ?? {};
+    if (!path || !title || !description || !keywords) {
+      return res.status(400).json({ message: "path, title, description, keywords are required" });
+    }
+
+    const [existingRows] = await pool.query("SELECT id FROM seo_records WHERE path = ? LIMIT 1", [path]);
+    const existingId = Array.isArray(existingRows) && existingRows[0] ? Number(existingRows[0].id) : null;
+
+    if (existingId) {
+      await pool.query(
+        "UPDATE seo_records SET title = ?, description = ?, keywords = ?, extra_meta_json = ? WHERE id = ?",
+        [title, description, keywords, JSON.stringify(extra_meta_json ?? {}), existingId],
+      );
+      const [updatedRows] = await pool.query(
+        "SELECT id, path, title, description, keywords, extra_meta_json, created_at, updated_at FROM seo_records WHERE id = ?",
+        [existingId],
+      );
+      const record = Array.isArray(updatedRows) ? updatedRows[0] : null;
+      return res.json({ ...record, extra_meta_json: parseJsonField(record?.extra_meta_json) });
+    }
+
+    const [result] = await pool.query(
+      "INSERT INTO seo_records (path, title, description, keywords, extra_meta_json) VALUES (?, ?, ?, ?, ?)",
+      [path, title, description, keywords, JSON.stringify(extra_meta_json ?? {})],
+    );
+
+    const insertedId = Number(result?.insertId);
+    const [insertedRows] = await pool.query(
+      "SELECT id, path, title, description, keywords, extra_meta_json, created_at, updated_at FROM seo_records WHERE id = ?",
+      [insertedId],
+    );
+
+    const record = Array.isArray(insertedRows) ? insertedRows[0] : null;
+    return res.status(201).json({ ...record, extra_meta_json: parseJsonField(record?.extra_meta_json) });
+  } catch (error) {
+    return res.status(500).json({
+      message: error instanceof Error ? error.message : "Failed to save SEO record",
+    });
+  }
+});
+
+app.put("/api/v1/seo/:id", async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const { path, title, description, keywords, extra_meta_json } = req.body ?? {};
+
+    const [result] = await pool.query(
+      "UPDATE seo_records SET path = ?, title = ?, description = ?, keywords = ?, extra_meta_json = ? WHERE id = ?",
+      [path, title, description, keywords, JSON.stringify(extra_meta_json ?? {}), id],
+    );
+
+    if (!result?.affectedRows) {
+      return res.status(404).json({ message: "SEO record not found" });
+    }
+
+    const [rows] = await pool.query(
+      "SELECT id, path, title, description, keywords, extra_meta_json, created_at, updated_at FROM seo_records WHERE id = ?",
+      [id],
+    );
+    const record = Array.isArray(rows) ? rows[0] : null;
+    return res.json({ ...record, extra_meta_json: parseJsonField(record?.extra_meta_json) });
+  } catch (error) {
+    return res.status(500).json({
+      message: error instanceof Error ? error.message : "Failed to update SEO record",
+    });
+  }
+});
+
+app.delete("/api/v1/seo/:id", async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const [result] = await pool.query("DELETE FROM seo_records WHERE id = ?", [id]);
+
+    if (!result?.affectedRows) {
+      return res.status(404).json({ message: "SEO record not found" });
+    }
+
+    return res.json({ ok: true });
+  } catch (error) {
+    return res.status(500).json({
+      message: error instanceof Error ? error.message : "Failed to delete SEO record",
+    });
+  }
+});
+
 app.get("/api/v1/health", async (_req, res) => {
   res.json({ status: "ok" });
 });
