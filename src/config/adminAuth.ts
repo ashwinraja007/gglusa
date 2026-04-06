@@ -1,9 +1,9 @@
 export const ADMIN_AUTH_STORAGE_KEY = "admin-authenticated";
 
 export const defaultAdminCredentials = {
-  username: import.meta.env.VITE_ADMIN_USERNAME ?? "admin",
-  password: import.meta.env.VITE_ADMIN_PASSWORD ?? "admin123",
+  email: import.meta.env.VITE_ADMIN_EMAIL ?? "admin@gglusa.us",
+  password: import.meta.env.VITE_ADMIN_PASSWORD ?? "Admin@12345",
 };
 
-export const nonProductionSecurityWarning =
-  "⚠ Non-production security mode: this login gate is UI-only and does not protect backend endpoints.";
+export const adminLoginHint = "Use your admin email and password to access the panel.";
+export const configuredMysqlDatabase = import.meta.env.VITE_MYSQL_DATABASE ?? "u546576758_ggl_usa";
