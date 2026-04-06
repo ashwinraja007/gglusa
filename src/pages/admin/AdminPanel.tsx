@@ -93,12 +93,14 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
   const [editingId, setEditingId] = useState<number | null>(null);
   const [formError, setFormError] = useState("");
   const [seoError, setSeoError] = useState("");
+  const [editingSeoId, setEditingSeoId] = useState<number | null>(null);
 
   const { pages, headers, locations, seo, content } = useAdminCollections(search);
   const createContent = useCreateRecord("content");
   const deleteContent = useDeleteRecord("content");
   const updateContent = useUpdateRecord("content");
   const upsertSeo = useCreateRecord("seo");
+  const updateSeo = useUpdateRecord("seo");
   const deleteSeo = useDeleteRecord("seo");
 
   useEffect(() => {
@@ -171,25 +173,49 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
   };
 
 
+
+  useEffect(() => {
+    const existing = (seo.data?.items ?? []).find((item) => item.path === seoForm.path);
+    if (!existing) {
+      setEditingSeoId(null);
+      return;
+    }
+
+    setEditingSeoId(existing.id);
+    setSeoForm((prev) => ({
+      ...prev,
+      title: existing.title,
+      description: existing.description,
+      keywords: existing.keywords,
+    }));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [seoForm.path, seo.data?.items]);
+
   const submitSeo = async (event: FormEvent) => {
     event.preventDefault();
     setSeoError("");
 
     try {
-      await upsertSeo.mutateAsync({
+      const payload = {
         path: seoForm.path,
         title: seoForm.title,
         description: seoForm.description,
         keywords: seoForm.keywords,
         extra_meta_json: {},
-      });
-      setSeoForm((prev) => ({ ...prev, title: "", description: "", keywords: "" }));
+      };
+
+      if (editingSeoId) {
+        await updateSeo.mutateAsync({ id: editingSeoId, payload });
+      } else {
+        await upsertSeo.mutateAsync(payload);
+      }
     } catch {
       setSeoError("Unable to save SEO record. Please check inputs.");
     }
   };
 
   const onEditSeo = (record: SeoRecord) => {
+    setEditingSeoId(record.id);
     setSeoForm({
       path: record.path,
       title: record.title,
@@ -256,7 +282,7 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
             <>
               <form onSubmit={submitSeo} className="space-y-3 rounded-lg border p-4">
                 <h3 className="font-semibold">Update SEO (All Pages)</h3>
-                <select className="w-full rounded border px-3 py-2" value={seoForm.path} onChange={(e) => setSeoForm((prev) => ({ ...prev, path: e.target.value }))}>
+                <select className="w-full rounded border px-3 py-2" value={seoForm.path} onChange={(e) => setSeoForm((prev) => ({ ...prev, path: e.target.value, title: "", description: "", keywords: "" }))}>
                   {seoPaths.map((path) => (
                     <option key={path} value={path}>
                       {path}
@@ -267,7 +293,7 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
                 <textarea className="min-h-20 w-full rounded border px-3 py-2" placeholder="Meta description" value={seoForm.description} onChange={(e) => setSeoForm((prev) => ({ ...prev, description: e.target.value }))} />
                 <input className="w-full rounded border px-3 py-2" placeholder="Meta keywords (comma separated)" value={seoForm.keywords} onChange={(e) => setSeoForm((prev) => ({ ...prev, keywords: e.target.value }))} />
                 {seoError ? <p className="text-sm text-red-600">{seoError}</p> : null}
-                <button className="rounded bg-slate-900 px-4 py-2 text-white" type="submit">Save SEO</button>
+                <button className="rounded bg-slate-900 px-4 py-2 text-white" type="submit">{editingSeoId ? "Update SEO" : "Save SEO"}</button>
               </form>
 
               <div>

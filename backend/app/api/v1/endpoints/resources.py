@@ -152,6 +152,19 @@ async def upsert_seo(payload: SeoIn, db: AsyncSession = Depends(get_db)):
     return SeoOut.model_validate(record, from_attributes=True)
 
 
+
+
+@router.put("/seo/{seo_id}", response_model=SeoOut)
+async def update_seo(seo_id: int, payload: SeoIn, db: AsyncSession = Depends(get_db)):
+    record = await db.get(SeoRecord, seo_id)
+    if not record:
+        raise HTTPException(status_code=404, detail="Not found")
+    for key, value in payload.model_dump().items():
+        setattr(record, key, value)
+    await db.commit()
+    await db.refresh(record)
+    return SeoOut.model_validate(record, from_attributes=True)
+
 @router.delete("/seo/{seo_id}")
 async def delete_seo(seo_id: int, db: AsyncSession = Depends(get_db)):
     record = await db.get(SeoRecord, seo_id)
