@@ -1,167 +1,194 @@
-import { motion } from "framer-motion";
-import { Globe } from "lucide-react";
-
-import { useContentByPath } from "@/api/hooks";
-import type { ContentRecord } from "@/api/types";
-import { Footer } from "@/components/layout/Footer";
-import { Header } from "@/components/layout/Header";
-
-type CardItem = { title: string; description: string };
-
-type AboutPageData = {
-  heroTitle: string;
-  heroSubtitle: string;
-  heading: string;
-  paragraphs: string[];
-  aboutImage: string;
-  heroImage: string;
-  logisticsTitle: string;
-  logisticsItems: CardItem[];
-  audienceTitle: string;
-  audienceItems: CardItem[];
-};
-
-const fallbackData: AboutPageData = {
-  heroTitle: "About GGL",
-  heroSubtitle:
-    "Singapore's premier logistics company, offering specialized expertise across warehousing, freight forwarding, and transportation",
-  heading: "About Us",
-  paragraphs: [
-    "GGL is a prominent logistics company headquartered in Singapore with strong divisions in 3PL, freight management, distribution, and transportation.",
-    "Our mission is to deliver complete end-to-end supply chain solutions through strong customer partnerships and regional expertise.",
-  ],
-  aboutImage: "/lovable-uploads/41795fb5-562d-45d1-a8d3-f26724bc079b.png",
-  heroImage: "/lovable-uploads/41795fb5-562d-45d1-a8d3-f26724bc079b.png",
-  logisticsTitle: "Comprehensive Logistics Services",
-  logisticsItems: [
-    { title: "Air & Ocean Freight (LCL & FCL)", description: "Complete import and export solutions for all cargo types." },
-    { title: "Dangerous Goods Handling", description: "Specialized expertise in hazardous materials transportation." },
-    { title: "Warehousing, Distribution & 3PL", description: "Secure storage and comprehensive third-party logistics solutions." },
-    { title: "Domestic & Cross-Border Land Transport", description: "Efficient ground transportation across regions." },
-  ],
-  audienceTitle: "Who We Serve (Neutral Consolidation)",
-  audienceItems: [
-    { title: "Freight Forwarders", description: "Trusted partners for global shipping solutions." },
-    { title: "Custom Brokers", description: "Reliable consolidation services for customs clearance." },
-    { title: "NVOCCs", description: "Neutral support for non-vessel operating common carriers." },
-    { title: "3PL Providers", description: "Comprehensive logistics partnership for third-party providers." },
-  ],
-};
-
-const getSection = (items: ContentRecord[], key: string) => items.find((item) => item.section_key === key);
-
-const asString = (value: unknown, fallback = "") => (typeof value === "string" ? value : fallback);
-const asStringArray = (value: unknown, fallback: string[]) =>
-  Array.isArray(value) ? value.filter((item): item is string => typeof item === "string") : fallback;
-
-const asCardItems = (value: unknown, fallback: CardItem[]) => {
-  if (!Array.isArray(value)) return fallback;
-
-  return value
-    .map((item) => {
-      if (typeof item !== "object" || !item) return null;
-      const record = item as Record<string, unknown>;
-      return {
-        title: asString(record.title),
-        description: asString(record.description),
-      };
-    })
-    .filter((item): item is CardItem => Boolean(item?.title));
-};
-
-const mapContentToAboutData = (items: ContentRecord[]): AboutPageData => {
-  const hero = getSection(items, "hero");
-  const about = getSection(items, "about_us");
-  const logistics = getSection(items, "logistics_services");
-  const audience = getSection(items, "who_we_serve");
-
-  return {
-    heroTitle: asString(hero?.content_json.title, fallbackData.heroTitle),
-    heroSubtitle: asString(hero?.content_json.subtitle, fallbackData.heroSubtitle),
-    heading: asString(about?.content_json.heading, fallbackData.heading),
-    paragraphs: asStringArray(about?.content_json.paragraphs, fallbackData.paragraphs),
-    aboutImage: asString(about?.images_json.about_image, fallbackData.aboutImage),
-    heroImage: asString(hero?.images_json.hero_image, fallbackData.heroImage),
-    logisticsTitle: asString(logistics?.content_json.title, fallbackData.logisticsTitle),
-    logisticsItems: asCardItems(logistics?.content_json.items, fallbackData.logisticsItems),
-    audienceTitle: asString(audience?.content_json.title, fallbackData.audienceTitle),
-    audienceItems: asCardItems(audience?.content_json.items, fallbackData.audienceItems),
-  };
-};
-
-const CardGrid = ({ title, items }: { title: string; items: CardItem[] }) => (
-  <div>
-    <h3 className="mb-8 text-center text-3xl font-bold text-gray-900">{title}</h3>
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-      {items.map((item) => (
-        <div key={item.title} className="rounded-xl border border-gray-100 bg-gray-50 p-6 shadow transition duration-300 hover:shadow-md">
-          <h4 className="mb-2 text-lg font-semibold text-gray-900">{item.title}</h4>
-          <p className="text-sm text-gray-600">{item.description}</p>
-        </div>
-      ))}
-    </div>
-  </div>
-);
-
+import React from 'react';
+import { Header } from '@/components/layout/Header';
+import { Footer } from '@/components/layout/Footer';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { Globe, Ship, Truck, Package, Clock, Shield, Target, Users, Award, CheckCircle } from 'lucide-react';
 const About = () => {
-  const { data } = useContentByPath("/about");
-  const aboutData = data?.items?.length ? mapContentToAboutData(data.items) : fallbackData;
-
-  return (
-    <div className="flex min-h-screen flex-col bg-gray-50">
+  return <div className="min-h-screen flex flex-col bg-gray-50">
       <Header />
 
       <main className="flex-grow">
-        <section className="mt-16 bg-gradient-to-r from-brand-navy to-brand-navy px-6 py-20 text-white">
-          <div className="mx-auto max-w-7xl text-center">
-            <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-6 text-4xl font-bold md:text-6xl">
-              {aboutData.heroTitle}
-            </motion.h1>
-            <p className="mx-auto max-w-4xl text-xl md:text-2xl">{aboutData.heroSubtitle}</p>
+        {/* Hero Section */}
+        <section className="py-20 bg-gradient-to-r from-brand-navy to-brand-navy text-white px-6 mt-16">
+          <div className="max-w-7xl mx-auto">
+            <motion.div initial={{
+            opacity: 0,
+            y: 30
+          }} animate={{
+            opacity: 1,
+            y: 0
+          }} transition={{
+            duration: 0.8
+          }} className="text-center">
+              <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight text-slate-50">
+                About <span className="text-slate-50">GGL</span>
+              </h1>
+              <p className="text-xl md:text-2xl max-w-4xl mx-auto leading-relaxed text-slate-50">
+                Singapore's premier logistics company, offering specialized expertise across warehousing, freight forwarding, and transportation
+              </p>
+            </motion.div>
           </div>
         </section>
 
-        <section className="bg-gray-50 px-6 py-20">
-          <div className="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
-            <div>
-              <h2 className="mb-8 text-4xl font-bold text-brand-navy md:text-5xl">{aboutData.heading}</h2>
-              <div className="space-y-6 text-lg leading-relaxed text-gray-700">
-                {aboutData.paragraphs.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
-              </div>
-            </div>
+        {/* About Section */}
+        <section className="py-20 px-6 bg-gray-50">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <motion.div initial={{
+              opacity: 0,
+              x: -30
+            }} whileInView={{
+              opacity: 1,
+              x: 0
+            }} transition={{
+              duration: 0.8
+            }} viewport={{
+              once: true
+            }}>
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight">
+                  <span className="text-[navy-blue] text-brand-navy">About Us</span>
+                </h2>
+                <div className="space-y-6 text-gray-700 text-lg leading-relaxed">
+                  <p>
+                    GGL is a prominent logistics company headquartered in Singapore. It operates with distinct divisions for 
+                    <strong> 3PL, Freight Management (Ocean and Air), Distribution, and Transportation.</strong> Our primary mission is to deliver comprehensive end-to-end solutions in supply chain management.
+                  </p>
+                  <p>
+                    We employ innovative approaches managed through our network of group offices and trusted partners who specialize in all facets of the supply chain. 
+                    We constantly strive to cultivate strong and collaborative relationships with our clients, fostering <strong>genuine partnerships</strong> that drive mutual growth.
+                  </p>
+                  <p>
+                    Our commitment extends beyond mere forwarding and logistics. It revolves around <strong>building customer trust</strong> by consistently providing world-class services and solutions. 
+                    We pride ourselves on being more than just a forwarding service; we are a trusted partner, a global solution provider leveraging the expertise of our highly experienced team.
+                  </p>
+                  <p>
+                    Through our in-house IT capabilities, we develop customized solutions and seamlessly integrate them with our clients' systems and processes. 
+                    This approach offers <strong>complete visibility and enhances productivity</strong> at every stage of supply chain management.
+                  </p>
+                  <p>
+                    With our extensive presence encompassing group offices across <strong>15 countries</strong> in South East Asia, the Indian subcontinent, and the Middle East, 
+                    along with a well-established partner network, GGL is exceptionally positioned to deliver global solutions to our valued customers.
+                  </p>
+                </div>
+              </motion.div>
 
-            <div className="relative">
-              <div className="overflow-hidden rounded-2xl shadow-2xl">
-                <img alt="GGL About" className="h-[600px] w-full object-cover" src={aboutData.aboutImage || aboutData.heroImage} />
-              </div>
-              <div className="absolute -bottom-8 -left-8 max-w-xs rounded-xl bg-white p-6 shadow-lg">
-                <div className="flex items-center gap-3">
-                  <div className="rounded-lg bg-blue-100 p-2">
-                    <Globe className="h-6 w-6 text-blue-600" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Global Network</h4>
-                    <p className="text-sm text-gray-600">50+ countries worldwide</p>
+              <motion.div initial={{
+              opacity: 0,
+              x: 30
+            }} whileInView={{
+              opacity: 1,
+              x: 0
+            }} transition={{
+              duration: 0.8
+            }} viewport={{
+              once: true
+            }} className="relative">
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                  <img alt="GGL Global Logistics" className="w-full h-[600px] object-cover" src="/lovable-uploads/41795fb5-562d-45d1-a8d3-f26724bc079b.png" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                </div>
+
+                {/* Floating Card */}
+                <div className="absolute -bottom-8 -left-8 bg-white p-6 rounded-xl shadow-lg max-w-xs">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-blue-100 rounded-lg">
+                      <Globe className="w-6 h-6 text-blue-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900">Global Network</h4>
+                      <p className="text-sm text-gray-600">50+ countries worldwide</p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </section>
 
-        <section className="bg-white px-6 py-20">
-          <div className="mx-auto max-w-7xl space-y-16">
-            <CardGrid title={aboutData.logisticsTitle} items={aboutData.logisticsItems} />
-            <CardGrid title={aboutData.audienceTitle} items={aboutData.audienceItems} />
+        {/* Why Choose GGL Cards Section */}
+        <section className="py-20 bg-white px-6">
+          <div className="max-w-7xl mx-auto space-y-16">
+            {/* Logistics Services */}
+            <div>
+              <h3 className="text-3xl font-bold text-gray-900 mb-8 text-center">Comprehensive Logistics Services</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {[{
+                title: "Air & Ocean Freight (LCL & FCL)",
+                description: "Complete import and export solutions for all cargo types.",
+                icon: Ship
+              }, {
+                title: "Dangerous Goods Handling",
+                description: "Specialized expertise in hazardous materials transportation.",
+                icon: Shield
+              }, {
+                title: "Warehousing, Distribution & 3PL",
+                description: "Secure storage and comprehensive third-party logistics solutions.",
+                icon: Package
+              }, {
+                title: "Domestic & Cross-Border Land Transport",
+                description: "Efficient ground transportation across regions.",
+                icon: Truck
+              }].map(({
+                title,
+                description,
+                icon: Icon
+              }, i) => <div key={i} className="bg-gray-50 p-6 rounded-xl shadow hover:shadow-md transition duration-300 border border-gray-100">
+                    <div className="flex items-start gap-4">
+                      <div className="p-3 bg-blue-100 rounded-full">
+                        <Icon className="text-blue-600 w-6 h-6" />
+                      </div>
+                      <div>
+                        <h4 className="text-lg font-semibold text-gray-900 mb-1">{title}</h4>
+                        <p className="text-gray-600 text-sm">{description}</p>
+                      </div>
+                    </div>
+                  </div>)}
+              </div>
+            </div>
+
+            {/* Who We Serve */}
+            <div>
+              <h3 className="text-3xl font-bold text-gray-900 mb-8 text-center">Who We Serve (Neutral Consolidation)</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {[{
+                title: "Freight Forwarders",
+                description: "Trusted partners for global shipping solutions.",
+                icon: Globe
+              }, {
+                title: "Custom Brokers",
+                description: "Reliable consolidation services for customs clearance.",
+                icon: CheckCircle
+              }, {
+                title: "NVOCCs",
+                description: "Neutral support for non-vessel operating common carriers.",
+                icon: Users
+              }, {
+                title: "3PL Providers",
+                description: "Comprehensive logistics partnership for third-party providers.",
+                icon: Target
+              }].map(({
+                title,
+                description,
+                icon: Icon
+              }, i) => <div key={i} className="bg-gray-50 p-6 rounded-xl shadow hover:shadow-md transition duration-300 border border-gray-100">
+                    <div className="flex items-start gap-4">
+                      <div className="p-3 bg-blue-100 rounded-full">
+                        <Icon className="text-blue-600 w-6 h-6" />
+                      </div>
+                      <div>
+                        <h4 className="text-lg font-semibold text-gray-900 mb-1">{title}</h4>
+                        <p className="text-gray-600 text-sm">{description}</p>
+                      </div>
+                    </div>
+                  </div>)}
+              </div>
+            </div>
           </div>
         </section>
       </main>
 
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default About;
