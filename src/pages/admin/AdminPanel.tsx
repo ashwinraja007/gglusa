@@ -93,6 +93,8 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
     refetchInterval: 10000,
   });
   const seoItems = seoRecordsQuery.data?.items?.length ? seoRecordsQuery.data.items : (seo.data?.items ?? []);
+  const seoLoading = seoRecordsQuery.isLoading || seo.isLoading;
+  const seoLoadError = (seoRecordsQuery.error as Error | null)?.message || (seo.error as Error | null)?.message || "";
 
   const createContentRecord = useCreateRecord("content");
   const deleteContentRecord = useDeleteRecord("content");
@@ -270,8 +272,12 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
 
               <div>
                 <h3 className="mb-2 font-semibold">SEO records</h3>
-                {seoItems.length === 0 ? (
-                  <p className="text-sm text-muted-foreground">No SEO records found in API response. Click Save SEO to create one for the selected path.</p>
+                {seoLoading ? (
+                  <p className="text-sm text-muted-foreground">Loading SEO records from MySQL…</p>
+                ) : seoLoadError ? (
+                  <p className="text-sm text-red-600">Failed to load SEO records from API: {seoLoadError}</p>
+                ) : seoItems.length === 0 ? (
+                  <p className="text-sm text-muted-foreground">No SEO records found in MySQL `seo_records` table for the current query.</p>
                 ) : (
                   <div className="space-y-2">
                     {seoItems.map((item) => (
