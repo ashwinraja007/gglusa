@@ -74,3 +74,15 @@ export const loginViaApi = (username: string, password: string) =>
     method: "POST",
     body: JSON.stringify({ username, password }),
   });
+
+
+export const useUpdateRecord = (resource: "pages" | "content" | "seo" | "headers" | "locations") => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, payload }: { id: number; payload: unknown }) =>
+      apiFetch(`/${resource}/${id}`, { method: "PUT", body: JSON.stringify(payload) }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [resource] });
+    },
+  });
+};
