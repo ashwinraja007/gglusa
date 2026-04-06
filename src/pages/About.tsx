@@ -91,12 +91,12 @@ const mapContentToAboutData = (items: ContentRecord[]): AboutPageData => {
 
 const CardGrid = ({ title, items }: { title: string; items: CardItem[] }) => (
   <div>
-    <h3 className="mb-8 text-center text-3xl font-bold text-gray-900">{title}</h3>
+    <h3 className="mb-8 text-center text-3xl font-bold text-white">{title}</h3>
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
       {items.map((item) => (
-        <div key={item.title} className="rounded-xl border border-gray-100 bg-gray-50 p-6 shadow transition duration-300 hover:shadow-md">
-          <h4 className="mb-2 text-lg font-semibold text-gray-900">{item.title}</h4>
-          <p className="text-sm text-gray-600">{item.description}</p>
+        <div key={item.title} className="rounded-xl border border-white/20 bg-white/10 p-6 shadow transition duration-300 hover:bg-white/15">
+          <h4 className="mb-2 text-lg font-semibold text-white">{item.title}</h4>
+          <p className="text-sm text-white/90">{item.description}</p>
         </div>
       ))}
     </div>
@@ -121,11 +121,11 @@ const About = () => {
           </div>
         </section>
 
-        <section className="bg-gray-50 px-6 py-20">
+        <section className="bg-brand-navy px-6 py-20 text-white">
           <div className="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
             <div>
-              <h2 className="mb-8 text-4xl font-bold text-brand-navy md:text-5xl">{aboutData.heading}</h2>
-              <div className="space-y-6 text-lg leading-relaxed text-gray-700">
+              <h2 className="mb-8 text-4xl font-bold text-white md:text-5xl">{aboutData.heading}</h2>
+              <div className="space-y-6 text-lg leading-relaxed text-white">
                 {aboutData.paragraphs.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
@@ -151,7 +151,7 @@ const About = () => {
           </div>
         </section>
 
-        <section className="bg-white px-6 py-20">
+        <section className="bg-brand-navy px-6 py-20 text-white">
           <div className="mx-auto max-w-7xl space-y-16">
             <CardGrid title={aboutData.logisticsTitle} items={aboutData.logisticsItems} />
             <CardGrid title={aboutData.audienceTitle} items={aboutData.audienceItems} />

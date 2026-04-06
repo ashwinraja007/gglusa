@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 
 import { useAdminCollections, useCreateRecord, useDeleteRecord, useUpdateRecord } from "@/api/hooks";
-import type { ContentRecord } from "@/api/types";
+import type { ContentRecord, SeoRecord } from "@/api/types";
 import { apiFetch } from "@/api/client";
 import { configuredMysqlDatabase } from "@/config/adminAuth";
 
@@ -14,6 +14,33 @@ type SummaryResponse = {
   serverTime?: string;
   message?: string;
 };
+
+
+type SeoFormState = {
+  path: string;
+  title: string;
+  description: string;
+  keywords: string;
+};
+
+const seoPaths = [
+  "/",
+  "/about",
+  "/services",
+  "/contact",
+  "/global-presence",
+  "/privacy-policy",
+  "/terms-and-conditions",
+  "/services/transportation",
+  "/services/liquid-transportation",
+  "/services/air-freight",
+  "/services/ocean-freight",
+  "/services/lcl-consolidation",
+  "/services/project-cargo",
+  "/services/customs-clearance",
+  "/services/warehousing",
+  "/services/e-commerce",
+];
 
 type ContentFormState = {
   page_path: string;
@@ -43,6 +70,13 @@ const seedData: Record<Exclude<Module, "content">, DummyRecord[]> = {
   ],
 };
 
+const initialSeoForm: SeoFormState = {
+  path: "/",
+  title: "",
+  description: "",
+  keywords: "",
+};
+
 const initialForm: ContentFormState = {
   page_path: "/about",
   section_key: "hero",
@@ -55,13 +89,17 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
   const [search, setSearch] = useState("");
   const [summary, setSummary] = useState<SummaryResponse | null>(null);
   const [form, setForm] = useState<ContentFormState>(initialForm);
+  const [seoForm, setSeoForm] = useState<SeoFormState>(initialSeoForm);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [formError, setFormError] = useState("");
+  const [seoError, setSeoError] = useState("");
 
   const { pages, headers, locations, seo, content } = useAdminCollections(search);
   const createContent = useCreateRecord("content");
   const deleteContent = useDeleteRecord("content");
   const updateContent = useUpdateRecord("content");
+  const upsertSeo = useCreateRecord("seo");
+  const deleteSeo = useDeleteRecord("seo");
 
   useEffect(() => {
     apiFetch<SummaryResponse>("/admin/summary")
@@ -132,6 +170,35 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
     setActive("content");
   };
 
+
+  const submitSeo = async (event: FormEvent) => {
+    event.preventDefault();
+    setSeoError("");
+
+    try {
+      await upsertSeo.mutateAsync({
+        path: seoForm.path,
+        title: seoForm.title,
+        description: seoForm.description,
+        keywords: seoForm.keywords,
+        extra_meta_json: {},
+      });
+      setSeoForm((prev) => ({ ...prev, title: "", description: "", keywords: "" }));
+    } catch {
+      setSeoError("Unable to save SEO record. Please check inputs.");
+    }
+  };
+
+  const onEditSeo = (record: SeoRecord) => {
+    setSeoForm({
+      path: record.path,
+      title: record.title,
+      description: record.description,
+      keywords: record.keywords,
+    });
+    setActive("seo");
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-6">
       <div className="mb-4 rounded-xl border bg-white p-4 text-sm">
@@ -185,7 +252,44 @@ export function AdminPanel({ onLogout }: { onLogout: () => void }) {
             <span className="text-sm text-muted-foreground">About page content is now dynamic and managed via DB records.</span>
           </div>
 
-          {active === "content" ? (
+          {active === "seo" ? (
+            <>
+              <form onSubmit={submitSeo} className="space-y-3 rounded-lg border p-4">
+                <h3 className="font-semibold">Update SEO (All Pages)</h3>
+                <select className="w-full rounded border px-3 py-2" value={seoForm.path} onChange={(e) => setSeoForm((prev) => ({ ...prev, path: e.target.value }))}>
+                  {seoPaths.map((path) => (
+                    <option key={path} value={path}>
+                      {path}
+                    </option>
+                  ))}
+                </select>
+                <input className="w-full rounded border px-3 py-2" placeholder="Meta title" value={seoForm.title} onChange={(e) => setSeoForm((prev) => ({ ...prev, title: e.target.value }))} />
+                <textarea className="min-h-20 w-full rounded border px-3 py-2" placeholder="Meta description" value={seoForm.description} onChange={(e) => setSeoForm((prev) => ({ ...prev, description: e.target.value }))} />
+                <input className="w-full rounded border px-3 py-2" placeholder="Meta keywords (comma separated)" value={seoForm.keywords} onChange={(e) => setSeoForm((prev) => ({ ...prev, keywords: e.target.value }))} />
+                {seoError ? <p className="text-sm text-red-600">{seoError}</p> : null}
+                <button className="rounded bg-slate-900 px-4 py-2 text-white" type="submit">Save SEO</button>
+              </form>
+
+              <div>
+                <h3 className="mb-2 font-semibold">SEO records</h3>
+                {(seo.data?.items ?? []).length === 0 ? (
+                  <p className="text-sm text-muted-foreground">No SEO records found.</p>
+                ) : (
+                  <div className="space-y-2">
+                    {(seo.data?.items ?? []).map((item) => (
+                      <div key={item.id} className="rounded border p-3">
+                        <div className="mb-2 flex gap-2">
+                          <button className="rounded border px-2 py-1 text-xs" onClick={() => onEditSeo(item)}>Edit</button>
+                          <button className="rounded border border-red-200 px-2 py-1 text-xs text-red-600" onClick={() => deleteSeo.mutate(item.id)}>Delete</button>
+                        </div>
+                        <pre className="text-xs">{JSON.stringify(item, null, 2)}</pre>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </>
+          ) : active === "content" ? (
             <>
               <form onSubmit={submitContent} className="space-y-3 rounded-lg border p-4">
                 <h3 className="font-semibold">{editingId ? "Update" : "Create"} Content Record</h3>
